@@ -1,5 +1,3 @@
-package com.eomcs.lang.ex03;
-
 // 정수 리터럴(literal) - 정수를 메모리에 저장하는 방법
 // 
 public class Exam0250 {

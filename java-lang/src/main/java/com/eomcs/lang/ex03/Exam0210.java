@@ -1,5 +1,3 @@
-package com.eomcs.lang.ex03;
-
 //# 정수 리터럴 - 다양한 기수법으로 정수를 표현하기
 //
 

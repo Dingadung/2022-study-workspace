@@ -1,5 +1,3 @@
-package com.eomcs.lang.ex03;
-
 //# 부동소수점 리터럴 - 메모리 크기에 따른 표기법
 
 public class Exam0320 {

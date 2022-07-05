@@ -1,5 +1,3 @@
-package com.eomcs.lang.ex03;
-
 //# 문자열 리터럴과 + 연산자
 //- 문자열 연결 연산자(concatenation): +
 //  + 를 이용하여 문자열과 문자열을 연결한다.
