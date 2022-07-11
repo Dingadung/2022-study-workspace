@@ -25,6 +25,8 @@ public class App {
       System.out.println();
       System.out.print("메뉴를 선택하세요[1..2] (0: 종료) "); //System.lang 패키지라서 Syste.out은 패키지를 알려주지 않아도 사용이 가능하다.
       int menuNo = keyboardInput.nextInt(); //변수명은 명확하게 의미를 정해야한다. -> 변수는 소문자로 시작하여, Camel 표기법 사용, 소스파일명은 대문자로 시작해야함
+      //keyboardInput.nextLine(); // 입력한 숫자 뒤에 남아 있는 줄바꿈 코드 제거 -> 필수 아님.
+
       if (menuNo == 0) {
         System.out.println("안녕히 가세요!");
         break;
