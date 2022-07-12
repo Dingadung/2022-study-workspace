@@ -58,3 +58,9 @@
   ### 6일
 - 부팅 과정 소개(ROM BIOS, Firmware, HDD 저장 원리 등)
 - 변수와 연산자 사용법
+
+### 7일
+- 연산자 사용법(계속)
+- 흐름제어문: if, if~ else~, switch, while, do~ while
+- board-app 프로젝트 수행
+  - 04. 변수 사용법
