@@ -17,15 +17,25 @@ public class App {
 
     //expression을 이용하여 변수에 값 담기
 
+    String title = " ";
+    String content = " ";
+    String writer = " ";
+    String password = " ";
+
     while (true) {
       System.out.println();
       System.out.println("메뉴: ");
       System.out.println("  1: 게시글 목록");
       System.out.println("  2: 게시글 상세보기");
+      System.out.println("  3: 게시글 등록");
       System.out.println();
-      System.out.print("메뉴를 선택하세요[1..2] (0: 종료) "); //System.lang 패키지라서 Syste.out은 패키지를 알려주지 않아도 사용이 가능하다.
+      System.out.print("메뉴를 선택하세요[1..3] (0: 종료) "); //System.lang 패키지라서 Syste.out은 패키지를 알려주지 않아도 사용이 가능하다.
       int menuNo = keyboardInput.nextInt(); //변수명은 명확하게 의미를 정해야한다. -> 변수는 소문자로 시작하여, Camel 표기법 사용, 소스파일명은 대문자로 시작해야함
-      //keyboardInput.nextLine(); // 입력한 숫자 뒤에 남아 있는 줄바꿈 코드 제거 -> 필수 아님.
+      keyboardInput.nextLine(); // 입력한 숫자 뒤에 남아 있는 줄바꿈 코드 제거 -> 필수 아님.
+
+      System.out.println(
+        "------------------------------------------------------"
+      );
 
       if (menuNo == 0) {
         System.out.println("안녕히 가세요!");
@@ -34,7 +44,7 @@ public class App {
       } else if (menuNo == 1) {
         System.out.println("[게시글 목록]");
 
-        System.out.println("번호\t제목\t조회수\t작성자\t등록일");
+        System.out.println("번호\t제목\t\t조회수\t작성자\t등록일");
         System.out.print(1);
         System.out.print("\t");
         System.out.print("제목입니다1");
@@ -69,18 +79,32 @@ public class App {
         );
         System.out.println();
       } else if (menuNo == 2) {
-        System.out.println("[게시판 상세보기]");
+        System.out.println("게시판 상세보기");
 
         System.out.printf("번호: %d\n", 1);
-        System.out.printf("제목: %s\n", "제목입니다1.");
-        System.out.printf("내용: %s\n", "내용입니다.");
+        System.out.printf("제목: %s\n", title);
+        System.out.printf("내용: %s\n", content);
         System.out.printf("조회수: %d\n", 100);
-        System.out.printf("작성자: %s\n", "홍길동");
+        System.out.printf("작성자: %s\n", writer);
         System.out.printf("등록일: %s\n", "2022-07-08");
         System.out.println(
           "------------------------------------------------------"
         );
         System.out.println();
+      } else if (menuNo == 3) {
+        System.out.println("[게시글 등록]");
+
+        System.out.print("제목? ");
+        title = keyboardInput.nextLine();
+
+        System.out.print("내용? ");
+        content = keyboardInput.nextLine();
+
+        System.out.print("작성자? ");
+        writer = keyboardInput.nextLine();
+
+        System.out.print("암호? ");
+        password = keyboardInput.nextLine();
       } else {
         System.out.println("메뉴 번호가 옳지 않습니다.");
         System.out.println(
