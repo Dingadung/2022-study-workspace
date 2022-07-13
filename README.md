@@ -64,3 +64,8 @@
 - 흐름제어문: if, if~ else~, switch, while, do~ while
 - board-app 프로젝트 수행
   - 04. 변수 사용법
+
+### 8일
+- board-app 프로젝트 수행
+  - 004. 변수 사용법(계속)
+  - 005. 배열 사용법
