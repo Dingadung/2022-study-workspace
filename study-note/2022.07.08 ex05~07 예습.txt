@@ -1,0 +1,27 @@
+enum struct 같은 느낌?
+
+배열문 String names[10] ={,,,}
+for(String name:names_{} -> 이렇게 이용가능, 하지만 name을 for문 밖에 선언하고 이렇게 이용은 안됨
+
+컬렉션 -> ArrayList 는 배열과 달리 다른 데이터 타입을 한 번에 넣을 수 있다.(크기가 가변적)
+ArrayList list = new ArrayList();
+원소 넣을 때: list.add(true);
+원소 뺄 때: list.get(0);
+for문 이용할 때: for(object value:list){}
+
+컬렉션 + 제네릭
+ArrayList<String> list = new ArrayList<>();
+list.add("홍길동")
+=> 위와 같은 경우, list에 String이 아닌 값은 넣을 수 없다.
+for문 이용: for(String name:list){}
+
+static 메소드는 클래스이름.메소드 와 같이 이용할 수 있다.
+
+가변 파라미터 -> 파라미터 형식: String... names
+=> 이 names를 배열처럼 사용할 수 있다.
+- 넘길 때 배열에 안넣어서 전달해도 됨.
+- 하지만 여러 개의 파라미터를 선언할 수는 없다. 구분이 힘들기 때문이다.
+일반 배열 파라미터 형식: String[] names
+
+
+아규먼트?
