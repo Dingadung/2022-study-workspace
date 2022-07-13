@@ -17,10 +17,13 @@ public class App {
 
     //expression을 이용하여 변수에 값 담기
 
+    int no = 0;
     String title = " ";
     String content = " ";
     String writer = " ";
     String password = " ";
+    int viewCount = 0;
+    long createdDate = 0;
 
     while (true) {
       System.out.println();
@@ -79,14 +82,24 @@ public class App {
         );
         System.out.println();
       } else if (menuNo == 2) {
+        viewCount++;
+
         System.out.println("게시판 상세보기");
 
-        System.out.printf("번호: %d\n", 1);
+        System.out.printf("번호: %d\n", no);
         System.out.printf("제목: %s\n", title);
         System.out.printf("내용: %s\n", content);
-        System.out.printf("조회수: %d\n", 100);
+        System.out.printf("조회수: %d\n", viewCount);
         System.out.printf("작성자: %s\n", writer);
-        System.out.printf("등록일: %s\n", "2022-07-08");
+
+        //Date 도구함의 도구를 쓸 수 있도록 데이터를 준비시킨다.
+        // new Date(밀리초)
+        // => 지정한 밀리초를 가지고 설정한 날짜 정보를 date라는 변수에 넣어 사용할 수 있도록 설정한다.
+        java.util.Date date = new java.util.Date(createdDate);
+
+        //Date 도구함을 통해 설정한 날짜 정보를 가지고 printf를 실행한다.
+        // %Y: date에 설정된 날짜 정보에서 연도만 추출한다.
+        System.out.printf("등록일: %1$tY-%1$tm-%1$td/%1$tA %1$tH:%1$tM\n", date);
         System.out.println(
           "------------------------------------------------------"
         );
@@ -105,6 +118,9 @@ public class App {
 
         System.out.print("암호? ");
         password = keyboardInput.nextLine();
+
+        no=1;
+        createdDate = System.currentTimeMillis();
       } else {
         System.out.println("메뉴 번호가 옳지 않습니다.");
         System.out.println(
