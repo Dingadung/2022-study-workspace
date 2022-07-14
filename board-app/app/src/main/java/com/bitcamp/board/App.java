@@ -8,7 +8,7 @@ public class App {
 
   public static void main(String[] args) {
     welcome();
-    
+
     loop:
       while (true) {
         displayMenu();
@@ -27,7 +27,7 @@ public class App {
       } //while문 끝 -----------------------------------------------
 
     Prompt.close();
-  } //main 끝 -------------------------------------
+  } //main 끝 ---------------------------------------
 
 
 
