@@ -14,11 +14,10 @@ public class BoardHandler {
   static String[] password = new String[SIZE];
   static int[] viewCount = new int[SIZE];
   static long[] createdDate = new long[SIZE];
-  static java.util.Scanner keyboardInput = new java.util.Scanner(System.in);
   //-------------------변수 선언-----------------------\\
 
   static void processList() {
-    //-------------------menu 1
+    //------------------- menu 1 --------------------------
     java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat(
       "yyyy-MM-dd hh:mm:ss"
     );
@@ -41,12 +40,11 @@ public class BoardHandler {
   }
 
   static void processDetail() {
-    //-------------------menu 2
+    //------------------- menu 2 --------------------------
 
     System.out.println("게시판 상세보기");
     System.out.print("몇 번 게시물을 조회하시겠습까? ");
-    String noStr = keyboardInput.nextLine();
-    int noBoard = Integer.parseInt(noStr);
+    int noBoard = Prompt.inputInt();
     int idx = -1;
     for (int i = 0; i < boardCount; i++) {
       if (no[i] == noBoard) {
@@ -72,7 +70,7 @@ public class BoardHandler {
   }
 
   static void processInput() {
-    //-------------------menu 3
+    //------------------- menu 3 --------------------------
 
     System.out.println("[게시글 등록]");
 
@@ -83,13 +81,13 @@ public class BoardHandler {
       return;
     }
     System.out.print("제목? ");
-    title[boardCount] = keyboardInput.nextLine();
+    title[boardCount] = Prompt.inputString();
     System.out.print("내용? ");
-    content[boardCount] = keyboardInput.nextLine();
+    content[boardCount] = Prompt.inputString();
     System.out.print("작성자? ");
-    writer[boardCount] = keyboardInput.nextLine();
+    writer[boardCount] = Prompt.inputString();
     System.out.print("암호? ");
-    password[boardCount] = keyboardInput.nextLine();
+    password[boardCount] = Prompt.inputString();
     no[boardCount] = boardCount == 0 ? 1 : no[boardCount - 1] + 1;
     createdDate[boardCount] = System.currentTimeMillis();
     viewCount[boardCount] = 0;

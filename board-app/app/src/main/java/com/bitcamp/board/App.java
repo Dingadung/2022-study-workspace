@@ -5,9 +5,6 @@
 package com.bitcamp.board;
 
 public class App {
-  //-------------------변수 선언-----------------------\\
-  static java.util.Scanner keyboardInput = new java.util.Scanner(System.in);
-  //-------------------변수 선언-----------------------\\
 
   public static void main(String[] args) {
     welcome();
@@ -29,7 +26,7 @@ public class App {
         displayBlankLine();
       } //while문 끝 -----------------------------------------------
 
-    keyboardInput.close();
+    Prompt.close();
   } //main 끝 -------------------------------------
 
 
@@ -42,6 +39,10 @@ public class App {
     System.out.println();
   }
 
+  static int promptMenu() {
+    return Prompt.inputInt();
+  }
+
   static void displayMenu() {
     System.out.println();
     System.out.println("메뉴: ");
@@ -50,18 +51,6 @@ public class App {
     System.out.println("  3: 게시글 등록");
     System.out.println();
     System.out.print("메뉴를 선택하세요[1..3] (0: 종료) ");
-  }
-
-  static int promptMenu() {
-    //-------------------menu 번호 입력 받기
-    int menuNo = keyboardInput.nextInt();
-    keyboardInput.nextLine();
-    return menuNo;
-    /*
-     * 또 다른 방식
-     * String input = keyboardInput.nextLine();
-     * return Integer.parseInt(input);
-     */
   }
 
   static void displayLine(char c){
