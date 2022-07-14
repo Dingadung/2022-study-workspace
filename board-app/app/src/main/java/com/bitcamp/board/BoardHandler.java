@@ -41,10 +41,8 @@ public class BoardHandler {
 
   static void processDetail() {
     //------------------- menu 2 --------------------------
-
-    System.out.println("게시판 상세보기");
-    System.out.print("몇 번 게시물을 조회하시겠습까? ");
-    int noBoard = Prompt.inputInt();
+    System.out.println("[게시판 상세보기]");
+    int noBoard = Prompt.inputInt("몇 번 게시물을 조회하시겠습까? ");
     int idx = -1;
     for (int i = 0; i < boardCount; i++) {
       if (no[i] == noBoard) {
@@ -52,6 +50,7 @@ public class BoardHandler {
         break;
       }
     }
+
     if (idx == -1) {
       System.out.println("해당 번호의 게시물은 존재하지 않습니다!");
       return; // 메소드를 호출할 곳으로 돌아가고 싶을 때. 
@@ -71,7 +70,6 @@ public class BoardHandler {
 
   static void processInput() {
     //------------------- menu 3 --------------------------
-
     System.out.println("[게시글 등록]");
 
     if (SIZE == boardCount) {
@@ -80,17 +78,18 @@ public class BoardHandler {
       );
       return;
     }
-    System.out.print("제목? ");
-    title[boardCount] = Prompt.inputString();
-    System.out.print("내용? ");
-    content[boardCount] = Prompt.inputString();
-    System.out.print("작성자? ");
-    writer[boardCount] = Prompt.inputString();
-    System.out.print("암호? ");
-    password[boardCount] = Prompt.inputString();
+
+    title[boardCount] = Prompt.inputString("제목? ");
+    content[boardCount] = Prompt.inputString("내용? ");
+    writer[boardCount] = Prompt.inputString("작성자? ");
+    password[boardCount] = Prompt.inputString("암호? ");
+
     no[boardCount] = boardCount == 0 ? 1 : no[boardCount - 1] + 1;
+    
     createdDate[boardCount] = System.currentTimeMillis();
+
     viewCount[boardCount] = 0;
+
     boardCount++;
   }
 

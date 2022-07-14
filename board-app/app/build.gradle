@@ -1,8 +1,9 @@
 plugins {
     id 'application'
+    id 'eclipse'
 }
 
-// 자바 소스를 컴파일 할 때 적용할 옵션
+// CLI(명령창, 콘솔창) 환경에서 자바 소스를 컴파일 할 때 적용할 옵션
 tasks.withType(JavaCompile) {
     // 프로젝트의 소스 파일 인코딩을 gradle에게 알려준다.
     // $javac -encoding UTF-8 ..
@@ -13,6 +14,21 @@ tasks.withType(JavaCompile) {
 
     // 자바 클래스를 실행시킬 JVM의 최소 버전
     targetCompatibility = '11'
+}
+
+// Eclipse IDE에서 사용할 프로젝트 정보 설정하기
+eclipse {
+    project {
+        name = "board-app"
+        // 프로젝트 이름을 지정하지 않으면 build.fradle 파일이 있는
+        // 폴더 이름을 프로젝트 이름으로 사용한다.
+    }
+    jdt {
+      //if you want to alter the java versions (by default they are configured with gradle java plugin settings):
+      sourceCompatibility = 11
+      targetCompatibility = 11
+      javaRuntimeName = "JavaSE-11"
+    }
 }
 
 repositories {

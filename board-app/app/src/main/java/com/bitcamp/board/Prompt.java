@@ -3,8 +3,6 @@
  */
 package com.bitcamp.board;
 
-import java.io.Closeable;
-
 public class Prompt {
 
   //-------------------변수 선언-----------------------\\
@@ -19,7 +17,18 @@ public class Prompt {
     return Integer.parseInt(str);
   }
 
+  static int inputInt(String title) {
+    System.out.print(title);
+    String str = keyboardInput.nextLine();
+    return Integer.parseInt(str);
+  }
+
   static String inputString() {
+    return keyboardInput.nextLine();
+  }
+
+  static String inputString(String title) {
+    System.out.print(title);
     return keyboardInput.nextLine();
   }
 
