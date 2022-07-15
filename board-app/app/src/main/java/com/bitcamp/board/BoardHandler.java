@@ -97,18 +97,18 @@ public class BoardHandler {
   }
 
   static void processDelete() {
+    System.out.println("[게시글 삭제]");
     int deleteNo = Prompt.inputInt("삭제하시고 싶은 게시글의 번호를 입력해 주시길 바랍니다.");
-    int check = -1;
+    int deleteIdx = -1;
     for(int i=0;i<SIZE;i++) {
       if(deleteNo == boards[i].no) {
         System.out.println("삭제되었습니다.");
-        check=1;
-
-        delete(deleteNo);
+        deleteIdx=deleteNo;
+        delete(deleteIdx);
         break;
       }
     }
-    if(check == -1) {
+    if(deleteIdx == -1) {
       System.out.println("잘못된 번호를 입력하셨습니다. 해당 게시글 번호는 존재하지 않습니다.\n올바른 번호를 입력해 주십시오.");
       return;
     }
