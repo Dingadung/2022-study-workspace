@@ -11,7 +11,7 @@ public class App {
 
     loop: while (true) {
       Print.displayMenu();
-      int menuNo = Prompt.inputInt("메뉴를 선택하세요[1..3] (0: 종료) ");
+      int menuNo = Prompt.inputInt("메뉴를 선택하세요[1..4] (0: 종료) ");
       Print.displayLine('-');
 
       switch (menuNo) {
@@ -26,6 +26,10 @@ public class App {
           break;
         case 3:
           BoardHandler.processInput();
+          break;
+        case 4:
+          //메뉴 삭제
+          BoardHandler.processDelete();
           break;
         default:
           Print.wrongMessage();

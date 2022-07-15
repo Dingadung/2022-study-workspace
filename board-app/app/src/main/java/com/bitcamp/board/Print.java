@@ -26,6 +26,7 @@ public class Print {
     System.out.println("  1: 게시글 목록");
     System.out.println("  2: 게시글 상세보기");
     System.out.println("  3: 게시글 등록");
+    System.out.println("  4: 게시글 삭제");
     System.out.println();
   }
 
