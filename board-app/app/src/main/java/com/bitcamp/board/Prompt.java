@@ -32,6 +32,13 @@ public class Prompt {
     return keyboardInput.nextLine();
   }
 
+  static char inputChar(String title) {
+    System.out.print(title);
+    char ans = keyboardInput.next().charAt(0);
+    keyboardInput.nextLine();
+    return ans;
+  }
+
 
   // 클래스 안에 close가 있으면 이 클래스는 close할 필요가 있음을 알 수 있다.
   static void close() {
