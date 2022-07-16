@@ -100,6 +100,10 @@ public class BoardHandler {
 
   static void processDelete() {
     System.out.println("[게시글 삭제]");
+    if(boardCount ==0) {
+      System.out.println("현재 존재하는 게시글이 없습니다!");
+      return;
+    }
     int deleteNo = Prompt.inputInt("삭제하시고 싶은 게시글의 번호를 입력해 주시길 바랍니다.");
 
     int deleteIdx = -1;
@@ -129,7 +133,12 @@ public class BoardHandler {
 
   public static void processUpdate() {
     System.out.println("[게시글 수정]");
+    if(boardCount ==0) {
+      System.out.println("현재 존재하는 게시글이 없습니다!");
+      return;
+    }
     int editNo = Prompt.inputInt("변경할 게시글 번호?");
+
     int editIdx = -1;
     for(int i=0;i<boardCount;i++) {
       if(editNo == boards[i].no) {
@@ -164,6 +173,8 @@ public class BoardHandler {
 
   static boolean isEdit() {
     char ans = Prompt.inputChar("변경하시겠습니까?(y/n) ");
+    if(ans=='y')return true;
+    else if(ans=='n') return false;
     return ans =='y'? true:false;
   }
 
