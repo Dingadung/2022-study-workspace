@@ -160,10 +160,7 @@ public class BoardHandler {
     String writer = Prompt.inputString("작성자? "+ "("+board.writer+")");
     String password = Prompt.inputString("암호? "+ "("+board.password+")");
     if(isEdit()) {
-      board.title =title;
-      board.content =content;
-      board.writer=writer;
-      board.password = password;
+      board = makeBoard(title, content, writer, password);
       System.out.println("성공적으로 변경되었습니다!");
     }else {
       System.out.println("변경을 취소하였습니다.");
@@ -176,6 +173,15 @@ public class BoardHandler {
     if(ans=='y')return true;
     else if(ans=='n') return false;
     return ans =='y'? true:false;
+  }
+
+  static Board makeBoard(String title, String content, String writer, String pwd) {
+    Board board = new Board();
+    board.title =title;
+    board.content =content;
+    board.writer=writer;
+    board.password = pwd;
+    return board;
   }
 
 }
