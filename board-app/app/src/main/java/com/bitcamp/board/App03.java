@@ -3,7 +3,7 @@
  */
 package com.bitcamp.board;
 
-public class App {
+public class App03 {
 
 
   public static void main(String[] args) {

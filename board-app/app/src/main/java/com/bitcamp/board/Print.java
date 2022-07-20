@@ -9,7 +9,7 @@ public class Print {
   }
 
   static void bye() {
-    System.out.println("프로그램을 종료합니다!\n안녕히 가세요!");
+    System.out.println("안녕히 가세요!");
   }
 
   // 메서드를 통해 특정 코드의 복잡함을 감출 수 있다. ==> 캡슐화(encapsulation)
@@ -20,26 +20,26 @@ public class Print {
     System.out.println();
   }
 
-  static void displayMenu() {
-    System.out.println();
-    System.out.println("메뉴: ");
-    System.out.println("  1: 게시글 목록");
-    System.out.println("  2: 게시글 상세보기");
-    System.out.println("  3: 게시글 등록");
-    System.out.println("  4: 게시글 삭제");
-    System.out.println("  5: 게시글 수정");
-    System.out.println();
-  }
+  //  static void displayMenu() {
+  //    System.out.println();
+  //    System.out.println("게시판: ");
+  //    System.out.println("  1: 목록");
+  //    System.out.println("  2: 상세보기");
+  //    System.out.println("  3: 등록");
+  //    System.out.println("  4: 삭제");
+  //    System.out.println("  5: 수정");
+  //    System.out.println();
+  //  }
 
-  static void displayLine(char c) {
-    for (int i = 0; i < 45; i++) {
-      System.out.print(c);
-    }
-    System.out.println();
-  }
-
-  static void displayBlankLine() {
-    displayLine('-');
-    System.out.println();
-  }
+  //  static void displayHeadLine(char c) {
+  //    for (int i = 0; i < 45; i++) {
+  //      System.out.print(c);
+  //    }
+  //    System.out.println();
+  //  }
+  //
+  //  static void displayBlankLine() {
+  //    displayHeadLine('=');
+  //    System.out.println();
+  //  }
 }

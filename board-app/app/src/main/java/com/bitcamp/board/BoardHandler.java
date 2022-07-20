@@ -10,6 +10,65 @@ public class BoardHandler {
   static Board[] boards = new Board[SIZE];
   //-------------------변수 선언-----------------------\\
 
+
+  static void execute() {
+    while(true) {
+      // 게시판 메뉴 출력
+      System.out.println();
+      System.out.println("게시판: ");
+      System.out.println("  1: 목록");
+      System.out.println("  2: 상세보기");
+      System.out.println("  3: 등록");
+      System.out.println("  4: 삭제");
+      System.out.println("  5: 수정");
+      System.out.println();
+      int menuNo = Prompt.inputInt("메뉴를 선택하세요[1..5] (0: 이전) ");
+      displayHeadLine('-');
+      switch (menuNo) {
+        case 0:
+          Print.bye();
+          return;
+        case 1:
+          BoardHandler.processList();
+          break;
+        case 2:
+          BoardHandler.processDetail();
+          break;
+        case 3:
+          BoardHandler.processInput();
+          break;
+        case 4:
+          //메뉴 삭제
+          BoardHandler.processDelete();
+          break;
+        case 5:
+          //게시글 변경
+          BoardHandler.processUpdate();
+          break;
+        default:
+          Print.wrongMessage();
+      }
+      displayBlankLine();
+    }//게시판 while
+  }
+
+
+  static void displayHeadLine(char c) {
+    for (int i = 0; i < 45; i++) {
+      System.out.print(c);
+    }
+    System.out.println();
+  }
+
+  static void displayBlankLine() {
+    displayHeadLine('=');
+    System.out.println();
+  }
+
+
+  /////////////////////////////////////////////////
+
+
   static void processList() {
     //------------------- menu 1 --------------------------
     java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat(
@@ -76,10 +135,6 @@ public class BoardHandler {
 
     Board board = new Board();
     boards[boardCount] = board;
-    //    title[boardCount] = Prompt.inputString("제목? ");
-    //    content[boardCount] = Prompt.inputString("내용? ");
-    //    writer[boardCount] = Prompt.inputString("작성자? ");
-    //    password[boardCount] = Prompt.inputString("암호? ");
     board.title = Prompt.inputString("제목? ");
     board.content = Prompt.inputString("내용? ");
     board.writer= Prompt.inputString("작성자? ");
