@@ -15,7 +15,22 @@ public class BoardHandler {
   // 왜? 인스턴스 변수는, 게시판 별로 생성할 수 있기 때문이다.
   int boardCount = 0; // 저장된 게시글의 개수
   Board[] boards = new Board[DEFAULT_SIZE];
+  String title ="";
   //-------------------변수 선언-----------------------\\
+
+  // 클래스 생성자가 정의되어 있지 않으면,
+  // 다음과 같이 파라미터가 없는 기본 생성자를 컴파일러가 자동으로 추가한다.
+  // 기본생성자: 
+  BoardHandler(){
+    // 파라미터가 없다.
+    // 메서드 몸체는 비어있다.
+    // 기본 생성자는 무조건 public, 접근 범위 무조건 공개이다.
+  }
+
+  // 제목을 입력 받는 생성자
+  BoardHandler(String title) {
+    this.title=title;
+  }
 
 
   void execute() {
@@ -24,7 +39,7 @@ public class BoardHandler {
     while(true) {
       // 게시판 메뉴 출력
       System.out.println();
-      System.out.println("게시판 : ");
+      System.out.printf("%s : \n", this.title);
       System.out.println("  1: 목록");
       System.out.println("  2: 상세보기");
       System.out.println("  3: 등록");
@@ -88,7 +103,7 @@ public class BoardHandler {
         "yyyy-MM-dd hh:mm:ss"
         );
 
-    System.out.println("[게시글 목록]");
+    System.out.printf("[%s 목록]\n", this.title);
     System.out.println("번호\t제목\t\t조회수\t작성자\t등록일");
 
     for (int i = 0; i < this.boardCount; i++) {
@@ -109,7 +124,7 @@ public class BoardHandler {
   void processDetail() {
     //------------------- menu 2 --------------------------
     Board board = null;
-    System.out.println("[게시판 상세보기]");
+    System.out.printf("[%s 상세보기]\n", this.title);
     int noBoard = Prompt.inputInt("몇 번 게시물을 조회하시겠습까? ");
     for (int i = 0; i <this.boardCount; i++) {
       if (this.boards[i].no == noBoard) {
@@ -137,7 +152,7 @@ public class BoardHandler {
 
   void processInput() {
     //------------------- menu 3 --------------------------
-    System.out.println("[게시글 등록]");
+    System.out.printf("[%s 등록]\n", this.title);
 
     // 배열의 크기를 초과하면, 배열 크기를 50% 증가시킨다.
     if (this.boards.length == this.boardCount) {
@@ -178,7 +193,7 @@ public class BoardHandler {
   }
 
   void processDelete() {
-    System.out.println("[게시글 삭제]");
+    System.out.printf("[%s 삭제]\n", this.title);
     if(this.boardCount ==0) {
       System.out.println("현재 존재하는 게시글이 없습니다!");
       return;
@@ -211,7 +226,7 @@ public class BoardHandler {
   }
 
   void processUpdate() {
-    System.out.println("[게시글 수정]");
+    System.out.printf("[%s 수정]\n", this.title);
     if(this.boardCount ==0) {
       System.out.println("현재 존재하는 게시글이 없습니다!");
       return;
