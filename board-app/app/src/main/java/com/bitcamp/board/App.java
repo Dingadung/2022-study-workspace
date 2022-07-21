@@ -27,10 +27,13 @@ public class App {
           BoardHandler.execute();
           break; // 메인 메뉴 화면으로 돌아가기
         case 2: // 독서록
+          ReadingHandler.execute();
           break;
         case 3: // 방명록
+          NoticeHandler.execute();
           break;
         case 4: // 공지사항
+          VisitHandler.execute();
           break;
         default:
           Print.wrongMessage();
