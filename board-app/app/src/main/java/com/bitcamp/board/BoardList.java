@@ -62,21 +62,6 @@ public class BoardList {
     return true;
   }
 
-  int getIdx(int editNo) {
-    int editIdx=-1;
-    for(int i=0;i<this.boardCount;i++) {
-      if(editNo == this.boards[i].no) {
-        editIdx=i;
-        //        edit(editIdx);
-        break;
-      }
-    }
-    return editIdx;
-  }
-
-
-
-
   void delete(int deleteIdx) {
     // 삭제할 항목의 다음 항목을 앞으로 당긴다.
     for(int i=deleteIdx+1;i<this.boardCount;i++) {
