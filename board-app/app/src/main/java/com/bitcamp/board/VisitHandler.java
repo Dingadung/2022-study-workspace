@@ -6,8 +6,8 @@ package com.bitcamp.board;
 public class VisitHandler {
   //-------------------변수 선언-----------------------\\
   static int boardCount = 0; // 저장된 방명록의 개수
-  static final int SIZE = 3;
-  static Board[] boards = new Board[SIZE];
+  static final int DEFAULT_SIZE = 3;
+  static Board[] boards = new Board[DEFAULT_SIZE];
   //-------------------변수 선언-----------------------\\
 
 

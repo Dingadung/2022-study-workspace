@@ -6,8 +6,8 @@ package com.bitcamp.board;
 public class NoticeHandler {
   //-------------------변수 선언-----------------------\\
   static int boardCount = 0;
-  static final int SIZE = 3;
-  static Board[] boards = new Board[SIZE];
+  static final int DEFAULT_SIZE = 3;
+  static Board[] boards = new Board[DEFAULT_SIZE];
   //-------------------변수 선언-----------------------\\
 
 
