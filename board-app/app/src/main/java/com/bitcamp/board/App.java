@@ -9,6 +9,9 @@ public class App {
   public static void main(String[] args) {
     Print.welcome();
     BoardHandler boardHandler = new BoardHandler();
+    BoardHandler readingHandler = new BoardHandler();
+    BoardHandler visitingHandler = new BoardHandler();
+    BoardHandler noticeHandler = new BoardHandler();
     loop: while (true) {
       //메인 메뉴 출력
       System.out.println();
@@ -27,10 +30,13 @@ public class App {
           boardHandler.execute();
           break; // 메인 메뉴 화면으로 돌아가기
         case 2: // 독서록
+          readingHandler.execute();
           break;
         case 3: // 방명록
+          visitingHandler.execute();
           break;
         case 4: // 공지사항
+          noticeHandler.execute();
           break;
         default:
           Print.wrongMessage();
