@@ -13,25 +13,33 @@ public class BoardHandler {
 
   // 각 게시판이 별도로 관리해야 할 데이터는 인스턴스 변수에 저장한다.
   // 왜? 인스턴스 변수는, 게시판 별로 생성할 수 있기 때문이다.
-  int boardCount = 0; // 저장된 게시글의 개수
-  Board[] boards = new Board[DEFAULT_SIZE];
-  String title ="";
+  int boardCount; // 저장된 게시글의 개수, 초기값 자동으로 0으로 초기화
+  Board[] boards; // 배열은 생성자에서 초기화 한다.
+  String title;
   //-------------------변수 선언-----------------------\\
 
-  // 클래스 생성자가 정의되어 있지 않으면,
-  // 다음과 같이 파라미터가 없는 기본 생성자를 컴파일러가 자동으로 추가한다.
-  // 기본생성자: 
-  BoardHandler(){
+
+  //-------------------생성자 선언-----------------------\\
+  /*클래스 생성자가 정의되어 있지 않으면,
+   다음과 같이 파라미터가 없는 기본 생성자를 컴파일러가 자동으로 추가한다.*/
+  //기본생성자:
+  public BoardHandler(){
     // 파라미터가 없다.
     // 메서드 몸체는 비어있다.
     // 기본 생성자는 무조건 public, 접근 범위 무조건 공개이다.
+    this(DEFAULT_SIZE);
   }
-
+  // 배열의 기본 크기를 설정하는 생성자
+  public BoardHandler(int initSize){
+    this("게시판");
+    this.boards = new Board[initSize];
+  }
   // 제목을 입력 받는 생성자
   BoardHandler(String title) {
+    this.boards = new Board[DEFAULT_SIZE];
     this.title=title;
   }
-
+  //-------------------생성자 선언-----------------------\\
 
   void execute() {
     //App 클래스에서 이 메서드를 호출할 때, BoardHandler의 인스턴스를 줄 것이다.
