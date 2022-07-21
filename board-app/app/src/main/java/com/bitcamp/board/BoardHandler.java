@@ -6,8 +6,8 @@ package com.bitcamp.board;
 public class BoardHandler {
   //-------------------변수 선언-----------------------\\
   static int boardCount = 0; // 저장된 게시글의 개수
-  static final int SIZE = 3;
-  static Board[] boards = new Board[SIZE];
+  static final int DEFAULT_SIZE = 3;
+  static Board[] boards = new Board[DEFAULT_SIZE];
   //-------------------변수 선언-----------------------\\
 
 
@@ -126,11 +126,22 @@ public class BoardHandler {
     //------------------- menu 3 --------------------------
     System.out.println("[게시글 등록]");
 
-    if (SIZE == boardCount) {
-      System.out.println(
-          "더 이상 게시글을 등록할 수 없습니다. 최대 게시물 등록 수를 초과했습니다!"
-          );
-      return;
+    // 배열의 크기를 초과하면, 배열 크기를 50% 증가시킨다.
+    if (boards.length == boardCount) {
+      // 새로 만들 배열의 크기를 계산한다.
+      //      int newSize = boards.length + boards.length/2;
+      int newSize = boards.length + (boards.length >> 1);
+
+      // 새 배열 준비
+      Board[] newArray = new Board[newSize];
+
+      // 기존 배열 값을 새 배열에 넣는다.
+      for(int i=0;i<boards.length;i++) {
+        newArray[i] = boards[i];
+      }
+
+      // 기존 배열(주소)을 버리고 새 배열(주소)을 사용한다.
+      boards = newArray;
     }
 
     Board board = new Board();
