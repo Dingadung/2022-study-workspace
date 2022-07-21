@@ -8,7 +8,7 @@ public class App {
 
   public static void main(String[] args) {
     Print.welcome();
-
+    BoardHandler boardHandler = new BoardHandler();
     loop: while (true) {
       //메인 메뉴 출력
       System.out.println();
@@ -24,16 +24,13 @@ public class App {
           Print.bye();
           break loop;
         case 1: // 게시판
-          BoardHandler.execute();
+          boardHandler.execute();
           break; // 메인 메뉴 화면으로 돌아가기
         case 2: // 독서록
-          ReadingHandler.execute();
           break;
         case 3: // 방명록
-          NoticeHandler.execute();
           break;
         case 4: // 공지사항
-          VisitHandler.execute();
           break;
         default:
           Print.wrongMessage();

@@ -1,21 +1,30 @@
 /*
  * 게시글 메뉴 처리 클래스
  */
-package com.bitcamp.board;
+package com.bitcamp.board; // 패키지는 항상 모든 코드들 최상위에 존재해야한다.
+
+import java.util.Date; 
 
 public class BoardHandler {
   //-------------------변수 선언-----------------------\\
-  static int boardCount = 0; // 저장된 게시글의 개수
+  // 모든 게시판이 공유하는 데이터는 클래스 변수에 저장한다.
+  // 왜? 클래스 변수는 클래스를 로딩할 때 한 번만 생성되기 때문이다.
   static final int DEFAULT_SIZE = 3;
-  static Board[] boards = new Board[DEFAULT_SIZE];
+
+  // 각 게시판이 별도로 관리해야 할 데이터는 인스턴스 변수에 저장한다.
+  // 왜? 인스턴스 변수는, 게시판 별로 생성할 수 있기 때문이다.
+  int boardCount = 0; // 저장된 게시글의 개수
+  Board[] boards = new Board[DEFAULT_SIZE];
   //-------------------변수 선언-----------------------\\
 
 
-  static void execute() {
+  void execute() {
+    //App 클래스에서 이 메서드를 호출할 때, BoardHandler의 인스턴스를 줄 것이다.
+    // 그 주소는 this라는 내장 변수에 보관된다.
     while(true) {
       // 게시판 메뉴 출력
       System.out.println();
-      System.out.println("게시판: ");
+      System.out.println("게시판 : ");
       System.out.println("  1: 목록");
       System.out.println("  2: 상세보기");
       System.out.println("  3: 등록");
@@ -24,26 +33,28 @@ public class BoardHandler {
       System.out.println();
       int menuNo = Prompt.inputInt("메뉴를 선택하세요[1..5] (0: 이전) ");
       displayHeadLine('-');
+
+      // 다른 인스턴스 메서드를 호출할 때 this에 보관된 인스턴스 주소를 사용한다.
       switch (menuNo) {
         case 0:
           Print.bye();
           return;
         case 1:
-          BoardHandler.processList();
+          this.processList();
           break;
         case 2:
-          BoardHandler.processDetail();
+          this.processDetail();
           break;
         case 3:
-          BoardHandler.processInput();
+          this.processInput();
           break;
         case 4:
           //메뉴 삭제
-          BoardHandler.processDelete();
+          this.processDelete();
           break;
         case 5:
           //게시글 변경
-          BoardHandler.processUpdate();
+          this.processUpdate();
           break;
         default:
           Print.wrongMessage();
@@ -69,18 +80,20 @@ public class BoardHandler {
   /////////////////////////////////////////////////
 
 
-  static void processList() {
+  void processList() {
+    //인스턴스 메서드는 호출될 때 넘겨 받은 인스턴스 주소를 this라는 내장 변수에 보관한다.
+
     //------------------- menu 1 --------------------------
     java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat(
         "yyyy-MM-dd hh:mm:ss"
         );
 
     System.out.println("[게시글 목록]");
-
     System.out.println("번호\t제목\t\t조회수\t작성자\t등록일");
-    for (int i = 0; i < boardCount; i++) {
-      Board board = boards[i];
-      java.util.Date date = new java.util.Date(board.createdDate);
+
+    for (int i = 0; i < this.boardCount; i++) {
+      Board board = this.boards[i];
+      Date date = new Date(board.createdDate);
       String dateStr = formatter.format(date);
       System.out.printf(
           "%d\t%s\t\t%d\t%s\t%s\n",
@@ -93,14 +106,14 @@ public class BoardHandler {
     }
   }
 
-  static void processDetail() {
+  void processDetail() {
     //------------------- menu 2 --------------------------
     Board board = null;
     System.out.println("[게시판 상세보기]");
     int noBoard = Prompt.inputInt("몇 번 게시물을 조회하시겠습까? ");
-    for (int i = 0; i < boardCount; i++) {
-      if (boards[i].no == noBoard) {
-        board = boards[i];
+    for (int i = 0; i <this.boardCount; i++) {
+      if (this.boards[i].no == noBoard) {
+        board = this.boards[i];
         break;
       }
     }
@@ -122,22 +135,22 @@ public class BoardHandler {
     System.out.printf("등록일: %1$tY-%1$tm-%1$td/%1$tA %1$tH:%1$tM\n", date);
   }
 
-  static void processInput() {
+  void processInput() {
     //------------------- menu 3 --------------------------
     System.out.println("[게시글 등록]");
 
     // 배열의 크기를 초과하면, 배열 크기를 50% 증가시킨다.
-    if (boards.length == boardCount) {
+    if (this.boards.length == this.boardCount) {
       // 새로 만들 배열의 크기를 계산한다.
       //      int newSize = boards.length + boards.length/2;
-      int newSize = boards.length + (boards.length >> 1);
+      int newSize = this.boards.length + (this.boards.length >> 1);
 
       // 새 배열 준비
       Board[] newArray = new Board[newSize];
 
       // 기존 배열 값을 새 배열에 넣는다.
-      for(int i=0;i<boards.length;i++) {
-        newArray[i] = boards[i];
+      for(int i=0;i<this.boards.length;i++) {
+        newArray[i] = this.boards[i];
       }
 
       // 기존 배열(주소)을 버리고 새 배열(주소)을 사용한다.
@@ -145,36 +158,36 @@ public class BoardHandler {
     }
 
     Board board = new Board();
-    boards[boardCount] = board;
+    this.boards[this.boardCount] = board;
     board.title = Prompt.inputString("제목? ");
     board.content = Prompt.inputString("내용? ");
     board.writer= Prompt.inputString("작성자? ");
     board.password = Prompt.inputString("암호? ");
 
-    board.no = boardCount == 0 ? 1 : boards[boardCount - 1].no + 1;
+    board.no = this.boardCount == 0 ? 1 : this.boards[this.boardCount - 1].no + 1;
 
-    boards[boardCount].createdDate = System.currentTimeMillis();
+    this.boards[this.boardCount].createdDate = System.currentTimeMillis();
 
-    boards[boardCount].viewCount = 0;
+    this.boards[this.boardCount].viewCount = 0;
 
     // 새로만든 인스턴스 주소를 레퍼런스 배열에 저장한다.
 
-    boardCount++;
+    this.boardCount++;
 
     System.out.println("게시글을 성공적으로 등록했습니다.");
   }
 
-  static void processDelete() {
+  void processDelete() {
     System.out.println("[게시글 삭제]");
-    if(boardCount ==0) {
+    if(this.boardCount ==0) {
       System.out.println("현재 존재하는 게시글이 없습니다!");
       return;
     }
     int deleteNo = Prompt.inputInt("삭제하시고 싶은 게시글의 번호를 입력해 주시길 바랍니다.");
 
     int deleteIdx = -1;
-    for(int i=0;i<boardCount;i++) {
-      if(deleteNo == boards[i].no) {
+    for(int i=0;i<this.boardCount;i++) {
+      if(deleteNo == this.boards[i].no) {
         System.out.println("삭제되었습니다.");
         deleteIdx=i;
         delete(deleteIdx);
@@ -187,27 +200,27 @@ public class BoardHandler {
     }
   }
 
-  static void delete(int deleteIdx) {
-    for(int i=deleteIdx+1;i<boardCount;i++) {
-      boards[i-1] = boards[i]; //마지막 인덱스 고려하기
+  void delete(int deleteIdx) {
+    for(int i=deleteIdx+1;i<this.boardCount;i++) {
+      this.boards[i-1] = this.boards[i]; //마지막 인덱스 고려하기
     }
-    boardCount--;
-    boards[boardCount]=null; // 없앤 값은 null 처리하기
+    this.boardCount--;
+    this.boards[this.boardCount]=null; // 없앤 값은 null 처리하기
 
     //boards[--boardCount]=null도 가능!
   }
 
-  public static void processUpdate() {
+  void processUpdate() {
     System.out.println("[게시글 수정]");
-    if(boardCount ==0) {
+    if(this.boardCount ==0) {
       System.out.println("현재 존재하는 게시글이 없습니다!");
       return;
     }
     int editNo = Prompt.inputInt("변경할 게시글 번호?");
 
     int editIdx = -1;
-    for(int i=0;i<boardCount;i++) {
-      if(editNo == boards[i].no) {
+    for(int i=0;i<this.boardCount;i++) {
+      if(editNo == this.boards[i].no) {
         editIdx=i;
         edit(editIdx);
         break;
@@ -219,8 +232,8 @@ public class BoardHandler {
     }
   }
 
-  static void edit(int editIdx) {
-    Board board = boards[editIdx];
+  void edit(int editIdx) {
+    Board board = this.boards[editIdx];
     String title= Prompt.inputString("제목? " + "("+board.title+")");
     String content= Prompt.inputString("내용? "+ "("+board.content+")");
     String writer = Prompt.inputString("작성자? "+ "("+board.writer+")");
