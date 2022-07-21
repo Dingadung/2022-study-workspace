@@ -55,21 +55,21 @@ public class BoardHandler {
           Print.bye();
           return;
         case 1:
-          this.processList();
+          this.onList();
           break;
         case 2:
-          this.processDetail();
+          this.onDetail();
           break;
         case 3:
-          this.processInput();
+          this.onInput();
           break;
         case 4:
           //메뉴 삭제
-          this.processDelete();
+          this.onDelete();
           break;
         case 5:
           //게시글 변경
-          this.processUpdate();
+          this.onUpdate();
           break;
         default:
           Print.wrongMessage();
@@ -95,7 +95,7 @@ public class BoardHandler {
   /////////////////////////////////////////////////
 
 
-  void processList() {
+  void onList() {
     //인스턴스 메서드는 호출될 때 넘겨 받은 인스턴스 주소를 this라는 내장 변수에 보관한다.
 
     //------------------- menu 1 --------------------------
@@ -121,7 +121,7 @@ public class BoardHandler {
     }
   }
 
-  void processDetail() {
+  void onDetail() {
     //------------------- menu 2 --------------------------
     Board board = null;
     System.out.printf("[%s 상세보기]\n", this.title);
@@ -150,7 +150,7 @@ public class BoardHandler {
     System.out.printf("등록일: %1$tY-%1$tm-%1$td/%1$tA %1$tH:%1$tM\n", date);
   }
 
-  void processInput() {
+  void onInput() {
     //------------------- menu 3 --------------------------
     System.out.printf("[%s 등록]\n", this.title);
 
@@ -192,7 +192,7 @@ public class BoardHandler {
     System.out.println("게시글을 성공적으로 등록했습니다.");
   }
 
-  void processDelete() {
+  void onDelete() {
     System.out.printf("[%s 삭제]\n", this.title);
     if(this.boardCount ==0) {
       System.out.println("현재 존재하는 게시글이 없습니다!");
@@ -225,7 +225,7 @@ public class BoardHandler {
     //boards[--boardCount]=null도 가능!
   }
 
-  void processUpdate() {
+  void onUpdate() {
     System.out.printf("[%s 수정]\n", this.title);
     if(this.boardCount ==0) {
       System.out.println("현재 존재하는 게시글이 없습니다!");
