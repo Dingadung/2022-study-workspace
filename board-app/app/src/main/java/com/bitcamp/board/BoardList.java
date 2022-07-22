@@ -50,7 +50,6 @@ public class BoardList {
     int deleteIdx = -1;
     for(int i=0;i<this.boardCount;i++) {
       if(deleteNo == this.boards[i].no) {
-        System.out.println("삭제되었습니다.");
         deleteIdx=i;
         delete(deleteIdx);
         break;
