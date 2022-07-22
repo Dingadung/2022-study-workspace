@@ -1,33 +1,33 @@
 /*
- * ê²Œì‹œê¸€ í”„ë¦°íŠ¸ ì²˜ë¦¬ í´ë˜ìŠ¤
+ * °Ô½Ã±Û ÇÁ¸°Æ® Ã³¸® Å¬·¡½º
  */
 package com.bitcamp.board.my;
 
 public class Print {
   static void wrongMessage() {
-    System.out.println("ë©”ë‰´ ë²ˆí˜¸ê°€ ì˜³ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+    System.out.println("¸Ş´º ¹øÈ£°¡ ¿ÇÁö ¾Ê½À´Ï´Ù.");
   }
 
   static void bye() {
-    System.out.println("ì•ˆë…•íˆ ê°€ì„¸ìš”!");
+    System.out.println("¾È³çÈ÷ °¡¼¼¿ä!");
   }
 
-  // ë©”ì„œë“œë¥¼ í†µí•´ íŠ¹ì • ì½”ë“œì˜ ë³µì¡í•¨ì„ ê°ì¶œ ìˆ˜ ìˆë‹¤. ==> ìº¡ìŠí™”(encapsulation)
+  // ¸Ş¼­µå¸¦ ÅëÇØ Æ¯Á¤ ÄÚµåÀÇ º¹ÀâÇÔÀ» °¨Ãâ ¼ö ÀÖ´Ù. ==> Ä¸½¶È­(encapsulation)
   static void welcome() {
-    System.out.println("[ê²Œì‹œíŒ ì• í”Œë¦¬ì¼€ì´ì…˜]");
+    System.out.println("[°Ô½ÃÆÇ ¾ÖÇÃ¸®ÄÉÀÌ¼Ç]");
     System.out.println();
-    System.out.println("í™˜ì˜í•©ë‹ˆë‹¤!");
+    System.out.println("È¯¿µÇÕ´Ï´Ù!");
     System.out.println();
   }
 
   //  static void displayMenu() {
   //    System.out.println();
-  //    System.out.println("ê²Œì‹œíŒ: ");
-  //    System.out.println("  1: ëª©ë¡");
-  //    System.out.println("  2: ìƒì„¸ë³´ê¸°");
-  //    System.out.println("  3: ë“±ë¡");
-  //    System.out.println("  4: ì‚­ì œ");
-  //    System.out.println("  5: ìˆ˜ì •");
+  //    System.out.println("°Ô½ÃÆÇ: ");
+  //    System.out.println("  1: ¸ñ·Ï");
+  //    System.out.println("  2: »ó¼¼º¸±â");
+  //    System.out.println("  3: µî·Ï");
+  //    System.out.println("  4: »èÁ¦");
+  //    System.out.println("  5: ¼öÁ¤");
   //    System.out.println();
   //  }
 
@@ -43,3 +43,4 @@ public class Print {
   //    System.out.println();
   //  }
 }
+

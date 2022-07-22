@@ -190,14 +190,23 @@ public class BoardHandler {
       return;
     }else {
       edit(board);
+      this.onList();
+      System.out.println(board.title + board.content + board.writer);
     }
   }
   void edit(Board board) {
     String title= Prompt.inputString("제목? " + "("+board.title+")");
     String content= Prompt.inputString("내용? "+ "("+board.content+")");
     if(isEdit()) {
+<<<<<<< HEAD:board-app/app/src/main/java/com/bitcamp/board/BoardHandler.java
+
+      makeBoard(board, title, content, writer, password);
+      System.out.println("�꽦怨듭쟻�쑝濡� 蹂�寃쎈릺�뿀�뒿�땲�떎!");
+
+=======
       makeBoard(board, title, content);
       System.out.println("성공적으로 변경되었습니다!");
+>>>>>>> d63849e30df5b0d4b67c5188546521a49eeca2db:board-app/app/src/main/java/com/bitcamp/board/my/BoardHandler.java
     }else {
       System.out.println("변경을 취소하였습니다.");
       return;
@@ -209,7 +218,12 @@ public class BoardHandler {
     else if(ans=='n') return false;
     return ans =='y'? true:false;
   }
+<<<<<<< HEAD:board-app/app/src/main/java/com/bitcamp/board/BoardHandler.java
+
+  Board makeBoard(Board board, String title, String content, String writer, String pwd) {
+=======
   void makeBoard(Board board, String title, String content) {
+>>>>>>> d63849e30df5b0d4b67c5188546521a49eeca2db:board-app/app/src/main/java/com/bitcamp/board/my/BoardHandler.java
     board.title =title;
     board.content =content;
   }
