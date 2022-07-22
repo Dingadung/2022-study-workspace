@@ -1,13 +1,13 @@
 /*
- * 키보드 입력을 받는 도구를 구비하고 있다.
+ * �궎蹂대뱶 �엯�젰�쓣 諛쏅뒗 �룄援щ�� 援щ퉬�븯怨� �엳�떎.
  */
 package com.bitcamp.board;
 
 public class Prompt {
 
-  //-------------------변수 선언-----------------------\\
+  //-------------------蹂��닔 �꽑�뼵-----------------------\\
   static java.util.Scanner keyboardInput = new java.util.Scanner(System.in);
-  //-------------------변수 선언-----------------------\\
+  //-------------------蹂��닔 �꽑�뼵-----------------------\\
 
   static int inputInt() {
     /*int value = keyboardInput.nextInt();
@@ -40,7 +40,7 @@ public class Prompt {
   }
 
 
-  // 클래스 안에 close가 있으면 이 클래스는 close할 필요가 있음을 알 수 있다.
+  // �겢�옒�뒪 �븞�뿉 close媛� �엳�쑝硫� �씠 �겢�옒�뒪�뒗 close�븷 �븘�슂媛� �엳�쓬�쓣 �븣 �닔 �엳�떎.
   static void close() {
     keyboardInput.close();
   }

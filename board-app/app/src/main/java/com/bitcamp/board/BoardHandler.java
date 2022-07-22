@@ -1,47 +1,47 @@
 /*
- * ê²Œì‹œê¸€ ë©”ë‰´ ì²˜ë¦¬ í´ë˜ìŠ¤
+ * °Ô½Ã±Û ¸Ş´º Ã³¸® Å¬·¡½º
  */
-package com.bitcamp.board; // íŒ¨í‚¤ì§€ëŠ” í•­ìƒ ëª¨ë“  ì½”ë“œë“¤ ìµœìƒìœ„ì— ì¡´ì¬í•´ì•¼í•œë‹¤.
+package com.bitcamp.board; // ÆĞÅ°Áö´Â Ç×»ó ¸ğµç ÄÚµåµé ÃÖ»óÀ§¿¡ Á¸ÀçÇØ¾ßÇÑ´Ù.
 
 import java.text.SimpleDateFormat;
 import java.util.Date; 
 
 public class BoardHandler {
-  //-------------------ë³€ìˆ˜ ì„ ì–¸-----------------------\\//
-  // ê° ê²Œì‹œíŒì´ ë³„ë„ë¡œ ê´€ë¦¬í•´ì•¼ í•  ë°ì´í„°ëŠ” ì¸ìŠ¤í„´ìŠ¤ ë³€ìˆ˜ì— ì €ì¥í•œë‹¤.
-  // ì™œ? ì¸ìŠ¤í„´ìŠ¤ ë³€ìˆ˜ëŠ”, ê²Œì‹œíŒ ë³„ë¡œ ìƒì„±í•  ìˆ˜ ìˆê¸° ë•Œë¬¸ì´ë‹¤.
+  //-------------------º¯¼ö ¼±¾ğ-----------------------\\//
+  // °¢ °Ô½ÃÆÇÀÌ º°µµ·Î °ü¸®ÇØ¾ß ÇÒ µ¥ÀÌÅÍ´Â ÀÎ½ºÅÏ½º º¯¼ö¿¡ ÀúÀåÇÑ´Ù.
+  // ¿Ö? ÀÎ½ºÅÏ½º º¯¼ö´Â, °Ô½ÃÆÇ º°·Î »ı¼ºÇÒ ¼ö ÀÖ±â ¶§¹®ÀÌ´Ù.
   String title;
 
-  // ê²Œì‹œê¸€ ëª©ë¡ì„ ê´€ë¦¬í•  ê°ì²´ ì¤€ë¹„
+  // °Ô½Ã±Û ¸ñ·ÏÀ» °ü¸®ÇÒ °´Ã¼ ÁØºñ
   BoardList boardList = new BoardList();
-  //-------------------ë³€ìˆ˜ ì„ ì–¸-----------------------\\
+  //-------------------º¯¼ö ¼±¾ğ-----------------------\\
 
 
-  //-------------------ìƒì„±ì ì„ ì–¸-----------------------\\
+  //-------------------»ı¼ºÀÚ ¼±¾ğ-----------------------\\
   public BoardHandler() {
 
   }
-  //ì œëª©ì„ ì…ë ¥ ë°›ëŠ” ìƒì„±ì
+  //Á¦¸ñÀ» ÀÔ·Â ¹Ş´Â »ı¼ºÀÚ
   BoardHandler(String title) {
     this.title=title;
   }
-  //-------------------ìƒì„±ì ì„ ì–¸-----------------------\\
+  //-------------------»ı¼ºÀÚ ¼±¾ğ-----------------------\\
 
   void execute() {
     while(true) {
-      // ê²Œì‹œíŒ ë©”ë‰´ ì¶œë ¥
+      // °Ô½ÃÆÇ ¸Ş´º Ãâ·Â
       System.out.println();
       System.out.printf("%s : \n", this.title);
-      System.out.println("  1: ëª©ë¡");
-      System.out.println("  2: ìƒì„¸ë³´ê¸°");
-      System.out.println("  3: ë“±ë¡");
-      System.out.println("  4: ì‚­ì œ");
-      System.out.println("  5: ìˆ˜ì •");
+      System.out.println("  1: ¸ñ·Ï");
+      System.out.println("  2: »ó¼¼º¸±â");
+      System.out.println("  3: µî·Ï");
+      System.out.println("  4: »èÁ¦");
+      System.out.println("  5: ¼öÁ¤");
       System.out.println();
-      int menuNo = Prompt.inputInt("ë©”ë‰´ë¥¼ ì„ íƒí•˜ì„¸ìš”[1..5] (0: ì´ì „) ");
+      int menuNo = Prompt.inputInt("¸Ş´º¸¦ ¼±ÅÃÇÏ¼¼¿ä[1..5] (0: ÀÌÀü) ");
       displayHeadLine('-');
 
-      // ë‹¤ë¥¸ ì¸ìŠ¤í„´ìŠ¤ ë©”ì„œë“œë¥¼ í˜¸ì¶œí•  ë•Œ thisì— ë³´ê´€ëœ ì¸ìŠ¤í„´ìŠ¤ ì£¼ì†Œë¥¼ ì‚¬ìš©í•œë‹¤.
+      // ´Ù¸¥ ÀÎ½ºÅÏ½º ¸Ş¼­µå¸¦ È£ÃâÇÒ ¶§ this¿¡ º¸°üµÈ ÀÎ½ºÅÏ½º ÁÖ¼Ò¸¦ »ç¿ëÇÑ´Ù.
       switch (menuNo) {
         case 0:
           Print.bye();
@@ -56,18 +56,18 @@ public class BoardHandler {
           this.onInput();
           break;
         case 4:
-          //ë©”ë‰´ ì‚­ì œ
+          //¸Ş´º »èÁ¦
           this.onDelete();
           break;
         case 5:
-          //ê²Œì‹œê¸€ ë³€ê²½
+          //°Ô½Ã±Û º¯°æ
           this.onUpdate();
           break;
         default:
           Print.wrongMessage();
       }
       displayBlankLine();
-    }//ê²Œì‹œíŒ while
+    }//°Ô½ÃÆÇ while
   }
 
 
@@ -88,21 +88,21 @@ public class BoardHandler {
 
 
   void onList() {
-    //ì¸ìŠ¤í„´ìŠ¤ ë©”ì„œë“œëŠ” í˜¸ì¶œë  ë•Œ ë„˜ê²¨ ë°›ì€ ì¸ìŠ¤í„´ìŠ¤ ì£¼ì†Œë¥¼ thisë¼ëŠ” ë‚´ì¥ ë³€ìˆ˜ì— ë³´ê´€í•œë‹¤.
+    //ÀÎ½ºÅÏ½º ¸Ş¼­µå´Â È£ÃâµÉ ¶§ ³Ñ°Ü ¹ŞÀº ÀÎ½ºÅÏ½º ÁÖ¼Ò¸¦ this¶ó´Â ³»Àå º¯¼ö¿¡ º¸°üÇÑ´Ù.
 
     //------------------- menu 1 --------------------------
     SimpleDateFormat formatter = new SimpleDateFormat(
         "yyyy-MM-dd hh:mm:ss"
         );
 
-    System.out.printf("[%s ëª©ë¡]\n", this.title);
-    System.out.println("ë²ˆí˜¸\tì œëª©\t\tì¡°íšŒìˆ˜\tì‘ì„±ì\të“±ë¡ì¼");
+    System.out.printf("[%s ¸ñ·Ï]\n", this.title);
+    System.out.println("¹øÈ£\tÁ¦¸ñ\t\tÁ¶È¸¼ö\tÀÛ¼ºÀÚ\tµî·ÏÀÏ");
 
 
-    // boardList ì¸ìŠ¤í„´ìŠ¤ì— ë“¤ì–´ ìˆëŠ” ë°ì´í„° ëª©ë¡ì„ ê°€ì ¸ì˜¨ë‹¤.
+    // boardList ÀÎ½ºÅÏ½º¿¡ µé¾î ÀÖ´Â µ¥ÀÌÅÍ ¸ñ·ÏÀ» °¡Á®¿Â´Ù.
     Board[] list = this.boardList.toArray();
-    for (Board board : list) { // ë”± ë°ì´í„°ê°€ ë“¤ì–´ ìˆëŠ” ê°’ë§Œ ì¡´ì¬
-      // ë°ì´í„° ì²¨ë¶€í„° ëê¹Œì§€ ë°˜ë³µí• ë•ŒëŠ” ìœ„ì—ì™€ ê°™ì´ forë¬¸ì„ ì–¸í•˜ê¸°
+    for (Board board : list) { // µü µ¥ÀÌÅÍ°¡ µé¾î ÀÖ´Â °ª¸¸ Á¸Àç
+      // µ¥ÀÌÅÍ Ã·ºÎÅÍ ³¡±îÁö ¹İº¹ÇÒ¶§´Â À§¿¡¿Í °°ÀÌ for¹®¼±¾ğÇÏ±â
       Date date = new Date(board.createdDate);
       String dateStr = formatter.format(date);
       System.out.printf(
@@ -118,107 +118,109 @@ public class BoardHandler {
 
   void onDetail() {
     //------------------- menu 2 --------------------------
-    System.out.printf("[%s ìƒì„¸ë³´ê¸°]\n", this.title);
-    int noBoard = Prompt.inputInt("ëª‡ ë²ˆ ê²Œì‹œë¬¼ì„ ì¡°íšŒí•˜ì‹œê² ìŠµê¹Œ? ");
+    System.out.printf("[%s »ó¼¼º¸±â]\n", this.title);
+    int noBoard = Prompt.inputInt("¸î ¹ø °Ô½Ã¹°À» Á¶È¸ÇÏ½Ã°Ú½À±î? ");
 
-    // í•´ë‹¹ ë²ˆí˜¸ì˜ ê²Œì‹œê¸€ì´ ëª‡ ë²ˆ ë°°ì—´ì— ë“¤ì–´ ìˆëŠ”ì§€ ì•Œì•„ë‚´ê¸°
+    // ÇØ´ç ¹øÈ£ÀÇ °Ô½Ã±ÛÀÌ ¸î ¹ø ¹è¿­¿¡ µé¾î ÀÖ´ÂÁö ¾Ë¾Æ³»±â
     Board board = this.boardList.get(noBoard);
 
     if (board == null) {
-      System.out.println("í•´ë‹¹ ë²ˆí˜¸ì˜ ê²Œì‹œë¬¼ì€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤!");
-      return; // ë©”ì†Œë“œë¥¼ í˜¸ì¶œí•  ê³³ìœ¼ë¡œ ëŒì•„ê°€ê³  ì‹¶ì„ ë•Œ. 
+      System.out.println("ÇØ´ç ¹øÈ£ÀÇ °Ô½Ã¹°Àº Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù!");
+      return; // ¸Ş¼Òµå¸¦ È£ÃâÇÒ °÷À¸·Î µ¹¾Æ°¡°í ½ÍÀ» ¶§. 
     }
 
     board.viewCount++;
 
-    System.out.printf("ë²ˆí˜¸: %d\n", board.no);
-    System.out.printf("ì œëª©: %s\n", board.title);
-    System.out.printf("ë‚´ìš©: %s\n", board.content);
-    System.out.printf("ì¡°íšŒìˆ˜: %d\n", board.viewCount);
-    System.out.printf("ì‘ì„±ì: %s\n", board.writer);
+    System.out.printf("¹øÈ£: %d\n", board.no);
+    System.out.printf("Á¦¸ñ: %s\n", board.title);
+    System.out.printf("³»¿ë: %s\n", board.content);
+    System.out.printf("Á¶È¸¼ö: %d\n", board.viewCount);
+    System.out.printf("ÀÛ¼ºÀÚ: %s\n", board.writer);
 
     java.util.Date date = new java.util.Date(board.createdDate);
-    System.out.printf("ë“±ë¡ì¼: %1$tY-%1$tm-%1$td/%1$tA %1$tH:%1$tM\n", date);
+    System.out.printf("µî·ÏÀÏ: %1$tY-%1$tm-%1$td/%1$tA %1$tH:%1$tM\n", date);
   }
 
   void onInput() {
     //------------------- menu 3 --------------------------
-    System.out.printf("[%s ë“±ë¡]\n", this.title);
+    System.out.printf("[%s µî·Ï]\n", this.title);
 
     Board board = new Board();
-    board.title = Prompt.inputString("ì œëª©? ");
-    board.content = Prompt.inputString("ë‚´ìš©? ");
-    board.writer= Prompt.inputString("ì‘ì„±ì? ");
-    board.password = Prompt.inputString("ì•”í˜¸? ");
+    board.title = Prompt.inputString("Á¦¸ñ? ");
+    board.content = Prompt.inputString("³»¿ë? ");
+    board.writer= Prompt.inputString("ÀÛ¼ºÀÚ? ");
+    board.password = Prompt.inputString("¾ÏÈ£? ");
     board.createdDate = System.currentTimeMillis();
     board.viewCount = 0;
-    // ìƒˆë¡œë§Œë“  ì¸ìŠ¤í„´ìŠ¤ ì£¼ì†Œë¥¼ ë ˆí¼ëŸ°ìŠ¤ ë°°ì—´ì— ì €ì¥í•œë‹¤.
+    // »õ·Î¸¸µç ÀÎ½ºÅÏ½º ÁÖ¼Ò¸¦ ·¹ÆÛ·±½º ¹è¿­¿¡ ÀúÀåÇÑ´Ù.
     this.boardList.add(board);
 
-    System.out.println("ê²Œì‹œê¸€ì„ ì„±ê³µì ìœ¼ë¡œ ë“±ë¡í–ˆìŠµë‹ˆë‹¤.");
+    System.out.println("°Ô½Ã±ÛÀ» ¼º°øÀûÀ¸·Î µî·ÏÇß½À´Ï´Ù.");
   }
 
   void onDelete() {
     //------------------- menu 4 --------------------------
-    System.out.printf("[%s ì‚­ì œ]\n", this.title);
+    System.out.printf("[%s »èÁ¦]\n", this.title);
     if(boardList.boardCount ==0) {
-      System.out.println("í˜„ì¬ ì¡´ì¬í•˜ëŠ” ê²Œì‹œê¸€ì´ ì—†ìŠµë‹ˆë‹¤!");
+      System.out.println("ÇöÀç Á¸ÀçÇÏ´Â °Ô½Ã±ÛÀÌ ¾ø½À´Ï´Ù!");
       return;
     }
-    int deleteNo = Prompt.inputInt("ì‚­ì œí•˜ì‹œê³  ì‹¶ì€ ê²Œì‹œê¸€ì˜ ë²ˆí˜¸ë¥¼ ì…ë ¥í•´ ì£¼ì‹œê¸¸ ë°”ëë‹ˆë‹¤.");
+    int deleteNo = Prompt.inputInt("»èÁ¦ÇÏ½Ã°í ½ÍÀº °Ô½Ã±ÛÀÇ ¹øÈ£¸¦ ÀÔ·ÂÇØ ÁÖ½Ã±æ ¹Ù¶ø´Ï´Ù.");
     if(!boardList.remove(deleteNo)) {
-      System.out.println("ì˜ëª»ëœ ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤. "
-          + "í•´ë‹¹ ê²Œì‹œê¸€ ë²ˆí˜¸ëŠ” ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤."
-          + "\nì˜¬ë°”ë¥¸ ë²ˆí˜¸ë¥¼ ì…ë ¥í•´ ì£¼ì‹­ì‹œì˜¤.");
+      System.out.println("Àß¸øµÈ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù. "
+          + "ÇØ´ç °Ô½Ã±Û ¹øÈ£´Â Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù."
+          + "\n¿Ã¹Ù¸¥ ¹øÈ£¸¦ ÀÔ·ÂÇØ ÁÖ½Ê½Ã¿À.");
       return;
     }else {
-      System.out.println("ì‚­ì œí•˜ì˜€ìŠµë‹ˆë‹¤!");
+      System.out.println("»èÁ¦ÇÏ¿´½À´Ï´Ù!");
     }
   }
 
   void onUpdate() {
     //------------------- menu 5 --------------------------
-    System.out.printf("[%s ìˆ˜ì •]\n", this.title);
+    System.out.printf("[%s ¼öÁ¤]\n", this.title);
     if(boardList.boardCount ==0) {
-      System.out.println("í˜„ì¬ ì¡´ì¬í•˜ëŠ” ê²Œì‹œê¸€ì´ ì—†ìŠµë‹ˆë‹¤!");
+      System.out.println("ÇöÀç Á¸ÀçÇÏ´Â °Ô½Ã±ÛÀÌ ¾ø½À´Ï´Ù!");
       return;
     }
-    int editNo = Prompt.inputInt("ë³€ê²½í•  ê²Œì‹œê¸€ ë²ˆí˜¸?");
+    int editNo = Prompt.inputInt("º¯°æÇÒ °Ô½Ã±Û ¹øÈ£?");
     Board board = this.boardList.get(editNo);
     if(board == null) {
-      System.out.println("ì˜ëª»ëœ ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤. í•´ë‹¹ ê²Œì‹œê¸€ ë²ˆí˜¸ëŠ” ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.\nì˜¬ë°”ë¥¸ ë²ˆí˜¸ë¥¼ ì…ë ¥í•´ ì£¼ì‹­ì‹œì˜¤.");
+      System.out.println("Àß¸øµÈ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù. ÇØ´ç °Ô½Ã±Û ¹øÈ£´Â Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.\n¿Ã¹Ù¸¥ ¹øÈ£¸¦ ÀÔ·ÂÇØ ÁÖ½Ê½Ã¿À.");
       return;
     }else {
       edit(board);
+      this.onList();
+      System.out.println(board.title + board.content + board.writer);
     }
   }
 
   void edit(Board board) {
-    String title= Prompt.inputString("ì œëª©? " + "("+board.title+")");
-    String content= Prompt.inputString("ë‚´ìš©? "+ "("+board.content+")");
-    String writer = Prompt.inputString("ì‘ì„±ì? "+ "("+board.writer+")");
-    String password = Prompt.inputString("ì•”í˜¸? "+ "("+board.password+")");
+    String title= Prompt.inputString("Á¦¸ñ? " + "("+board.title+")");
+    String content= Prompt.inputString("³»¿ë? "+ "("+board.content+")");
+    String writer = Prompt.inputString("ÀÛ¼ºÀÚ? "+ "("+board.writer+")");
+    String password = Prompt.inputString("¾ÏÈ£? "+ "("+board.password+")");
     if(isEdit()) {
       board = makeBoard(title, content, writer, password);
-      System.out.println(board.title + board.content + board.writer);
-      System.out.println("ì„±ê³µì ìœ¼ë¡œ ë³€ê²½ë˜ì—ˆìŠµë‹ˆë‹¤!");
+     System.out.println("¼º°øÀûÀ¸·Î º¯°æµÇ¾ú½À´Ï´Ù!");
     }else {
-      System.out.println("ë³€ê²½ì„ ì·¨ì†Œí•˜ì˜€ìŠµë‹ˆë‹¤.");
+      System.out.println("º¯°æÀ» Ãë¼ÒÇÏ¿´½À´Ï´Ù.");
       return;
     }
   }
   static boolean isEdit() {
-    char ans = Prompt.inputChar("ë³€ê²½í•˜ì‹œê² ìŠµë‹ˆê¹Œ?(y/n) ");
+    char ans = Prompt.inputChar("º¯°æÇÏ½Ã°Ú½À´Ï±î?(y/n) ");
     if(ans=='y')return true;
     else if(ans=='n') return false;
     return ans =='y'? true:false;
   }
-  static Board makeBoard(String title, String content, String writer, String pwd) {
-    Board board = new Board();
-    board.title =title;
-    board.content =content;
-    board.writer=writer;
-    board.password = pwd;
-    return board;
+  Board makeBoard(String title, String content, String writer, String pwd) {
+    Board board2 = new Board();
+    board2.title =title;
+    board2.content =content;
+    board2.writer=writer;
+    board2.password = pwd;
+    
+    return board2;
   }
 }
