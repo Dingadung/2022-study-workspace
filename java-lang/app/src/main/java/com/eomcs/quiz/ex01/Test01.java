@@ -1,12 +1,13 @@
 package com.eomcs.quiz.ex01;
 
 // [문제] 
-// 파라미터로 주어진 정수 값을 2진수로 표현했을 때 1로 설정된 비트의 개수를 구하라!
+// - 파라미터로 주어진 정수 값을 2진수로 표현했을 때 1로 설정된 비트의 개수를 구하라!
 // [훈련 목표]
-// - 비교 연산자 및 비트 연산자 활용
+// - 관계 연산자 및 비트 연산자, 비트 이동 연산자 활용
 // - 반복문 활용
 // - 메서드 파라미터 및 리턴 값 다루기
-//
+// [시간 복잡도]
+// - ?
 public class Test01 {
 
   public static void main(String[] args) {
@@ -19,13 +20,7 @@ public class Test01 {
 
   static int countBits(int value) {
     int r = 0;
-    // 이 메서드를 완성하시오! 
-    // r = r+(value&1); -> &는 더하기 효과라 1비트가 증가하게 되면 1이 존재하는 것을 알 수 있다.
-    // value >>>=1;
-    while(value>0) {
-      if(value % 2 !=0) r++;
-      value /=2;
-    }
+    // 이 메서드를 완성하시오!
     return r;
   }
 

@@ -137,7 +137,7 @@ public class BoardHandler {
     System.out.printf("조회수: %d\n", board.viewCount);
     System.out.printf("작성자: %s\n", board.writer);
 
-    java.util.Date date = new java.util.Date(board.createdDate);
+    Date date = new Date(board.createdDate);
     System.out.printf("등록일: %1$tY-%1$tm-%1$td/%1$tA %1$tH:%1$tM\n", date);
   }
 
@@ -192,14 +192,11 @@ public class BoardHandler {
       edit(board);
     }
   }
-
   void edit(Board board) {
     String title= Prompt.inputString("제목? " + "("+board.title+")");
     String content= Prompt.inputString("내용? "+ "("+board.content+")");
-    String writer = Prompt.inputString("작성자? "+ "("+board.writer+")");
-    String password = Prompt.inputString("암호? "+ "("+board.password+")");
     if(isEdit()) {
-      makeBoard(board, title, content, writer, password);
+      makeBoard(board, title, content);
       System.out.println("성공적으로 변경되었습니다!");
     }else {
       System.out.println("변경을 취소하였습니다.");
@@ -212,11 +209,8 @@ public class BoardHandler {
     else if(ans=='n') return false;
     return ans =='y'? true:false;
   }
-  Board makeBoard(Board board, String title, String content, String writer, String pwd) {
+  void makeBoard(Board board, String title, String content) {
     board.title =title;
     board.content =content;
-    board.writer=writer;
-    board.password = pwd;
-    return board;
   }
 }

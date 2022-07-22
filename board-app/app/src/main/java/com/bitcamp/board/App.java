@@ -25,7 +25,7 @@ public class App {
       System.out.printf("  3: %s\n", visitingHandler.title);
       System.out.printf("  4: %s\n", noticeHandler.title);
       System.out.printf("  5: %s\n", diaryHandler.title);
-      int mainMenuNo = Prompt.inputInt("메뉴를 선택하세요[1..4] (0: 종료) ");
+      int mainMenuNo = Prompt.inputInt("메뉴를 선택하세요[1..5] (0: 종료) ");
       System.out.println();
       switch (mainMenuNo) {
         case 0:

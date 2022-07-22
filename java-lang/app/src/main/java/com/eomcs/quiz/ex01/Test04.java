@@ -6,7 +6,8 @@ package com.eomcs.quiz.ex01;
 // 예) 
 // 1010 => 2
 // 123 => 1
-//
+// [시간 복잡도]
+// - ?
 public class Test04 {
 
   public static void main(String[] args) {
@@ -17,10 +18,6 @@ public class Test04 {
   static int countEvenNumber(int value) {
     int result = 0;
     // 이 메서드를 완성하시오!
-    while(value>0) {
-      if(value%2==0)result++;
-      value/=10;
-    }
     return result;
   }
 }
