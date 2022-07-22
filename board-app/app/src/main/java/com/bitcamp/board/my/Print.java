@@ -1,7 +1,7 @@
 /*
  * 게시글 프린트 처리 클래스
  */
-package com.bitcamp.board.test1;
+package com.bitcamp.board.my;
 
 public class Print {
   static void wrongMessage() {
@@ -20,16 +20,16 @@ public class Print {
     System.out.println();
   }
 
-  //    static void displayMenu() {
-  //      System.out.println();
-  //      System.out.println("게시판: ");
-  //      System.out.println("  1: 목록");
-  //      System.out.println("  2: 상세보기");
-  //      System.out.println("  3: 등록");
-  //      System.out.println("  4: 삭제");
-  //      System.out.println("  5: 수정");
-  //      System.out.println();
-  //    }
+  //  static void displayMenu() {
+  //    System.out.println();
+  //    System.out.println("게시판: ");
+  //    System.out.println("  1: 목록");
+  //    System.out.println("  2: 상세보기");
+  //    System.out.println("  3: 등록");
+  //    System.out.println("  4: 삭제");
+  //    System.out.println("  5: 수정");
+  //    System.out.println();
+  //  }
 
   //  static void displayHeadLine(char c) {
   //    for (int i = 0; i < 45; i++) {
