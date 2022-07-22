@@ -62,21 +62,6 @@ public class BoardList {
     return true;
   }
 
-  int getIdx(int editNo) {
-    int editIdx=-1;
-    for(int i=0;i<this.boardCount;i++) {
-      if(editNo == this.boards[i].no) {
-        editIdx=i;
-        //        edit(editIdx);
-        break;
-      }
-    }
-    return editIdx;
-  }
-
-
-
-
   void delete(int deleteIdx) {
     // �궘�젣�븷 �빆紐⑹쓽 �떎�쓬 �빆紐⑹쓣 �븵�쑝濡� �떦湲대떎.
     for(int i=deleteIdx+1;i<this.boardCount;i++) {
