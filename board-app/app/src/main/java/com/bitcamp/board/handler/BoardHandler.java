@@ -67,9 +67,13 @@ public class BoardHandler {
     System.out.println("번호 제목 조회수 작성자 등록일");
 
     // boardList 인스턴스에 들어 있는 데이터 목록을 가져온다.
-    Board[] list = this.boardList.toArray();
-
-    for (Board board : list) {
+    Object[] list = this.boardList.toArray();
+    // Object 타입인데 Board에 들어가서 오류가는 것임
+    /// 하지만 강제로 형변환하면 오류 뜬다.. (Board[]를 붙임오류남 ㅠㅠ)
+    // 그래서 일단 Object로 받고, 나중에 사용하기 직전
+    for (Object object : list) {
+      // 즉 여기서 원래의 타입 Board로 형변환을 해준다!
+      Board board = (Board)object;
       Date date = new Date(board.createdDate);
       String dateStr = formatter.format(date); 
       System.out.printf("%d\t%s\t%d\t%s\t%s\n",

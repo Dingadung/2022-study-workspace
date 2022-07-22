@@ -4,80 +4,48 @@ import com.bitcamp.board.domain.Member;
 
 // 회원 목록을 관리하는 역할
 //
-public class MemberList {
-
-  private static final int DEFAULT_SIZE = 3;
-
-  private int memberCount; 
-  private Member[] members; 
+public class MemberList extends ObjectList {
+  // 선배가 작성한 코드 이제 내것 처럼 작성할 수 있다!
   private int no = 0;
-
-  public MemberList() {
-    this.members = new Member[DEFAULT_SIZE];
+  private int nextNo() {
+    return ++no;
+  }
+  @Override
+  public void add(Object object) {
+    // TODO Auto-generated method stub
+    // 게시글을 그냥 바로 넣으면 안되고 번호설정하고 넣어야해!
+    Member member = (Member) object; // 얘 원래 멤버인거 알려준거임
+    member.no = nextNo();
+    super.add(object); /// 근데 그냥 member 넣으면 안되나? 
+    // 원래 import한 add의 파라미터의 데이터 타입이 오브젝트라서
+    // 오브젝트의 서브클래스 타입은 다 넣을 수 있다.
   }
 
-  public MemberList(int initCapacity) {
-    this.members = new Member[initCapacity];
-  }
-
-  public Member[] toArray() {
-    Member[] arr = new Member[this.memberCount];
-    for (int i = 0; i < arr.length; i++) {
-      arr[i] = this.members[i];
-    }
-    return arr;
-  }
-
+  @Override
   public Member get(int memberNo) {
-    for (int i = 0; i < this.memberCount; i++) {
-      if (this.members[i].no == memberNo) {
-        return this.members[i];
+    // TODO Auto-generated method stub
+    int idx=-1;
+    for(int i=0;i<this.length;i++) {
+      Member member = (Member)this.list[i];
+      if(member.no ==memberNo) {
+        return member;
       }
     }
     return null;
   }
 
-  public void add(Member member) {
-    if (this.memberCount == this.members.length) {
-      grow();
-    }
-    member.no = nextNo();
-    this.members[this.memberCount++] = member;
-  }
-
+  @Override
   public boolean remove(int memberNo) {
-    int memberIndex = -1;
-    for (int i = 0; i < this.memberCount; i++) {
-      if (this.members[i].no == memberNo) {
-        memberIndex = i;
+    // TODO Auto-generated method stub
+    int idx=-1;
+    for(int i=0;i<this.length;i++) {
+      Member member = (Member)this.list[i];
+      if(member.no ==memberNo) {
+        idx =i;
         break;
       }
     }
-
-    if (memberIndex == -1) {
-      return false;
-    }
-
-    for (int i = memberIndex + 1; i < this.memberCount; i++) {
-      this.members[i - 1] = this.members[i];
-    }
-
-    this.members[--this.memberCount] = null;
-
-    return true;
-  }
-
-  private void grow() {
-    int newSize = this.members.length + (this.members.length >> 1);
-    Member[] newArray = new Member[newSize];
-    for (int i = 0; i < this.members.length; i++) {
-      newArray[i] = this.members[i];
-    }
-    this.members = newArray;
-  }
-
-  private int nextNo() {
-    return ++no;
+    return super.remove(idx);
   }
 }
 

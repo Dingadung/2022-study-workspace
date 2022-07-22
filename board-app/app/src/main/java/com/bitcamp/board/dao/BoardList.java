@@ -4,84 +4,66 @@ import com.bitcamp.board.domain.Board;
 
 // 게시글 목록을 관리하는 역할
 //
-public class BoardList {
+public class BoardList extends ObjectList {
 
-  private static final int DEFAULT_SIZE = 3;
-
-  private int boardCount; 
-  private Board[] boards; 
   private int no = 0;
 
-  // 생성자
-  public BoardList() {
-    this.boards = new Board[DEFAULT_SIZE];
-  }
+  // 상속 이용!
+  // 수퍼 클래스의 get() 메서드는 인덱스로 항목을 찾는다
+  // 그래서 Board 객체를 다루기에 적합하지 않다.
+  // 따라서 다음 메서드 처럼 Board 객체를 조회하는데 적합한 메서드를 추가한다.
+  // 이 메서드는 게시글 번호에 해당하는 Board 인스턴스를 찾아 리턴한다.
 
-  public BoardList(int initCapacity) {
-    this.boards = new Board[initCapacity];
-  }
-
-  // 목록에 저장된 인스턴스를 꺼내서 리턴한다.
-  public Board[] toArray() {
-    Board[] arr = new Board[this.boardCount];
-    for (int i = 0; i < arr.length; i++) {
-      arr[i] = this.boards[i];
-    }
-    return arr;
-  }
-
-  // 게시글 번호에 해당하는 Board 인스턴스를 찾아 리턴한다.
+  // 슈퍼 클래스의 get() 메서드를 BoardList에 맞게 재정의한다.
+  // -> 파라미터는 인덱스가 아닌 게시글 번호가 되게 한다.
+  // --> Override이라고 부른다. (슈퍼를 서브에서 재정의)
+  @Override
   public Board get(int boardNo) {
-    for (int i = 0; i < this.boardCount; i++) {
-      if (this.boards[i].no == boardNo) {
-        return this.boards[i];
+    for (int i = 0; i < this.length; i++) {
+      Board board = (Board)this.list[i]; // Object배열에 실제 들어 있는 것은 Board라고 컴파일러에게 알린다.
+      if (board.no == boardNo) {
+        return board;
       }
     }
     return null;
   }
 
-  // Board 인스턴스를 배열에 저장한다.
-  public void add(Board board) {
-    if (this.boardCount == this.boards.length) {
-      grow();
-    }
-    board.no = nextNo();
-    this.boards[this.boardCount++] = board;
-  }
 
+
+  // 수퍼 클래스의 add(Object)를 BoardList에 맞게끔 정의한다.
+  // 같은 이름의 유사 기능을 수행하는 메서드를 추가 정의한다.
+
+  // => 파라미터로 받은 Board 인스턴스의 no 변수값을 설정한 다음 배열에 저장한다.
+  // => Overriding
+  @Override
+  public void add(Object object) {
+    Board board = (Board) object;
+    board.no = nextNo(); // 게시글 추가 전에 게시글의 번호 먼저 설정해주는 것으 원해서 오버라이딩
+    // 수퍼 클래스의 add()를 사용하여 처리
+    super.add(board);
+  }
+  //상속 받은 클래스의 메서드를 서브 클래스의 역할에 맞춰서 사용하려고
+  // 오버라이딩을 진행한다! 이것이 오버라이딩을 하는 이유이다!
+
+
+
+  // 수퍼 클래스의 remove()를 BoardList 클래스의 역할을 맞춰 재정의한다.
+  @Override
   public boolean remove(int boardNo) {
     int boardIndex = -1;
-    for (int i = 0; i < this.boardCount; i++) {
-      if (this.boards[i].no == boardNo) {
+    for (int i = 0; i < this.length; i++) {
+      Board board = (Board) this.list[i];
+      if (board.no == boardNo) {
         boardIndex = i;
         break;
       }
     }
-
     if (boardIndex == -1) {
       return false;
     }
-
-    // 삭제할 항목의 다음 항목을 앞으로 당긴다.
-    for (int i = boardIndex + 1; i < this.boardCount; i++) {
-      this.boards[i - 1] = this.boards[i];
-    }
-
-    // 게시글 개수를 한 개 줄인 후 
-    // 맨 뒤의 있던 항목의 주소를 0으로 설정한다.
-    this.boards[--this.boardCount] = null;
-
-    return true;
+    return super.remove(boardIndex); // 재정의 하기 전의 수퍼 클래스의 메서드를 호출한다.
   }
 
-  private void grow() {
-    int newSize = this.boards.length + (this.boards.length >> 1);
-    Board[] newArray = new Board[newSize];
-    for (int i = 0; i < this.boards.length; i++) {
-      newArray[i] = this.boards[i];
-    }
-    this.boards = newArray;
-  }
 
   private int nextNo() {
     return ++no;
