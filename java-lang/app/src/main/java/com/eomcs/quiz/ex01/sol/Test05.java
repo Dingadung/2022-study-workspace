@@ -1,4 +1,4 @@
-package com.eomcs.quiz.ex01;
+package com.eomcs.quiz.ex01.sol;
 
 // 출처: codefights.com
 //
@@ -8,7 +8,7 @@ package com.eomcs.quiz.ex01;
 // 10 => 17 번 
 //
 // [시간 복잡도]
-// - ?
+// - O(k) : k는 10진수의 자릿수이다.
 //
 public class Test05 {
 
@@ -18,7 +18,10 @@ public class Test05 {
 
   static int countWaysToChangeDigit(int value) {
     int answer = 0;  
-    // 이 메서드를 완성하시오!
+    while (value > 0) {    
+      answer += 9 - value % 10;
+      value /= 10;
+    }
     return answer;
   }
 }

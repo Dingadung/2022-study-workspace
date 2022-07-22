@@ -1,4 +1,4 @@
-package com.eomcs.quiz.ex01;
+package com.eomcs.quiz.ex01.sol;
 
 // 출처: codefights.com
 //
@@ -6,8 +6,10 @@ package com.eomcs.quiz.ex01;
 // 예) 
 // 1010 => 2
 // 123 => 1
+//
 // [시간 복잡도]
-// - ?
+// - O(k) : k는 입력 값의 10진수 자릿수이다.
+//
 public class Test04 {
 
   public static void main(String[] args) {
@@ -17,7 +19,13 @@ public class Test04 {
 
   static int countEvenNumber(int value) {
     int result = 0;
-    // 이 메서드를 완성하시오!
+    int n = value;
+    while(n != 0) {
+      if ((n % 2) == 0) {
+        result++;
+      }
+      n /= 10;
+    }
     return result;
   }
 }

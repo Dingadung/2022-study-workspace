@@ -1,28 +1,28 @@
 /*
  * 게시글 메뉴 처리 클래스
  */
-package com.bitcamp.board; // 패키지는 항상 모든 코드들 최상위에 존재해야한다.
+package com.bitcamp.board.my; // 패키지는 항상 모든 코드들 최상위에 존재해야한다.
 
 import java.text.SimpleDateFormat;
 import java.util.Date; 
 
-public class BoardHandler {
+public class MemberHandler {
   //-------------------변수 선언-----------------------\\//
   // 각 게시판이 별도로 관리해야 할 데이터는 인스턴스 변수에 저장한다.
   // 왜? 인스턴스 변수는, 게시판 별로 생성할 수 있기 때문이다.
-  String title;
+  String title; // 일기장
 
   // 게시글 목록을 관리할 객체 준비
-  BoardList boardList = new BoardList();
+  MemberList memberList = new MemberList();
   //-------------------변수 선언-----------------------\\
 
 
   //-------------------생성자 선언-----------------------\\
-  public BoardHandler() {
+  public MemberHandler() {
 
   }
   //제목을 입력 받는 생성자
-  BoardHandler(String title) {
+  MemberHandler(String title) {
     this.title=title;
   }
   //-------------------생성자 선언-----------------------\\
@@ -36,7 +36,7 @@ public class BoardHandler {
       System.out.println("  2: 상세보기");
       System.out.println("  3: 등록");
       System.out.println("  4: 삭제");
-      System.out.println("  5: 수정");
+      System.out.println("  5: 변경");
       System.out.println();
       int menuNo = Prompt.inputInt("메뉴를 선택하세요[1..5] (0: 이전) ");
       displayHeadLine('-');
@@ -96,21 +96,20 @@ public class BoardHandler {
         );
 
     System.out.printf("[%s 목록]\n", this.title);
-    System.out.println("번호\t제목\t\t조회수\t작성자\t등록일");
+    System.out.println("번호\t이름\t이메일\t\t등록일");
 
 
     // boardList 인스턴스에 들어 있는 데이터 목록을 가져온다.
-    Board[] list = this.boardList.toArray();
-    for (Board board : list) { // 딱 데이터가 들어 있는 값만 존재
+    Member[] list = this.memberList.toArray();
+    for (Member member : list) { // 딱 데이터가 들어 있는 값만 존재
       // 데이터 첨부터 끝까지 반복할때는 위에와 같이 for문선언하기
-      Date date = new Date(board.createdDate);
+      Date date = new Date(member.createdDate);
       String dateStr = formatter.format(date);
       System.out.printf(
-          "%d\t%s\t\t%d\t%s\t%s\n",
-          board.no,
-          board.title,
-          board.viewCount,
-          board.writer,
+          "%d\t%s\t%s\t%s\n",
+          member.no,
+          member.name,
+          member.email,
           dateStr
           );
     }
@@ -119,25 +118,23 @@ public class BoardHandler {
   void onDetail() {
     //------------------- menu 2 --------------------------
     System.out.printf("[%s 상세보기]\n", this.title);
-    int noBoard = Prompt.inputInt("몇 번 게시물을 조회하시겠습까? ");
+    int memberNo = Prompt.inputInt("몇 번 회원을 조회하시겠습까? ");
 
     // 해당 번호의 게시글이 몇 번 배열에 들어 있는지 알아내기
-    Board board = this.boardList.get(noBoard);
+    Member member = this.memberList.get(memberNo);
 
-    if (board == null) {
-      System.out.println("해당 번호의 게시물은 존재하지 않습니다!");
+    if (member == null) {
+      System.out.println("해당 번호의 회원은 존재하지 않습니다!");
       return; // 메소드를 호출할 곳으로 돌아가고 싶을 때. 
     }
 
-    board.viewCount++;
+    member.viewCount++;
 
-    System.out.printf("번호: %d\n", board.no);
-    System.out.printf("제목: %s\n", board.title);
-    System.out.printf("내용: %s\n", board.content);
-    System.out.printf("조회수: %d\n", board.viewCount);
-    System.out.printf("작성자: %s\n", board.writer);
+    System.out.printf("번호: %d\n", member.no);
+    System.out.printf("이름: %s\n", member.name);
+    System.out.printf("이메일: %s\n", member.email);
 
-    java.util.Date date = new java.util.Date(board.createdDate);
+    Date date = new Date(member.createdDate);
     System.out.printf("등록일: %1$tY-%1$tm-%1$td/%1$tA %1$tH:%1$tM\n", date);
   }
 
@@ -145,30 +142,29 @@ public class BoardHandler {
     //------------------- menu 3 --------------------------
     System.out.printf("[%s 등록]\n", this.title);
 
-    Board board = new Board();
-    board.title = Prompt.inputString("제목? ");
-    board.content = Prompt.inputString("내용? ");
-    board.writer= Prompt.inputString("작성자? ");
-    board.password = Prompt.inputString("암호? ");
-    board.createdDate = System.currentTimeMillis();
-    board.viewCount = 0;
+    Member member = new Member();
+    member.name = Prompt.inputString("이름? ");
+    member.email = Prompt.inputString("이메일? ");
+    member.password = Prompt.inputString("암호? ");
+    member.createdDate = System.currentTimeMillis();
+    member.viewCount = 0;
     // 새로만든 인스턴스 주소를 레퍼런스 배열에 저장한다.
-    this.boardList.add(board);
+    this.memberList.add(member);
 
-    System.out.println("게시글을 성공적으로 등록했습니다.");
+    System.out.println("회원을 성공적으로 등록했습니다.");
   }
 
   void onDelete() {
     //------------------- menu 4 --------------------------
     System.out.printf("[%s 삭제]\n", this.title);
-    if(boardList.boardCount ==0) {
-      System.out.println("현재 존재하는 게시글이 없습니다!");
+    if(memberList.memberCount ==0) {
+      System.out.println("현재 존재하는 회원이 없습니다!");
       return;
     }
-    int deleteNo = Prompt.inputInt("삭제하시고 싶은 게시글의 번호를 입력해 주시길 바랍니다.");
-    if(!boardList.remove(deleteNo)) {
-      System.out.println("잘못된 번호를 입력하셨습니다. "
-          + "해당 게시글 번호는 존재하지 않습니다."
+    int deleteNo = Prompt.inputInt("삭제하시고 싶은 회원의 번호를 입력해 주시길 바랍니다.");
+    if(!memberList.remove(deleteNo)) {
+      System.out.println("잘못된 회원 번호를 입력하셨습니다. "
+          + "해당 회원 번호는 존재하지 않습니다."
           + "\n올바른 번호를 입력해 주십시오.");
       return;
     }else {
@@ -179,32 +175,27 @@ public class BoardHandler {
   void onUpdate() {
     //------------------- menu 5 --------------------------
     System.out.printf("[%s 수정]\n", this.title);
-    if(boardList.boardCount ==0) {
-      System.out.println("현재 존재하는 게시글이 없습니다!");
+    if(memberList.memberCount ==0) {
+      System.out.println("현재 존재하는 회원이 없습니다!");
       return;
     }
-    int editNo = Prompt.inputInt("변경할 게시글 번호?");
-    Board board = this.boardList.get(editNo);
-    if(board == null) {
-      System.out.println("잘못된 번호를 입력하셨습니다. 해당 게시글 번호는 존재하지 않습니다.\n올바른 번호를 입력해 주십시오.");
+    int editNo = Prompt.inputInt("변경할 회원 번호?");
+    Member member = this.memberList.get(editNo);
+    if(member == null) {
+      System.out.println("잘못된 회원 번호를 입력하셨습니다. "
+          + "해당 회원 번호는 존재하지 않습니다."
+          + "\n올바른 번호를 입력해 주십시오.");
       return;
     }else {
-      edit(board);
-      this.onList();
-      System.out.println(board.title + board.content + board.writer);
+      edit(member);
     }
   }
-
-  void edit(Board board) {
-    String title= Prompt.inputString("제목? " + "("+board.title+")");
-    String content= Prompt.inputString("내용? "+ "("+board.content+")");
-    String writer = Prompt.inputString("작성자? "+ "("+board.writer+")");
-    String password = Prompt.inputString("암호? "+ "("+board.password+")");
+  void edit(Member member) {
+    String name= Prompt.inputString("이름? " + "("+member.name+")");
+    String email= Prompt.inputString("이메일? "+ "("+member.email+")");
     if(isEdit()) {
-
-      makeBoard(board, title, content, writer, password);
-      System.out.println("�꽦怨듭쟻�쑝濡� 蹂�寃쎈릺�뿀�뒿�땲�떎!");
-
+      makeMember(member, name, email);
+      System.out.println("성공적으로 변경되었습니다!");
     }else {
       System.out.println("변경을 취소하였습니다.");
       return;
@@ -216,12 +207,8 @@ public class BoardHandler {
     else if(ans=='n') return false;
     return ans =='y'? true:false;
   }
-
-  Board makeBoard(Board board, String title, String content, String writer, String pwd) {
-    board.title =title;
-    board.content =content;
-    board.writer=writer;
-    board.password = pwd;
-    return board;
+  void makeMember(Member member, String name, String email) {
+    member.name =name;
+    member.email =email;
   }
 }

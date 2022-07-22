@@ -1,4 +1,4 @@
-package com.bitcamp.board;
+package com.bitcamp.board.my;
 
 public class Board {
   // 인스턴스를 생성할 때 준비되는 메모리를 선언

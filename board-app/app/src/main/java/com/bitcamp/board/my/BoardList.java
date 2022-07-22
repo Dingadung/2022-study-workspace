@@ -1,4 +1,4 @@
-package com.bitcamp.board;
+package com.bitcamp.board.my;
 
 //寃뚯떆湲� 紐⑸줉�쓣 愿�由ы븯�뒗 �뿭�븷�쓣 留↔퀬 �엳�뒗 �겢�옒�뒪
 public class BoardList {
@@ -50,7 +50,10 @@ public class BoardList {
     int deleteIdx = -1;
     for(int i=0;i<this.boardCount;i++) {
       if(deleteNo == this.boards[i].no) {
+<<<<<<< HEAD:board-app/app/src/main/java/com/bitcamp/board/BoardList.java
         System.out.println("�궘�젣�릺�뿀�뒿�땲�떎.");
+=======
+>>>>>>> d63849e30df5b0d4b67c5188546521a49eeca2db:board-app/app/src/main/java/com/bitcamp/board/my/BoardList.java
         deleteIdx=i;
         delete(deleteIdx);
         break;

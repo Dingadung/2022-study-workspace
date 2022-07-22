@@ -1,7 +1,7 @@
 /*
  * 게시글 프린트 처리 클래스
  */
-package com.bitcamp.board;
+package com.bitcamp.board.my;
 
 public class Print {
   static void wrongMessage() {

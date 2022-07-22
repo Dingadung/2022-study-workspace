@@ -1,7 +1,7 @@
 /*
  * �궎蹂대뱶 �엯�젰�쓣 諛쏅뒗 �룄援щ�� 援щ퉬�븯怨� �엳�떎.
  */
-package com.bitcamp.board;
+package com.bitcamp.board.my;
 
 public class Prompt {
 

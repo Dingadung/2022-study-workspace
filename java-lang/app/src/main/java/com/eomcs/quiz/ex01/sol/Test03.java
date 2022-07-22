@@ -1,4 +1,4 @@
-package com.eomcs.quiz.ex01;
+package com.eomcs.quiz.ex01.sol;
 
 // [문제] 
 // 두 위치의 비트 값을 맞교환 하라! 
@@ -10,8 +10,10 @@ package com.eomcs.quiz.ex01;
 // - 관계 연산자 및 비트 연산자, 비트 이동 연산자 활용
 // - 반복문 활용
 // - 메서드 파라미터 및 리턴 값 다루기
+//
 // [시간 복잡도]
-// - ?
+// - O(1) : 시간 복잡도는 입력 크기와 상관없다.
+//
 public class Test03 {
 
   public static void main(String[] args) {
@@ -22,8 +24,11 @@ public class Test03 {
     System.out.println(r == 0b01010111_01100011); // true
   }
 
-  static int swapBits(int value, int i, int j) {
-    // 이 메서드를 완성하시오!
+  static int swapBits(int value, int i, int j) { 
+    if (((value >>> i) & 1) != ((value >>> j) & 1)) {
+      int bitMask = (1 << i) | (1 << j);
+      value ^= bitMask;  
+    }
     return value;
   }
 
