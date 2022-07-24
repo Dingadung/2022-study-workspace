@@ -29,5 +29,36 @@ public class Test02 {
 
   static void changeValuePosition(int[] values) {
     // 이 메서드를 완성하시오!
+    int[]t1 = new int[values.length];
+    int[]t2 = new int[values.length];
+    int len = values.length;
+    int half = values.length /2;
+    if(len %2==0) {
+      for(int i=0;i<half;i++) {
+        t1[i] = values[i];
+      }
+      for(int i=0;i<half;i++) {
+        t2[i] = values[half +i];
+      }
+      for(int i=0;i<half;i++) {
+        values[i] = t2[i];
+      }
+      for(int i=0;i<half;i++) {
+        values[half +i] = t1[i];
+      }
+    }else {
+      for(int i=0;i<half;i++) {
+        t1[i] = values[i];
+      }
+      for(int i=0;i<half;i++) {
+        t2[i] = values[half + 1 + i];
+      }
+      for(int i=0;i<half;i++) {
+        values[i] = t2[i];
+      }
+      for(int i=0;i<half;i++) {
+        values[half + 1 + i] = t1[i];
+      }
+    }
   }
 }

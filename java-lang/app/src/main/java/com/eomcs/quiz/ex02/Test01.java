@@ -18,6 +18,14 @@ public class Test01 {
   static int maxDiff(int[] values) {
     int answer = 1;
     // 이 메서드를 완성하시오!
+    for(int i=1;i<values.length-1;i++) {
+      if(answer < Math.abs(values[i]-values[i-1])){
+        answer = Math.abs(values[i]-values[i-1]);
+      }
+      else if (answer < Math.abs(values[i]-values[i+1])){
+        answer = Math.abs(values[i]-values[i+1]);
+      }
+    }
     return answer;
   }
 }

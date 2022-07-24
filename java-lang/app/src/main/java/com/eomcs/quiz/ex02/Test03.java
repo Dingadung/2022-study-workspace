@@ -19,6 +19,11 @@ public class Test03 {
   public static int divisorsPairs(int[] sequence) {
     int result = 0;
     // 이 메서드를 완성하시오!
+    for(int i=0;i<sequence.length;i++) {
+      if((sequence[i]&1)==0) {
+        result++;
+      }
+    }
     return result;
   }
 }
