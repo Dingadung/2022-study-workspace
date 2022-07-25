@@ -6,7 +6,7 @@ package com.eomcs.quiz.ex02;
 // 나누어 0이 떨어지는 수가 몇 쌍이 있는지 구하라!
 //
 // [시간 복잡도]
-// - ?
+// - O(n^2): n은 배열의 개수
 //
 public class Test03 {
 
@@ -20,8 +20,10 @@ public class Test03 {
     int result = 0;
     // 이 메서드를 완성하시오!
     for(int i=0;i<sequence.length;i++) {
-      if((sequence[i]&1)==0) {
-        result++;
+      for(int j=i+1;j<sequence.length;j++) {
+        if((sequence[i] % sequence[j])==0 || (sequence[j] % sequence[i])==0) {
+          result++;
+        }
       }
     }
     return result;

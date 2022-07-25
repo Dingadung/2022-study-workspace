@@ -36,7 +36,9 @@ public class Exam0610 {
     // 주의!
     // - 각각의 클래스는 딱 한 번만 로딩된다.
     // - 레퍼런스를 선언할 때는 클래스가 로딩되지 않는다.
-    // - 그래서 스태틱 초기화 블록이 실행되지 않는다.
+    // - 그래서 스태틱 초기화 블록(static initializer)이 실행되지 않는다.
+    System.out.println("main() call!");
+    A.a = 100;
     A obj1;
     A obj2;
 
