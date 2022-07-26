@@ -45,8 +45,9 @@ public class Test04 {
 
   static boolean isGeometricProgression(int[] sequence) {
     // 이 메서드를 완성하시오!
-    for(int i=1;i<sequence.length -1;i++) {
-      if(sequence[i+1] / sequence[i] !=  sequence[i] / sequence[i-1]) {
+    int n=sequence.length;
+    for(int i=0;i<n/2;i++) {
+      if(sequence[0+i]*sequence[n-1-i] != sequence[1+i]*sequence[n-2-i]) {
         return false;
       }
     }

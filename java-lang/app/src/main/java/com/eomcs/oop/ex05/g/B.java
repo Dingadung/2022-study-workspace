@@ -12,6 +12,9 @@ public class B extends A {
     System.out.println("B() 생성자!");
     this.v2 = 200;
   }
+  static {
+    System.out.println("static B");
+  }
 }
 
 

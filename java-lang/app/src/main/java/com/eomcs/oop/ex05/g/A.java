@@ -18,6 +18,9 @@ public class A /*extends Object*/ {
     System.out.println("A() 생성자!");
     this.v1 = 100;
   }
+  static {
+    System.out.println("static A");
+  }
 }
 
 
