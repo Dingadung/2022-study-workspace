@@ -22,11 +22,13 @@ public class Exam0123 {
         return true;
       if (obj == null)
         return false;
-      if (getClass() != obj.getClass())
+      if (getClass() != obj.getClass()) // 둘의 클래스가 다르면 둘의 값은 당연히 다르다!
         return false;
       Member other = (Member) obj;
       return age == other.age && Objects.equals(name, other.name);
     }
+    // 지우고 오른쪽 버튼, 소스, 제너레이트 이쿼스 , age, name이 같을 떄 트루 리턴하도록,  마지막 생성자 바로 밑에 생성-> 바로 위의 메소드가 생성된다.
+    // equals 는 도구의 도움을 받아서 생성하자. 내가 생성XXXXXX!!!
   }
 
   public static void main(String[] args) {

@@ -5,6 +5,8 @@ public class Exam0142 {
   public static void main(String[] args) {
 
     Object obj = new String("Hello");
+    String s = (String)obj;
+    String str2 = s.toLowerCase();
 
     // obj가 String 객체를 가리키더라도 
     // obj의 타입이 Object이기 때문에 Object에 선언한 멤버만 사용할 수 있다.

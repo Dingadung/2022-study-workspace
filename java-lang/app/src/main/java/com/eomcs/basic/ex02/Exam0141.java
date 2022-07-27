@@ -7,7 +7,7 @@ public class Exam0141 {
     Object obj = new String("Hello"); // 인스턴스 주소가 100이라 가정하자;
 
     String x1 = (String) obj; // x1 <--- 100
-
+    System.out.println(x1 == obj);
     // obj에 대해 toString()을 호출할 때,
     // => 일단 obj 클래스에 선언된 멤버(필드와 메서드)만 사용할 수 있다.
     // => 단 멤버는 실제 obj가 가리키는 클래스부터 찾아 올라 간다.
