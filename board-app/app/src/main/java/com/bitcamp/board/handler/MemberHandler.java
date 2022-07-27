@@ -49,30 +49,28 @@ public class MemberHandler {
 
   private void onList() {
     System.out.println("[회원 목록]");
-    System.out.println("번호 이름 이메일");
+    System.out.println("이메일\t이름");
 
-    Member[] list = this.memberList.toArray();
+    Object[] list = this.memberList.toArray();
 
-    for (Member member : list) {
-      System.out.printf("%d\t%s\t%s\n",
-          member.no, member.name, member.email);
+    for (Object item : list) {
+      Member member = (Member)item;
+      System.out.printf("%s\t%s\n", member.email, member.name);
     }
-
   }
 
   private void onDetail() {
     System.out.println("[회원 상세보기]");
 
-    int memberNo = Prompt.inputInt("조회할 회원 번호? ");
+    String email = Prompt.inputString("조회할 회원의 이메일? ");
 
-    Member member = this.memberList.get(memberNo);
+    Member member = memberList.get(email);
 
     if (member == null) {
-      System.out.println("해당 번호의 회원이 없습니다!");
+      System.out.println("해당 이메일의 회원이 없습니다!");
       return;
     }
 
-    System.out.printf("번호: %d\n", member.no);
     System.out.printf("이름: %s\n", member.name);
     System.out.printf("이메일: %s\n", member.email);
     Date date = new Date(member.createdDate);
@@ -92,30 +90,30 @@ public class MemberHandler {
 
     this.memberList.add(member);
 
-    System.out.println("회워을 등록했습니다.");
+    System.out.println("회원을 등록했습니다.");
   }
 
   private void onDelete() {
     System.out.println("[회원 삭제]");
 
-    int memberNo = Prompt.inputInt("삭제할 회원 번호? ");
+    String email = Prompt.inputString("삭제할 회원 이메일? ");
 
-    if (memberList.remove(memberNo)) {
+    if (memberList.remove(email)) {
       System.out.println("삭제하였습니다.");
     } else {
-      System.out.println("해당 번호의 회원이 없습니다!");
+      System.out.println("해당 이메일의 회원이 없습니다!");
     }
   }
 
   private void onUpdate() {
     System.out.println("[회원 변경]");
 
-    int memberNo = Prompt.inputInt("변경할 회원 번호? ");
+    String email = Prompt.inputString("변경할 회원 이메일? ");
 
-    Member member = this.memberList.get(memberNo);
+    Member member = this.memberList.get(email);
 
     if (member == null) {
-      System.out.println("해당 번호의 회원이 없습니다!");
+      System.out.println("해당 이메일의 회원이 없습니다!");
       return;
     }
 

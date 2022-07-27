@@ -1,90 +1,56 @@
 package com.bitcamp.board.dao;
 
 import com.bitcamp.board.domain.Board;
+import com.bitcamp.util.ObjectList;
 
 // 게시글 목록을 관리하는 역할
 //
-public class BoardList {
+public class BoardList  extends ObjectList{
+  // 자동으로 증가하는 게시글 번호
+  private int boardNo = 0;
 
-  private static final int DEFAULT_SIZE = 3;
-
-  private int boardCount; 
-  private Board[] boards; 
-  private int no = 0;
-
-  // 생성자
-  public BoardList() {
-    this.boards = new Board[DEFAULT_SIZE];
+  // 게시글을 저장할 때 자동으로 증가한 번호를 게시글 번호로 설정할 수 있도록
+  // add() 메서드를 재정의한다.
+  @Override
+  public void add(Object e) {
+    // 넘어오는 Object 객체를 Board로 형변환해줘야 한다!
+    Board board = (Board) e;
+    board.no = nextNo();
+    super.add(e);
   }
 
-  public BoardList(int initCapacity) {
-    this.boards = new Board[initCapacity];
-  }
-
-  // 목록에 저장된 인스턴스를 꺼내서 리턴한다.
-  public Board[] toArray() {
-    Board[] arr = new Board[this.boardCount];
-    for (int i = 0; i < arr.length; i++) {
-      arr[i] = this.boards[i];
-    }
-    return arr;
-  }
-
-  // 게시글 번호에 해당하는 Board 인스턴스를 찾아 리턴한다.
+  // 목록에 인덱스로 해당 항목을 찾는 get() 메서드를 오버라이딩하여
+  // 게시글을 등록할 때 부여한 일련 번호로 찾을 수 있도록
+  // get() 메서드를 재정의(overriding)한다.
+  // => 오버라이딩 메서드의 리턴 타입은 원래 타입의 서브 클래스로 변경할 수 있다.
+  @Override
   public Board get(int boardNo) {
-    for (int i = 0; i < this.boardCount; i++) {
-      if (this.boards[i].no == boardNo) {
-        return this.boards[i];
+    for (int i = 0; i < size(); i++) {
+      Board board = (Board)super.get(i);
+      if (board.no== boardNo) {
+        return board;
       }
     }
     return null;
   }
 
-  // Board 인스턴스를 배열에 저장한다.
-  public void add(Board board) {
-    if (this.boardCount == this.boards.length) {
-      grow();
-    }
-    board.no = nextNo();
-    this.boards[this.boardCount++] = board;
-  }
 
+  // 수퍼 클래스의 remove()는 인덱스로 지정한 항목을 삭제한다.
+  /// 이것을 게시글 번호에 해당하는 항목을 삭제하도록 상속받은 메소드를 재정의(overriding)한다.
+  @Override
   public boolean remove(int boardNo) {
-    int boardIndex = -1;
-    for (int i = 0; i < this.boardCount; i++) {
-      if (this.boards[i].no == boardNo) {
-        boardIndex = i;
-        break;
+    for (int i = 0; i < size(); i++) {
+      Board board = (Board)super.get(i);
+      if (board.no == boardNo) {
+        return super.remove(i);
       }
     }
-
-    if (boardIndex == -1) {
-      return false;
-    }
-
-    // 삭제할 항목의 다음 항목을 앞으로 당긴다.
-    for (int i = boardIndex + 1; i < this.boardCount; i++) {
-      this.boards[i - 1] = this.boards[i];
-    }
-
-    // 게시글 개수를 한 개 줄인 후 
-    // 맨 뒤의 있던 항목의 주소를 0으로 설정한다.
-    this.boards[--this.boardCount] = null;
-
-    return true;
+    return false;
   }
 
-  private void grow() {
-    int newSize = this.boards.length + (this.boards.length >> 1);
-    Board[] newArray = new Board[newSize];
-    for (int i = 0; i < this.boards.length; i++) {
-      newArray[i] = this.boards[i];
-    }
-    this.boards = newArray;
-  }
 
   private int nextNo() {
-    return ++no;
+    return ++boardNo;
   }
 }
 
