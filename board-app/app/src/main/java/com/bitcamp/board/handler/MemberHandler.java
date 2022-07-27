@@ -9,16 +9,12 @@ import com.bitcamp.board.domain.Member;
 import com.bitcamp.util.Prompt;
 
 public class MemberHandler {
-  private String member;
 
-  public MemberHandler(String member) {
-    this.member = member;
-  }
   private MemberList memberList = new MemberList();
 
   public void execute() {
     while (true) {
-      System.out.printf("%s:\n", this.member);
+      System.out.println("회원:");
       System.out.println("  1: 목록");
       System.out.println("  2: 상세보기");
       System.out.println("  3: 등록");
@@ -52,13 +48,12 @@ public class MemberHandler {
   }
 
   private void onList() {
-    System.out.printf("[%s 목록]\n", this.member);
+    System.out.println("[회원 목록]");
     System.out.println("번호 이름 이메일");
 
-    Object[] list = this.memberList.toArray();
+    Member[] list = this.memberList.toArray();
 
-    for (Object object : list) {
-      Member member = (Member) object;
+    for (Member member : list) {
       System.out.printf("%d\t%s\t%s\n",
           member.no, member.name, member.email);
     }
@@ -66,7 +61,7 @@ public class MemberHandler {
   }
 
   private void onDetail() {
-    System.out.printf("[%s 상세보기]\n", this.member);
+    System.out.println("[회원 상세보기]");
 
     int memberNo = Prompt.inputInt("조회할 회원 번호? ");
 
@@ -86,7 +81,7 @@ public class MemberHandler {
   }
 
   private void onInput() {
-    System.out.printf("[%s 등록]\n", this.member);
+    System.out.println("[회원 등록]");
 
     Member member = new Member();
 
@@ -97,11 +92,11 @@ public class MemberHandler {
 
     this.memberList.add(member);
 
-    System.out.println("회원을 등록했습니다.");
+    System.out.println("회워을 등록했습니다.");
   }
 
   private void onDelete() {
-    System.out.printf("[%s 삭제]\n", this.member);
+    System.out.println("[회원 삭제]");
 
     int memberNo = Prompt.inputInt("삭제할 회원 번호? ");
 
@@ -113,7 +108,7 @@ public class MemberHandler {
   }
 
   private void onUpdate() {
-    System.out.printf("[%s 변경]\n", this.member);
+    System.out.println("[회원 변경]");
 
     int memberNo = Prompt.inputInt("변경할 회원 번호? ");
 
