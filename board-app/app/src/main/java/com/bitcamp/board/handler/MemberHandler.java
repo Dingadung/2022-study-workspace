@@ -64,22 +64,24 @@ public class MemberHandler {
   }
 
   private void onDetail() {
-    System.out.println("[회원 상세보기]");
+    try { // 이렇게 다묶으면 어디서 예외가 발생하든 다 캐치 하겠다는 뜻이다!
+      System.out.println("[회원 상세보기]");
+      String email = Prompt.inputString("조회할 회원의 이메일? ");
 
-    String email = Prompt.inputString("조회할 회원의 이메일? ");
+      Member member = memberList.get(email);
 
-    Member member = memberList.get(email);
+      if (member == null) {
+        System.out.println("해당 이메일의 회원이 없습니다!");
+        return;
+      }
 
-    if (member == null) {
-      System.out.println("해당 이메일의 회원이 없습니다!");
-      return;
+      System.out.printf("이름: %s\n", member.name);
+      System.out.printf("이메일: %s\n", member.email);
+      Date date = new Date(member.createdDate);
+      System.out.printf("등록일: %tY-%1$tm-%1$td %1$tH:%1$tM\n", date);
+    }catch(Throwable ex) {
+      System.out.printf("예외 발생: %s\n", ex.getMessage());
     }
-
-    System.out.printf("이름: %s\n", member.name);
-    System.out.printf("이메일: %s\n", member.email);
-    Date date = new Date(member.createdDate);
-    System.out.printf("등록일: %tY-%1$tm-%1$td %1$tH:%1$tM\n", date);
-
   }
 
   private void onInput() {
@@ -98,43 +100,47 @@ public class MemberHandler {
   }
 
   private void onDelete() {
-    System.out.println("[회원 삭제]");
+    try {
+      System.out.println("[회원 삭제]");
 
-    String email = Prompt.inputString("삭제할 회원 이메일? ");
+      String email = Prompt.inputString("삭제할 회원 이메일? ");
 
-    if (memberList.remove(email)) {
-      System.out.println("삭제하였습니다.");
-    } else {
-      System.out.println("해당 이메일의 회원이 없습니다!");
+
+      if (memberList.remove(email)) {
+        System.out.println("삭제하였습니다.");
+      } else {
+        System.out.println("해당 이메일의 회원이 없습니다!");
+      }
+    }catch(Throwable ex) {
+      System.out.println(ex.getMessage());
     }
   }
 
   private void onUpdate() {
-    System.out.println("[회원 변경]");
+    try {
+      System.out.println("[회원 변경]");
+      String email = Prompt.inputString("변경할 회원 이메일? ");
+      Member member = this.memberList.get(email);
 
-    String email = Prompt.inputString("변경할 회원 이메일? ");
+      if (member == null) {
+        System.out.println("해당 이메일의 회원이 없습니다!");
+        return;
+      }
 
-    Member member = this.memberList.get(email);
+      String newName = Prompt.inputString("이름?(" + member.name + ") ");
+      String newEmail = Prompt.inputString(String.format("이메일?(%s) ", member.email));
 
-    if (member == null) {
-      System.out.println("해당 이메일의 회원이 없습니다!");
-      return;
-    }
-
-    String newName = Prompt.inputString("이름?(" + member.name + ") ");
-    String newEmail = Prompt.inputString(String.format("이메일?(%s) ", member.email));
-
-    String input = Prompt.inputString("변경하시겠습니까?(y/n) ");
-    if (input.equals("y")) {
-      member.name = newName;
-      member.email = newEmail;
-      System.out.println("변경했습니다.");
-    } else {
-      System.out.println("변경 취소했습니다.");
+      String input = Prompt.inputString("변경하시겠습니까?(y/n) ");
+      if (input.equals("y")) {
+        member.name = newName;
+        member.email = newEmail;
+        System.out.println("변경했습니다.");
+      } else {
+        System.out.println("변경 취소했습니다.");
+      }
+    }catch(Throwable ex) {
+      System.out.println(ex.getMessage());
     }
   }
+
 }
-
-
-
-
