@@ -98,27 +98,24 @@ public class BoardHandler {
       }
     }
 
-    try {
-      // 해당 번호의 게시글이 몇 번 배열에 들어 있는지 알아내기
-      Board board = this.boardList.get(boardNo);
+    // 해당 번호의 게시글이 몇 번 배열에 들어 있는지 알아내기
+    Board board = this.boardList.get(boardNo);
 
-      // 사용자가 입력한 번호에 해당하는 게시글을 못 찾았다면
-      if (board == null) {
-        System.out.println("해당 번호의 게시글이 없습니다!");
-        return;
-      }
-
-      System.out.printf("번호: %d\n", board.no);
-      System.out.printf("제목: %s\n", board.title);
-      System.out.printf("내용: %s\n", board.content);
-      System.out.printf("조회수: %d\n", board.viewCount);
-      System.out.printf("작성자: %s\n", board.writer);
-      Date date = new Date(board.createdDate);
-      System.out.printf("등록일: %tY-%1$tm-%1$td %1$tH:%1$tM\n", date);
-      // 정상적일 때 여기까지 진행한다.
-    }catch(Throwable ex) {
-      System.out.printf("예외 발생: %s\n", ex.getMessage());
+    // 사용자가 입력한 번호에 해당하는 게시글을 못 찾았다면
+    if (board == null) {
+      System.out.println("해당 번호의 게시글이 없습니다!");
+      return;
     }
+
+    System.out.printf("번호: %d\n", board.no);
+    System.out.printf("제목: %s\n", board.title);
+    System.out.printf("내용: %s\n", board.content);
+    System.out.printf("조회수: %d\n", board.viewCount);
+    System.out.printf("작성자: %s\n", board.writer);
+    Date date = new Date(board.createdDate);
+    System.out.printf("등록일: %tY-%1$tm-%1$td %1$tH:%1$tM\n", date);
+    // 정상적일 때 여기까지 진행한다.
+
   }
 
   private void onInput() {
@@ -150,15 +147,13 @@ public class BoardHandler {
       }
     }
 
-    try {
-      if (boardList.remove(boardNo)) {
-        System.out.println("삭제하였습니다.");
-      } else {
-        System.out.println("해당 번호의 게시글이 없습니다!");
-      }// 정상적일 때 여기까지 진행한다.
-    }catch(Throwable ex) {
-      System.out.printf("예외 발생: %s\n", ex.getMessage());
-    }
+
+    if (boardList.remove(boardNo)) {
+      System.out.println("삭제하였습니다.");
+    } else {
+      System.out.println("해당 번호의 게시글이 없습니다!");
+    }// 정상적일 때 여기까지 진행한다.
+
   }
 
   private void onUpdate() {
@@ -172,29 +167,26 @@ public class BoardHandler {
         System.out.println("입력 값이 옳지 않습니다!");
       }
     }
-    try {
-      Board board = this.boardList.get(boardNo);
 
-      if (board == null) {
-        System.out.println("해당 번호의 게시글이 없습니다!");
-        return;
-      }
+    Board board = this.boardList.get(boardNo);
 
-      String newTitle = Prompt.inputString("제목?(" + board.title + ") ");
-      String newContent = Prompt.inputString(String.format("내용?(%s) ", board.content));
-
-      String input = Prompt.inputString("변경하시겠습니까?(y/n) ");
-      if (input.equals("y")) {
-        board.title = newTitle;
-        board.content = newContent;
-        System.out.println("변경했습니다.");
-      } else {
-        System.out.println("변경 취소했습니다.");
-      }
-      // 정상적일 때 여기까지 진행한다.
-    }catch(Throwable ex) {
-      System.out.printf("예외 발생: %s\n", ex.getMessage());
+    if (board == null) {
+      System.out.println("해당 번호의 게시글이 없습니다!");
+      return;
     }
+
+    String newTitle = Prompt.inputString("제목?(" + board.title + ") ");
+    String newContent = Prompt.inputString(String.format("내용?(%s) ", board.content));
+
+    String input = Prompt.inputString("변경하시겠습니까?(y/n) ");
+    if (input.equals("y")) {
+      board.title = newTitle;
+      board.content = newContent;
+      System.out.println("변경했습니다.");
+    } else {
+      System.out.println("변경 취소했습니다.");
+    }
+
   }
 }
 
