@@ -34,21 +34,27 @@ public class BoardHandler {
       System.out.println("  5: 변경");
       System.out.println();
 
-      int menuNo = Prompt.inputInt("메뉴를 선택하세요[1..5](0: 이전) ");
-      displayHeadline();
 
-      // 다른 인스턴스 메서드를 호출할 때 this에 보관된 인스턴스 주소를 사용한다. 
-      switch (menuNo) {
-        case 0: return;
-        case 1: this.onList(); break;
-        case 2: this.onDetail(); break;
-        case 3: this.onInput(); break;
-        case 4: this.onDelete(); break;
-        case 5: this.onUpdate(); break;
-        default: System.out.println("메뉴 번호가 옳지 않습니다!");
+      try {
+        int menuNo = Prompt.inputInt("메뉴를 선택하세요[1..5](0: 이전) ");
+        displayHeadline();
+
+        // 다른 인스턴스 메서드를 호출할 때 this에 보관된 인스턴스 주소를 사용한다. 
+        switch (menuNo) {
+          case 0: return;
+          case 1: this.onList(); break;
+          case 2: this.onDetail(); break;
+          case 3: this.onInput(); break;
+          case 4: this.onDelete(); break;
+          case 5: this.onUpdate(); break;
+          default: System.out.println("메뉴 번호가 옳지 않습니다!");
+        }
+
+        displayBlankLine();
+
+      }catch(Throwable ex) {
+        System.out.println("입력 값이 옳지 않습니다!");
       }
-
-      displayBlankLine();
     } // 게시판 while
   }
 
@@ -82,7 +88,15 @@ public class BoardHandler {
   private void onDetail() {
     System.out.printf("[%s 상세보기]\n", this.title);
 
-    int boardNo = Prompt.inputInt("조회할 게시글 번호? ");
+    int boardNo=0;
+    while(true) {
+      try {
+        boardNo = Prompt.inputInt("조회할 게시글 번호? ");
+        break;
+      }catch(Throwable ex0) {
+        System.out.println("입력값이 옳지 않습니다!");
+      }
+    }
 
     // 해당 번호의 게시글이 몇 번 배열에 들어 있는지 알아내기
     Board board = this.boardList.get(boardNo);
