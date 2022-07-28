@@ -39,7 +39,6 @@ public class BoardHandler {
         int menuNo = Prompt.inputInt("메뉴를 선택하세요[1..5](0: 이전) ");
         displayHeadline();
 
-        // 다른 인스턴스 메서드를 호출할 때 this에 보관된 인스턴스 주소를 사용한다. 
         switch (menuNo) {
           case 0: return;
           case 1: this.onList(); break;
@@ -72,7 +71,6 @@ public class BoardHandler {
     System.out.printf("[%s 목록]\n", this.title);
     System.out.println("번호 제목 조회수 작성자 등록일");
 
-    // boardList 인스턴스에 들어 있는 데이터 목록을 가져온다.
     Object[] list = this.boardList.toArray();
 
     for (Object item : list) {
@@ -85,7 +83,7 @@ public class BoardHandler {
 
   }
 
-  private void onDetail() {
+  private void onDetail() throws Throwable{
     System.out.printf("[%s 상세보기]\n", this.title);
 
     int boardNo=0;
@@ -135,7 +133,7 @@ public class BoardHandler {
     System.out.println("게시글을 등록했습니다.");
   }
 
-  private void onDelete() {
+  private void onDelete() throws Throwable {
     System.out.printf("[%s 삭제]\n", this.title);
     int boardNo=0;
     while(true) {
@@ -156,7 +154,7 @@ public class BoardHandler {
 
   }
 
-  private void onUpdate() {
+  private void onUpdate() throws Throwable{
     System.out.printf("[%s 변경]\n", this.title);
     int boardNo=0;
     while(true) {
@@ -189,7 +187,3 @@ public class BoardHandler {
 
   }
 }
-
-
-
-
