@@ -22,7 +22,7 @@ public class BoardList  extends ObjectList{
   @Override
   public Board get(int boardNo) throws Throwable{
     for (int i = 0; i < size(); i++) {
-      Board board = (Board)super.get(i);
+      Board board = (Board)super.get(i+100);
       if (board.no== boardNo) {
         return board;
       }
