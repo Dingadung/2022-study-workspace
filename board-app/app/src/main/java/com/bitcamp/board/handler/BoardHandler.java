@@ -52,7 +52,7 @@ public class BoardHandler {
         displayBlankLine();
 
       }catch(Throwable ex) {
-        System.out.println("입력 값이 옳지 않습니다!");
+        System.out.printf("예외 발생: %s\n", ex.getMessage());
       }
     } // 게시판 while
   }
