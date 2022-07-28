@@ -38,10 +38,11 @@ public class Test09 {
   static int arithmeticProgression(int element1, int element2, int n) {
     // 이 메서드를 완성하시오!
     int gap = element2-element1;
-    for(int i=2;i<n;i++) {
-      element2 += gap;
-    }
-    return element2;
+    //    for(int i=2;i<n;i++) {
+    //      element2 += gap;
+    //    }
+    element1 += gap *(n-1);
+    return element1;
   }
 }
 
