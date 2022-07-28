@@ -136,8 +136,15 @@ public class BoardHandler {
 
   private void onDelete() {
     System.out.printf("[%s 삭제]\n", this.title);
-
-    int boardNo = Prompt.inputInt("삭제할 게시글 번호? ");
+    int boardNo=0;
+    while(true) {
+      try {
+        boardNo = Prompt.inputInt("삭제할 게시글 번호? ");
+        break;
+      }catch(Throwable ex) {
+        System.out.println("입력 값이 옳지 않습니다!");
+      }
+    }
 
     if (boardList.remove(boardNo)) {
       System.out.println("삭제하였습니다.");
@@ -148,9 +155,15 @@ public class BoardHandler {
 
   private void onUpdate() {
     System.out.printf("[%s 변경]\n", this.title);
-
-    int boardNo = Prompt.inputInt("변경할 게시글 번호? ");
-
+    int boardNo=0;
+    while(true) {
+      try {
+        boardNo = Prompt.inputInt("변경할 게시글 번호? ");
+        break;
+      }catch(Throwable ex) {
+        System.out.println("입력 값이 옳지 않습니다!");
+      }
+    }
     Board board = this.boardList.get(boardNo);
 
     if (board == null) {
