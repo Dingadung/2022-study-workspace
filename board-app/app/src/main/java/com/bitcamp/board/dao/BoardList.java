@@ -15,12 +15,12 @@ public class BoardList  extends ObjectList{
     super.add(e);
   }
 
-  // 수퍼 클래스의 get()메서드를 호출했을 때  예외가 발생하면,
-  // 서브 클래스의 get()메서드에서 처리할 상황이 아니다.
-  // 서브 클래스의 get()을 호출한 쪽에 보고하는 것이 더 낫다.
-  // 이럴 경우, try-catch-를 쓰지 말고 메서드 선언부에 발생되는 예외를 표시라하라!
+
+  //ObjectList의 get()에서 던지는 예외를 이 메서드에서 처리하지 않고 호출자에게 처리를 위임한다.
+  // ListException은 Runtime 계열이기 때문에 메서드 선언부에 표시하지 않아도 된다.
+  // Exception 계열의 예외를 다루는 것보다 덜 번거롭다.
   @Override
-  public Board get(int boardNo) throws Throwable{
+  public Board get(int boardNo) {
     for (int i = 0; i < size(); i++) {
       Board board = (Board)super.get(i);
       if (board.no== boardNo) {
@@ -30,9 +30,11 @@ public class BoardList  extends ObjectList{
     return null;
   }
 
-
+  //ObjectList의 get()에서 던지는 예외를 이 메서드에서 처리하지 않고 호출자에게 처리를 위임한다.
+  // ListException은 Runtime 계열이기 때문에 메서드 선언부에 표시하지 않아도 된다.
+  // Exception 계열의 예외를 다루는 것보다 덜 번거롭다.
   @Override
-  public boolean remove(int boardNo) throws Throwable{
+  public boolean remove(int boardNo) {
     for (int i = 0; i < size(); i++) {
       Board board = (Board)super.get(i); // 예외를 던지는 메소드를 호출할 때는 무조건 try-catch문으로 감싸줘야한다.
       if (board.no == boardNo) {

@@ -27,7 +27,7 @@ public  class ObjectList {
     return arr;
   }
 
-  // 개발자가 예외 클래스 이름만 보고도  어떤 작업을 하다가 예외를 발생했는지 직관적으로 알 수 있도록, 사용자 정의 예외를 던진다!!!!!!
+  // 개발자가 예외 클래스 이름만 보고도  어떤 작업을 하다가 예외를 발생했는지 직관적으로 알 수 있도록, 사용자 정의 예외를 던진다!!!!!!  아 , 얘 목록 다루다가 오류 떴구나!!!
   // => RuntimeException계열의 예외는 메서드선언부에 표시할 필요가 없다.
   public Object get(int index) throws ListException{  
     if(index <0 || index >= size) {
@@ -38,7 +38,7 @@ public  class ObjectList {
   }
 
   //=> RuntimeException계열의 예외는 메서드선언부에 표시할 필요가 없다. get() 처럼 throws해줘도 되고, remove처럼 throws 안 해줘도 된다.
-  public boolean remove(int index) {
+  public boolean remove(int index) /*throws ListException*/ {
     if(index <0 || index >= size) {
       throw new ListException("인덱스가 무효합니다!");
     }
