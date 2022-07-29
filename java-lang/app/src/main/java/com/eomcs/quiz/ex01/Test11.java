@@ -23,7 +23,7 @@ a string of lowercase latin letters
 public class Test11 {
 
   public static void main(String[] args) {
-    System.out.println(differentSymbolsNaive("cabca") == 3);
+    System.out.println(differentSymbolsNaive("cabcafff") == 4);
   }
 
   static int differentSymbolsNaive(String s) {
