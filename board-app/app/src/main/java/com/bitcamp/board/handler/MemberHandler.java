@@ -37,7 +37,7 @@ public class MemberHandler {
         }
 
         displayBlankLine();
-      } catch(Throwable ex) {
+      } catch(Exception ex) {
         System.out.printf("예외 발생: %s\n", ex.getMessage());
       }
     } // 게시판 while
@@ -63,7 +63,7 @@ public class MemberHandler {
     }
   }
 
-  private void onDetail() throws Throwable {
+  private void onDetail(){
     System.out.println("[회원 상세보기]");
     String email = Prompt.inputString("조회할 회원의 이메일? ");
 
@@ -95,7 +95,7 @@ public class MemberHandler {
     System.out.println("회원을 등록했습니다.");
   }
 
-  private void onDelete() throws Throwable {
+  private void onDelete(){
 
     System.out.println("[회원 삭제]");
 
@@ -110,7 +110,7 @@ public class MemberHandler {
 
   }
 
-  private void onUpdate() throws Throwable {
+  private void onUpdate() {
 
     System.out.println("[회원 변경]");
     String email = Prompt.inputString("변경할 회원 이메일? ");
