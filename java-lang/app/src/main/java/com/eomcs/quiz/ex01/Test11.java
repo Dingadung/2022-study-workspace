@@ -28,23 +28,15 @@ public class Test11 {
 
   static int differentSymbolsNaive(String s) {
     int result = 0;
-    int c=0, idx=0;
     // 이 메서드를 완성하시오!
-    char[] n = s.toCharArray();
-    char []a = new  char[s.length()+1];
-    for(int i=0;i<n.length;i++) {
-      for(int j=0;j<a.length;j++) {
-        if(n[i] ==  a[j]) {
-          c=1;
+    for(char c = 'a'; c<='z';c++) {
+      for(int i=0;i<s.length();i++) {
+        if(s.charAt(i) == c) {
+          result++;
           break;
         }
-
       }
-      if(c==0) {
-        a[idx++]=n[i];
-      }
-      c=0;
     }
-    return idx;
+    return result;
   }
 }
