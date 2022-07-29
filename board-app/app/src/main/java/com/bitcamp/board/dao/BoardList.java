@@ -20,7 +20,7 @@ public class BoardList  extends ObjectList{
   // ListException은 Runtime 계열이기 때문에 메서드 선언부에 표시하지 않아도 된다.
   // Exception 계열의 예외를 다루는 것보다 덜 번거롭다.
   @Override
-  public Board get(int boardNo) {
+  public Board get(int boardNo){
     for (int i = 0; i < size(); i++) {
       Board board = (Board)super.get(i);
       if (board.no== boardNo) {
