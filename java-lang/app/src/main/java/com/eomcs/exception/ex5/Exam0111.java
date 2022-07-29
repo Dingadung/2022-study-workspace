@@ -1,13 +1,14 @@
-// 예외 처리 전 - 1단계: 수동으로 자원 해제.
+// 예외 처리 전 - 2단계: finally 블럭을 이용하여 자원 해제를 자동화하기.
 package com.eomcs.exception.ex5;
 
 import java.sql.Date;
 import java.util.Scanner;
 
-public class Exam0110 {
+public class Exam0111 {
 
   static Board read() {
-    Scanner keyScan = new Scanner(System.in);
+    Scanner keyScan = null ;
+    try {    keyScan = new Scanner(System.in);
     Board board = new Board();
 
     System.out.print("번호> ");
@@ -21,11 +22,13 @@ public class Exam0110 {
 
     System.out.print("등록일> ");
     board.setCreatedDate(Date.valueOf(keyScan.nextLine()));
-
-
-    keyScan.close(); //개발자가 직접 자원을 해제시킨다.
     return board;
 
+    }finally {
+      // 정상적으로 실행하든 예외가 발생하든지 간에 무조건 close() 를 실행한다.
+      keyScan.close(); //개발자가 직접 자원을 해제시킨다.
+      System.out.println("Scanner 자원을 해제시켰다.");
+    }
   }
 
   public static void main(String[] args) {

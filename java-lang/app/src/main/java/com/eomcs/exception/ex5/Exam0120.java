@@ -1,4 +1,4 @@
-// 예외 처리 후
+// 예외 처리 후 - 1) 기존 예외 클래스를 시용하여 예외 객체를 받기.
 package com.eomcs.exception.ex5;
 
 import java.sql.Date;
@@ -18,6 +18,13 @@ public class Exam0120 {
   //    예외를 던진다는 것은 이해하지만,
   //    그 예외가 의미하는 바가 무엇인지 즉시 알아보기 힘들다는 얘기다.
   //
+
+
+  // read() 메서드에서 발생할 수 있는 예
+  //Integer.parseInt() -> NumberFormatException이 발생할 수 있다.
+  //Date.valueOf() => Illegal ArgumentExeption이 발생할 수 있다.
+  // 위 두 개의 예외는 모두 RuntimeException 계열의 예외이기 때문에,
+  // 메서드 선언부에 Throws 문장을 표시할 필요가없다. => 생략해도 된다.
   static Board read() {
     try (Scanner keyScan = new Scanner(System.in)) {
       Board board = new Board();
@@ -48,6 +55,7 @@ public class Exam0120 {
       System.out.printf("등록일: %s\n", board.getCreatedDate());
 
     } catch (RuntimeException e) {
+      //read() 에서 발생된 예외를 받을 때는 두 예외를모두 받을 수 있도록 두 클래스의 부모인 RuntimeException 파라미터로 받는다.
       System.out.println(e.getMessage());
       System.out.println("게시물 입력 중에 오류 발생!");
       // e.printStackTrace();
