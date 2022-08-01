@@ -26,6 +26,18 @@ public class LinkedListTest {
     // 맨 마지막 노드 삭제 테스트.
     list.remove(1); // 안중근  삭제.
     printList(list);
+
+    // 마지막 남은 노드 삭제 테스트.
+    list.remove(0);
+    printList(list);
+
+    // 완전히 삭제한 다음에 다시 입력할 경우제대로 동작하는지 테스트.
+
+    list.add("홍길동");
+    list.add("임꺽정");
+    list.add("유관순");
+    list.add("안중근");
+    printList(list);
   }
 
   static void printList(LinkedList list) {

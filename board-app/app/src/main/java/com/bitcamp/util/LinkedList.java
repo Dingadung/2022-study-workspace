@@ -52,6 +52,11 @@ public class LinkedList {
 
     // 목록 크기를 한 개 줄인다.
     size--;
+    if(head == tail) {
+      // node가 하나만 남은 상태, => 마지막 남은 노드를 제거할 때.
+      head = tail = null;
+      return;
+    }
 
     // 삭제할노드를 찾기 위해 시작 노드를 head로 설정한다.
     Node cursor = head;
