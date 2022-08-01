@@ -4,13 +4,13 @@
 package com.bitcamp.board.handler;
 
 import java.util.Date;
-import com.bitcamp.board.dao.MemberList;
+import com.bitcamp.board.dao.MemberDao;
 import com.bitcamp.board.domain.Member;
 import com.bitcamp.util.Prompt;
 
 public class MemberHandler {
 
-  private MemberList memberList = new MemberList();
+  private MemberDao memberList = new MemberDao();
 
   public void execute() {
     while (true) {
@@ -37,7 +37,8 @@ public class MemberHandler {
         }
 
         displayBlankLine();
-      } catch(Exception ex) {
+
+      } catch (Exception ex) {
         System.out.printf("예외 발생: %s\n", ex.getMessage());
       }
     } // 게시판 while
@@ -53,21 +54,24 @@ public class MemberHandler {
 
   private void onList() {
     System.out.println("[회원 목록]");
-    System.out.println("이메일\t이름");
+    System.out.println("이메일 이름");
 
-    Object[] list = this.memberList.getArray();
+    Object[] list = this.memberList.findAll();
 
     for (Object item : list) {
-      Member member = (Member)item;
-      System.out.printf("%s\t%s\n", member.email, member.name);
+      Member member = (Member) item;
+      System.out.printf("%s\t%s\n",
+          member.email, member.name);
     }
+
   }
 
-  private void onDetail(){
+  private void onDetail() {
     System.out.println("[회원 상세보기]");
-    String email = Prompt.inputString("조회할 회원의 이메일? ");
 
-    Member member = memberList.retrieve(email);
+    String email = Prompt.inputString("조회할 회원 이메일? ");
+
+    Member member = this.memberList.findByEmail(email);
 
     if (member == null) {
       System.out.println("해당 이메일의 회원이 없습니다!");
@@ -90,31 +94,29 @@ public class MemberHandler {
     member.password = Prompt.inputString("암호? ");
     member.createdDate = System.currentTimeMillis();
 
-    this.memberList.append(member);
+    this.memberList.insert(member);
 
-    System.out.println("회원을 등록했습니다.");
+    System.out.println("회워을 등록했습니다.");
   }
 
-  private void onDelete(){
-
+  private void onDelete() {
     System.out.println("[회원 삭제]");
 
     String email = Prompt.inputString("삭제할 회원 이메일? ");
 
-
-    if (memberList.delete(email)!=null) {
+    if (memberList.delete(email)) {
       System.out.println("삭제하였습니다.");
     } else {
       System.out.println("해당 이메일의 회원이 없습니다!");
     }
-
   }
 
   private void onUpdate() {
-
     System.out.println("[회원 변경]");
+
     String email = Prompt.inputString("변경할 회원 이메일? ");
-    Member member = this.memberList.retrieve(email);
+
+    Member member = this.memberList.findByEmail(email);
 
     if (member == null) {
       System.out.println("해당 이메일의 회원이 없습니다!");
@@ -132,7 +134,9 @@ public class MemberHandler {
     } else {
       System.out.println("변경 취소했습니다.");
     }
-
   }
-
 }
+
+
+
+

@@ -5,7 +5,7 @@ package com.bitcamp.board.handler;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import com.bitcamp.board.dao.BoardList;
+import com.bitcamp.board.dao.BoardDao;
 import com.bitcamp.board.domain.Board;
 import com.bitcamp.util.Prompt;
 
@@ -14,7 +14,7 @@ public class BoardHandler {
   private String title; // 게시판의 제목
 
   // 게시글 목록을 관리할 객체 준비
-  private BoardList boardList = new BoardList();
+  private BoardDao boardDao = new BoardDao();
 
   public BoardHandler() {
     this.title = "게시판";
@@ -34,11 +34,12 @@ public class BoardHandler {
       System.out.println("  5: 변경");
       System.out.println();
 
-
       try {
         int menuNo = Prompt.inputInt("메뉴를 선택하세요[1..5](0: 이전) ");
+
         displayHeadline();
 
+        // 다른 인스턴스 메서드를 호출할 때 this에 보관된 인스턴스 주소를 사용한다. 
         switch (menuNo) {
           case 0: return;
           case 1: this.onList(); break;
@@ -51,7 +52,7 @@ public class BoardHandler {
 
         displayBlankLine();
 
-      }catch(Exception ex) {
+      } catch (Exception ex) {
         System.out.printf("예외 발생: %s\n", ex.getMessage());
       }
     } // 게시판 while
@@ -71,10 +72,10 @@ public class BoardHandler {
     System.out.printf("[%s 목록]\n", this.title);
     System.out.println("번호 제목 조회수 작성자 등록일");
 
-    Object[] list = this.boardList.getArray();
+    // boardList 인스턴스에 들어 있는 데이터 목록을 가져온다.
+    Board[] boards = this.boardDao.findAll();
 
-    for (Object item : list) {
-      Board board = (Board)item;
+    for (Board board : boards) {
       Date date = new Date(board.createdDate);
       String dateStr = formatter.format(date); 
       System.out.printf("%d\t%s\t%d\t%s\t%s\n",
@@ -83,21 +84,21 @@ public class BoardHandler {
 
   }
 
-  private void onDetail(){
+  private void onDetail() {
     System.out.printf("[%s 상세보기]\n", this.title);
 
-    int boardNo=0;
-    while(true) {
+    int boardNo = 0;
+    while (true) {
       try {
         boardNo = Prompt.inputInt("조회할 게시글 번호? ");
         break;
-      }catch(Exception ex0) {
-        System.out.println("입력값이 옳지 않습니다!");
+      } catch (Exception ex) {
+        System.out.println("입력 값이 옳지 않습니다!");
       }
     }
 
     // 해당 번호의 게시글이 몇 번 배열에 들어 있는지 알아내기
-    Board board = this.boardList.retrieve(boardNo);
+    Board board = this.boardDao.findByNo(boardNo);
 
     // 사용자가 입력한 번호에 해당하는 게시글을 못 찾았다면
     if (board == null) {
@@ -112,7 +113,6 @@ public class BoardHandler {
     System.out.printf("작성자: %s\n", board.writer);
     Date date = new Date(board.createdDate);
     System.out.printf("등록일: %tY-%1$tm-%1$td %1$tH:%1$tM\n", date);
-    // 정상적일 때 여기까지 진행한다.
 
   }
 
@@ -128,45 +128,46 @@ public class BoardHandler {
     board.viewCount = 0;
     board.createdDate = System.currentTimeMillis();
 
-    this.boardList.append(board);
+    this.boardDao.insert(board);
 
     System.out.println("게시글을 등록했습니다.");
   }
 
   private void onDelete() {
     System.out.printf("[%s 삭제]\n", this.title);
-    int boardNo=0;
-    while(true) {
+
+    int boardNo = 0;
+    while (true) {
       try {
         boardNo = Prompt.inputInt("삭제할 게시글 번호? ");
         break;
-      }catch(Exception ex) {
+      } catch (Exception ex) {
         System.out.println("입력 값이 옳지 않습니다!");
       }
     }
 
-
-    if (boardList.delete(boardNo)!=null) {
+    if (boardDao.delete(boardNo)) {
       System.out.println("삭제하였습니다.");
     } else {
       System.out.println("해당 번호의 게시글이 없습니다!");
-    }// 정상적일 때 여기까지 진행한다.
-
+    }
   }
 
-  private void onUpdate(){
+  private void onUpdate() {
+
     System.out.printf("[%s 변경]\n", this.title);
-    int boardNo=0;
-    while(true) {
+
+    int boardNo = 0;
+    while (true) {
       try {
         boardNo = Prompt.inputInt("변경할 게시글 번호? ");
         break;
-      }catch(Exception ex) {
+      } catch (Throwable ex) {
         System.out.println("입력 값이 옳지 않습니다!");
       }
     }
 
-    Board board = this.boardList.retrieve(boardNo);
+    Board board = this.boardDao.findByNo(boardNo);
 
     if (board == null) {
       System.out.println("해당 번호의 게시글이 없습니다!");
@@ -184,6 +185,9 @@ public class BoardHandler {
     } else {
       System.out.println("변경 취소했습니다.");
     }
-
   }
 }
+
+
+
+
