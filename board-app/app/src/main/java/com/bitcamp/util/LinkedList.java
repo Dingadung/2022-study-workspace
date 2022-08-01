@@ -1,9 +1,11 @@
 package com.bitcamp.util;
-/*
- * Node를 이용해 값의 목록을 관리하는 일을 한다.
- * author: jimin Park
- * */
 
+/**
+ * 
+ * @author vivi
+ * Node를 이용해 값의 목록을 관리하는 일을 한다.
+ *
+ */
 public class LinkedList {
   private Node head; // 첫 노드의 주소를 저장
   private Node tail; // 마지막 노드의주소를 저장
