@@ -7,9 +7,9 @@ import com.bitcamp.util.ObjectList;
 //
 public class BoardDao {
 
-  // BoardDao는 ObjectList 객체를 포함한다.
-  // => BoardDao는 ObjectList의 기능에 의존한다.
-  // => 따라서 ObjectList는 BoardDao가 의존하는 객체이다. ==> "dependency" 의존 객체 
+  //   BoardDao는 ObjectList 객체를 포함한다.
+  //   => BoardDao는 ObjectList의 기능에 의존한다.
+  //   => 따라서 ObjectList는 BoardDao가 의존하는 객체이다. ==> "dependency" 의존 객체 
   ObjectList list = new ObjectList();
 
   private int boardNo = 0;
