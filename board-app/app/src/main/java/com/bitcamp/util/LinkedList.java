@@ -13,7 +13,7 @@ public class LinkedList {
   /*
    *  add():    파라미터로 주어진 값을 노드에 담아 리스트 끝에 연결한다.
    * */
-  public void add(Object value) {
+  public void append(Object value) {
     // Node 생성 후, 값을 저장한다.
     Node node = new Node(value);
     size++; // 목록의 크기를 한 개 증가시킨다.
@@ -30,7 +30,7 @@ public class LinkedList {
     tail = node; // 새 노드가 끝 노드가 되게 설정한다.
   }
 
-  public Object get(int index) {
+  public Object retrieve(int index) {
     // 인덱스의 유효 여부 검사
     if(index < 0 || index >= size) {
       throw new ListException("인덱스의 범위를 초과했습니다!");
@@ -44,7 +44,7 @@ public class LinkedList {
     return cursor.value;
   }
 
-  public void remove(int index) {
+  public Object delete(int index) {
     // 인덱스의 유효 여부 검사
     if(index < 0 || index >= size) {
       throw new ListException("인덱스의 범위를 초과했습니다!");
@@ -52,10 +52,16 @@ public class LinkedList {
 
     // 목록 크기를 한 개 줄인다.
     size--;
+
+    // 삭제할 값을 임시 보관하여 메서드를 리턴할 때 호출자에게 전달한다. 밑의 변수는,  return값이 존재하기 때문에 만든 변수이다. void라면 필요없는 변수임.
+    Object deleted;
+
     if(head == tail) {
       // node가 하나만 남은 상태, => 마지막 남은 노드를 제거할 때.
-      head = tail = null;
-      return;
+      deleted = head.value; // 노드를 삭제하기 전에 값을 리턴할 수 있도록 값을 임시 보관한다. 노드가 아닌 값을 리턴함을 명심하자!
+      head.value = null;
+      head = tail = null; // 노드에 들어 있는 값 객체의 주소를 비운다.
+      return deleted; // 메서드를 종료할 때 호출자에게 삭제한 값을 리턴한다.
     }
 
     // 삭제할노드를 찾기 위해 시작 노드를 head로 설정한다.
@@ -71,7 +77,7 @@ public class LinkedList {
     }else {// 맨 앞 노드라면,  => 
       // 삭제할 노드 앞에 노드가 없다면, 즉, 삭제할 노드가 맨 앞의 노드라면, 첫번째 노드를 삭제하는 상황이므로, 헤드를 새로 초기화해준다.
       head = cursor.next; // 삭제할 노드의 다음 노드를 시작 노드로 설정한다.
-      head.prev = null; // 시작 노드가 앞노드를 가르키지 않게 한다.
+      head.prev = null; // 시작 노드가 앞노드를 가리키지 않게 한다.
     }
 
     if(cursor.next!=null) {
@@ -86,14 +92,16 @@ public class LinkedList {
     // 삭제할 노드를 초기화 시켜준다.
     // 삭제할 노드, garbage객체가 살아있는 객체를 가르키지, 참조하지 않게 한다.
     //garbage객체가 다른 garbage객체를 참조하지 않게 한다.
+    deleted =cursor.value; // 노드를 삭제하기 전에 노드에 들어있는 값을 노드에 임시 보관해둔다.
     cursor.value = null;
     cursor.prev = null;
     cursor.next = null;
 
+    return deleted; // 메서드를 리턴할 때 삭제된 값을 호출자에게 전달한다.
   }
 
-  public int size() {
+  public int length() {
     return size;
   }
-  //LinkedList 끝부분
+  //LinkedList class 끝부분
 }
