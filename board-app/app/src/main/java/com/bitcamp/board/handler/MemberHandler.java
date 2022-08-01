@@ -55,7 +55,7 @@ public class MemberHandler {
     System.out.println("[회원 목록]");
     System.out.println("이메일\t이름");
 
-    Object[] list = this.memberList.toArray();
+    Object[] list = this.memberList.getArray();
 
     for (Object item : list) {
       Member member = (Member)item;
@@ -67,7 +67,7 @@ public class MemberHandler {
     System.out.println("[회원 상세보기]");
     String email = Prompt.inputString("조회할 회원의 이메일? ");
 
-    Member member = memberList.get(email);
+    Member member = memberList.retrieve(email);
 
     if (member == null) {
       System.out.println("해당 이메일의 회원이 없습니다!");
@@ -90,7 +90,7 @@ public class MemberHandler {
     member.password = Prompt.inputString("암호? ");
     member.createdDate = System.currentTimeMillis();
 
-    this.memberList.add(member);
+    this.memberList.append(member);
 
     System.out.println("회원을 등록했습니다.");
   }
@@ -102,7 +102,7 @@ public class MemberHandler {
     String email = Prompt.inputString("삭제할 회원 이메일? ");
 
 
-    if (memberList.remove(email)) {
+    if (memberList.delete(email)!=null) {
       System.out.println("삭제하였습니다.");
     } else {
       System.out.println("해당 이메일의 회원이 없습니다!");
@@ -114,7 +114,7 @@ public class MemberHandler {
 
     System.out.println("[회원 변경]");
     String email = Prompt.inputString("변경할 회원 이메일? ");
-    Member member = this.memberList.get(email);
+    Member member = this.memberList.retrieve(email);
 
     if (member == null) {
       System.out.println("해당 이메일의 회원이 없습니다!");
