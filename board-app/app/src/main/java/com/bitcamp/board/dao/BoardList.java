@@ -2,18 +2,17 @@ package com.bitcamp.board.dao;
 
 import com.bitcamp.board.domain.Board;
 import com.bitcamp.util.ListException;
-import com.bitcamp.util.ObjectList;
 
 // 게시글 목록을 관리하는 역할
 //
-public class BoardList  extends ObjectList{
+public class BoardList  extends LinkedList{
   private int boardNo = 0;
 
   @Override
-  public void add(Object e) {
+  public void append(Object e) {
     Board board = (Board) e;
     board.no = nextNo();
-    super.add(e);
+    super.append(e);
   }
 
 
@@ -22,7 +21,7 @@ public class BoardList  extends ObjectList{
   // Exception 계열의 예외를 다루는 것보다 덜 번거롭다.
   // Throwable이 상위 클래스여도수퍼가 에러 안던지니까 얘도 던지면 안된다!
   @Override
-  public Board get(int boardNo)throws ListException{
+  public Board retrieve(int boardNo)throws ListException{
     for (int i = 0; i < size(); i++) {
       Board board = (Board)super.get(i);
       if (board.no== boardNo) {

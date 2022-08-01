@@ -105,9 +105,12 @@ public class LinkedList {
   }
 
   public Object[] getArray() {
+    // 값을 담을 배열을 준비
     Object [] arr = new Object[size];
+
+    // 노드를 따라가면서 값을 꺼내 배열에 담는다.
     for(int i=0;i<size;i++) {
-      arr[i] = retrieve(i);
+      arr[i] = retrieve(i); //node=head, node.value, node.next
     }
     return arr;
   }
