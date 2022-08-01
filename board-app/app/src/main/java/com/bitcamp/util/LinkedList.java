@@ -103,5 +103,13 @@ public class LinkedList {
   public int length() {
     return size;
   }
+
+  public Object[] getArray() {
+    Object [] arr = new Object[size];
+    for(int i=0;i<size;i++) {
+      arr[i] = retrieve(i);
+    }
+    return arr;
+  }
   //LinkedList class 끝부분
 }

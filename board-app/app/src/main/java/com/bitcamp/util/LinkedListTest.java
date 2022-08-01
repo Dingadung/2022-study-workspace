@@ -38,6 +38,12 @@ public class LinkedListTest {
     list.append("유관순");
     list.append("안중근");
     printList(list);
+
+
+    System.out.println("--------------------mytest");
+    Object[] s = new Object[list.length()];
+    s = list.getArray();
+    System.out.println((String)s[0]);
   }
 
   static void printList(LinkedList list) {
