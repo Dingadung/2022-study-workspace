@@ -7,7 +7,7 @@ package com.bitcamp.util;
  *
  */
 // LinkedList class도 ObjectList처럼 List 규격에 따라 만든다.
-// 규격이 같으면 두 객체를 서로 교체할 수 있다. ObjectLsit <-> LinkedList class
+// 규격이 같으면 두 객체를 서로 교체할 수 있다. ObjectLsit <-> LinkedList class   
 public class LinkedList implements List {
 
   private Node head; // 첫 노드의 주소를 저장

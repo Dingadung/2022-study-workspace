@@ -40,10 +40,10 @@ public class Exam0310 {
     // 어차피 인터페이스에서 구현한 default 메서드를 사용하지 않기 때문에 
     // 이 경우에는 다중 구현이 가능한다.
     // 
-    //    @Override
-    //    public void rule3() {
-    //      System.out.println("ProtocolImpl.rule3()");
-    //    }
+        @Override
+        public void rule3() {
+          System.out.println("ProtocolImpl.rule3()");
+        }
   }
 
   public static void main(String[] args) {

@@ -22,7 +22,7 @@ interface MyInterface4 {
   // - 해당 기능을 m2()와 m3() 처럼 여러 메서드에서 사용해야 할 경우
   //   그 공통 코드를 다음과 같이 private 구현 메서드로 정의하면 될 것이다.
   //
-  private void x() {
+  private void x() { // -> 이렇게 사용하지 말 것!
     System.out.println("MyInterface4.x()");
   }
 }
