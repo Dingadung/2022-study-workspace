@@ -1,6 +1,7 @@
 package com.bitcamp.board.dao;
 
 import com.bitcamp.board.domain.Board;
+import com.bitcamp.util.LinkedList;
 import com.bitcamp.util.List;
 
 // 게시글 목록을 관리하는 역할
