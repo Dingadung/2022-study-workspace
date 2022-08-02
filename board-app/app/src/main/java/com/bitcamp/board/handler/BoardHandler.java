@@ -72,7 +72,6 @@ public class BoardHandler {
     System.out.printf("[%s 목록]\n", this.title);
     System.out.println("번호 제목 조회수 작성자 등록일");
 
-    // boardList 인스턴스에 들어 있는 데이터 목록을 가져온다.
     Board[] boards = this.boardDao.findAll();
 
     for (Board board : boards) {
