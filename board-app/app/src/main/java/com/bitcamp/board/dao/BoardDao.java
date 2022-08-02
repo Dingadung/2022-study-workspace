@@ -2,7 +2,6 @@ package com.bitcamp.board.dao;
 
 import com.bitcamp.board.domain.Board;
 import com.bitcamp.util.List;
-import com.bitcamp.util.ObjectList;
 
 // 게시글 목록을 관리하는 역할
 //
@@ -10,7 +9,7 @@ public class BoardDao {
 
   // List   인터페이스 레퍼런스인, list 변수는
   // List 규격에 따라 만든 객체 주소를 담을 수 있다.
-  List  list = new ObjectList();
+  List  list = new LinkedList();
 
   private int boardNo = 0;
 
