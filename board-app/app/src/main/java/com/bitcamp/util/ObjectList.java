@@ -17,7 +17,7 @@ public class ObjectList implements List {
     elementData = new Object[initialCapacity];
   }
 
-  @Override // 인터페이스 규격에 따라 메서드를 정의하는 것도 오버라이딩으로 간주한다.
+  @Override // 인터페이스 규격에 따라 메서드를 정의하는 것도 오버라이딩으로 간주한다.  
   public void add(Object e) {
     if (size == elementData.length) {
       grow();
