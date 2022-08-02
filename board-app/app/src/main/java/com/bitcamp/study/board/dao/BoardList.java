@@ -5,27 +5,21 @@ import com.bitcamp.util.ObjectList;
 
 // 게시글 목록을 관리하는 역할
 //
-public class BoardList extends ObjectList {
-
+public class BoardList {
+  ObjectList list = new ObjectList();
   private int boardNo = 0;
 
-  @Override
-  public void add(Object e) {
+
+  public void append(Object e) {
     Board board = (Board) e;
     board.no = nextNo();
-    super.add(e);
+    list.add(e);
   }
 
-  // ObjectList의 get()에서 던지는 예외를 이 메서드에서 처리하지 않고
-  // 호출자에게 처리를 위임한다.
-  // => ListException은 RuntimeException 계열이기 때문에 
-  //    메서드 선언부에 표시하지 않아도 된다.
-  //    Exception 계열의 예외를 다루는 것 보다 덜 번거롭다.
-  //
-  @Override
-  public Board get(int boardNo) {
-    for (int i = 0; i < size(); i++) {
-      Board board = (Board) super.get(i);
+
+  public Board findByNo(int boardNo) {
+    for (int i = 0; i < list.size(); i++) {
+      Board board = (Board) list.get(i);
       if (board.no == boardNo) {
         return board;
       }
@@ -39,12 +33,12 @@ public class BoardList extends ObjectList {
   //    메서드 선언부에 표시하지 않아도 된다.
   //    Exception 계열의 예외를 다루는 것 보다 덜 번거롭다.
   //
-  @Override
-  public boolean remove(int boardNo) {
-    for (int i = 0; i < size(); i++) {
-      Board board = (Board) super.get(i);
+
+  public boolean delete(int boardNo) {
+    for (int i = 0; i < list.size(); i++) {
+      Board board = (Board) list.get(i);
       if (board.no == boardNo) {
-        return super.remove(i);
+        return list.remove(i);
       }
     }
 
@@ -53,6 +47,15 @@ public class BoardList extends ObjectList {
 
   private int nextNo() {
     return ++boardNo;
+  }
+
+  public Board[] findAll() {
+    Object[] arr = list.toArray();
+    Board [] boards = new Board[arr.length];
+    for(int i=0;i<arr.length;i++) {
+      boards[i] = (Board)arr[i];
+    }
+    return boards;
   }
 }
 

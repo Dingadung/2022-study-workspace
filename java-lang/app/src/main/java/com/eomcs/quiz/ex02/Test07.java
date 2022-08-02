@@ -27,7 +27,7 @@ maximal even element of inputArray
 public class Test07 {
 
   public static void main(String[] args) {
-    System.out.println(maximalEven(new int[]{4, 3, 6, 8, 2, 4}) == 8);
+    System.out.println(maximalEven(new int[]{4, 3, 6, 7, 2, 4}) == 6);
   }
 
   static int maximalEven(int[] inputArray) {
