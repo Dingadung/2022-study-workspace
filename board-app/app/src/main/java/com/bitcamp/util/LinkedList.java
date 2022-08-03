@@ -110,7 +110,7 @@ public class LinkedList extends AbstractList {
   }
 
   // LinkedList의 특정 인스턴스에 종속되지 않기 때문에 static nested class( 스태틱 중첩클래스로 정의한다.)
-  static public class Node {
+  private static class Node {
     Object value;
     Node prev;
     Node next;
