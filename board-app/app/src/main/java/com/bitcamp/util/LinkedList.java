@@ -115,8 +115,6 @@ public class LinkedList extends AbstractList {
     Node prev;
     Node next;
 
-    public Node() {}
-
     public Node(Object v) {
       this.value = v;
     }
