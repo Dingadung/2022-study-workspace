@@ -19,7 +19,7 @@ public class App {
     welcome();
 
     // 핸들러를 담을 레퍼런스 배열을 준비한다.
-    Handler[] handlers = new Handler[] {
+    Handler[] handlers = new Handler[] { //개수 정하지 않고 배열선언한다.
         new BoardHandler(), // 게시판
         new BoardHandler(), // 독서록
         new BoardHandler(), // 방명록
