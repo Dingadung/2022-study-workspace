@@ -12,7 +12,6 @@ import com.bitcamp.util.Prompt;
 
 public class BoardHandler {
 
-  private String title; // 게시판의 제목
 
   // 게시글 목록을 관리할 객체 준비
   private BoardDao boardDao = new BoardDao();
@@ -28,20 +27,7 @@ public class BoardHandler {
     System.out.println();
   }
 
-
-  public BoardHandler() {
-    this.title = "게시판";
-  }
-
-  public BoardHandler(String title) {
-    this.title = title;
-  }
-
-
-
   public void execute() {
-    // 핸들러를 실행할 때, breadCurmb메뉴에 이 핸들러의 이름을 등록한다.
-    //App.breadcrumbMenu.push(title);
     while (true) {
       System.out.printf("%s:\n", App.breadcrumbMenu); // printf가 알아서 toString을 호출하므로 따로 안붙여줘도 ㄱㅊ
       printMenus(menus);
@@ -61,7 +47,8 @@ public class BoardHandler {
 
         displayHeadline();
 
-        // 다른 인스턴스 메서드를 호출할 때 this에 보관된 인스턴스 주소를 사용한다. 
+        // 서브 메뉴의 제목을 출력한다.
+        System.out.printf("%s: \n",App.breadcrumbMenu);
         switch (menuNo) {
           case 1: 
             this.onList(); break;
@@ -73,7 +60,7 @@ public class BoardHandler {
         }
 
         displayBlankLine();
-
+        App.breadcrumbMenu.pop();
       } catch (Exception ex) {
         System.out.printf("예외 발생: %s\n", ex.getMessage());
       }
@@ -91,7 +78,7 @@ public class BoardHandler {
   private void onList() {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-    System.out.printf("[%s 목록]\n", this.title);
+
     System.out.println("번호 제목 조회수 작성자 등록일");
 
     Board[] boards = this.boardDao.findAll();
@@ -106,7 +93,6 @@ public class BoardHandler {
   }
 
   private void onDetail() {
-    System.out.printf("[%s 상세보기]\n", this.title);
 
     int boardNo = 0;
     while (true) {
@@ -138,7 +124,6 @@ public class BoardHandler {
   }
 
   private void onInput() {
-    System.out.printf("[%s 등록]\n", this.title);
 
     Board board = new Board();
 
@@ -155,7 +140,6 @@ public class BoardHandler {
   }
 
   private void onDelete() {
-    System.out.printf("[%s 삭제]\n", this.title);
 
     int boardNo = 0;
     while (true) {
@@ -176,7 +160,6 @@ public class BoardHandler {
 
   private void onUpdate() {
 
-    System.out.printf("[%s 변경]\n", this.title);
 
     int boardNo = 0;
     while (true) {

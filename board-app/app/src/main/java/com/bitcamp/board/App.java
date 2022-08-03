@@ -20,11 +20,11 @@ public class App {
     // 인스턴스를 생성할 때 생성자가 원하는 값을 반드시 줘야 한다.
     // 주지 않으면 컴파일 오류이다!
     //
-    BoardHandler boardHandler = new BoardHandler("게시판");
-    BoardHandler readingHandler = new BoardHandler("독서록");
-    BoardHandler visitHandler = new BoardHandler("방명록");
-    BoardHandler noticeHandler = new BoardHandler("공지사항");
-    BoardHandler diaryHandler = new BoardHandler("일기장");
+    BoardHandler boardHandler = new BoardHandler();
+    BoardHandler readingHandler = new BoardHandler();
+    BoardHandler visitHandler = new BoardHandler();
+    BoardHandler noticeHandler = new BoardHandler();
+    BoardHandler diaryHandler = new BoardHandler();
     MemberHandler memberHandler = new MemberHandler();
 
     // "메인" 메뉴의 이름을 스택에 등록한다.
