@@ -36,13 +36,13 @@ public class App {
     loop: while (true) {
 
       // 메인 메뉴 출력
-      for(int i=0;i<menus.length; i++) {
-        System.out.printf("  %d: %s\n", i + 1, menus[i]);
-      }
-      System.out.println();
+      printMenus(menus);
 
       try {
         int mainMenuNo = Prompt.inputInt("메뉴를 선택하세요[1..6](0: 종료) ");
+
+        //메뉴에 진입할 때 breadCrumb메뉴바에 그 메뉴를 등록한다.
+        if(mainMenuNo > 0 && mainMenuNo <= menus.length) breadcrumbMenu.push(menus[mainMenuNo]);
 
         switch (mainMenuNo) {
           case 0: break loop;
@@ -68,9 +68,9 @@ public class App {
         } // switch
       } catch (Exception ex) {
         System.out.println("입력 값이 옳지 않습니다.");
-      }
+      } // switch
 
-
+      breadcrumbMenu.pop();
     } // while
 
     System.out.println("안녕히 가세요!");
@@ -81,6 +81,13 @@ public class App {
     System.out.println("[게시판 애플리케이션]");
     System.out.println();
     System.out.println("환영합니다!");
+    System.out.println();
+  }
+
+  static void printMenus(String[] menus) {
+    for(int i=0;i<menus.length; i++) {
+      System.out.printf("  %d: %s\n", i + 1, menus[i]);
+    }
     System.out.println();
   }
 }

@@ -27,7 +27,7 @@ public class BoardHandler {
 
   public void execute() {
     // 핸들러를 실행할 때, breadCurmb메뉴에 이 핸들러의 이름을 등록한다.
-    App.breadcrumbMenu.push(title);
+    //App.breadcrumbMenu.push(title);
 
     while (true) {
       System.out.printf("%s:\n", App.breadcrumbMenu); // printf가 알아서 toString을 호출하므로 따로 안붙여줘도 ㄱㅊ
@@ -47,7 +47,7 @@ public class BoardHandler {
         switch (menuNo) {
           case 0:
             // 핸들러를 종료할 때, breadcrumb 메뉴에 등록된 이 핸들러의 이름을 꺼낸다.
-            App.breadcrumbMenu.pop();
+            //App.breadcrumbMenu.pop();
             return;
           case 1: 
             this.onList(); break;
