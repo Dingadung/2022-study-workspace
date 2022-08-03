@@ -6,6 +6,7 @@ package com.bitcamp.board;
 
 import com.bitcamp.board.handler.BoardHandler;
 import com.bitcamp.board.handler.MemberHandler;
+import com.bitcamp.handler.Handler;
 import com.bitcamp.util.Prompt;
 import com.bitcamp.util.Stack;
 
@@ -17,12 +18,15 @@ public class App {
   public static void main(String[] args) {
     welcome();
 
-    BoardHandler boardHandler = new BoardHandler();
-    BoardHandler readingHandler = new BoardHandler();
-    BoardHandler visitHandler = new BoardHandler();
-    BoardHandler noticeHandler = new BoardHandler();
-    BoardHandler diaryHandler = new BoardHandler();
-    MemberHandler memberHandler = new MemberHandler();
+    // 핸들러를 담을 레퍼런스 배열을 준비한다.
+    Handler[] handlers = new Handler[] {
+        new BoardHandler(), // 게시판
+        new BoardHandler(), // 독서록
+        new BoardHandler(), // 방명록
+        new BoardHandler(), // 공지사항
+        new BoardHandler(), // 일기장
+        new MemberHandler() // 회원
+    };
 
     // "메인" 메뉴의 이름을 스택에 등록한다.
     breadcrumbMenu.push("메인");
