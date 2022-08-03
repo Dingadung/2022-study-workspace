@@ -109,7 +109,14 @@ public class LinkedList extends AbstractList {
     return arr;
   }
 
-  // LinkedList의 특정 인스턴스에 종속되지 않기 때문에 static nested class( 스태틱 중첩클래스로 정의한다.)
+  // LinkedList에서만 사용할 클래스라면, 이 클래스 안에 선언하는 것이 유지보수에 좋다!
+  // 클래스 안에 정의된 클래스를 중첩 클래스, (nested class)라고 한다.
+  //
+  // 특정 인스턴스에 종속되지 않는 중첩 클래스라면 static nested class( 스태틱 중첩클래스)로 정의한다.
+  // LinkedList의 특정 인스턴스에 종속되지 않기 때문에 static nested class( 스태틱 중첩클래스)로 정의한다.
+  // 크기도 작으므로!
+  // 어차피 LinkedList에서만 사용하므로 넣어버리고, private으로 설정한다.
+  //
   private static class Node {
     Object value;
     Node prev;
