@@ -8,8 +8,14 @@ public class StackTest {
     stack.push("유관순");
     stack.push("안중근");
 
+    // 스택에서 값을 꺼내기 전에 스택에 저장된값을 문자열로 출력한다.
+    System.out.println(stack); // println은 stack에 대해 toString()을 호출한 후 그 리턴 값을 출력한다.
+
+    System.out.println("-----------------------------------");
     while(!stack.empty()) {
       System.out.println(stack.pop());
     }
+
+
   }
 }
