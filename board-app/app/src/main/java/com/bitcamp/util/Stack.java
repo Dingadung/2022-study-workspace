@@ -11,7 +11,7 @@ public class Stack extends LinkedList{
 
   // 스택의 맨 마지막 값을 꺼낸다. 꺼낸 값은 스택에서 제거한다.
   public Object pop() {
-    remove(size()-1); // 수퍼 클래스의 메서드를 호출하여pop() 기능을 구현한다.
+    // 수퍼 클래스의 메서드를 호출하여pop() 기능을 구현한다.
     return remove(size()-1);
   }
 
@@ -22,5 +22,19 @@ public class Stack extends LinkedList{
 
   public Object peek() { // 스택의 저장된 맨 마지막 값을 리턴한다. 제거하지 않는다.
     return get(size-1);
+  }
+
+  @Override
+  public String toString() {
+    // 스택에 저장된 객체를 순서대로 꺼내,  문자열로 저장한다.
+    StringBuffer buf = new StringBuffer();
+    for(int i=0;i<size();i++) {
+      if(buf.length() > 0) {
+        // 이미 버퍼에 저장된 문자열이 있다면,
+        buf.append(">");
+      }
+      buf.append(get(i));
+    }
+    return buf.toString();
   }
 }

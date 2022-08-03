@@ -7,9 +7,11 @@ package com.bitcamp.board;
 import com.bitcamp.board.handler.BoardHandler;
 import com.bitcamp.board.handler.MemberHandler;
 import com.bitcamp.util.Prompt;
+import com.bitcamp.util.Stack;
 
 public class App {
-
+  //breadCrumb 메뉴를 저장할 스택을 준비
+  public static  Stack breadcrumbMenu = new Stack();
   public static void main(String[] args) {
     welcome();
 
