@@ -42,7 +42,7 @@ public class App {
         int mainMenuNo = Prompt.inputInt("메뉴를 선택하세요[1..6](0: 종료) ");
 
         //메뉴에 진입할 때 breadCrumb메뉴바에 그 메뉴를 등록한다.
-        if(mainMenuNo > 0 && mainMenuNo <= menus.length) breadcrumbMenu.push(menus[mainMenuNo]);
+        if(mainMenuNo > 0 && mainMenuNo <= menus.length) breadcrumbMenu.push(menus[mainMenuNo-1]);
 
         switch (mainMenuNo) {
           case 0: break loop;
