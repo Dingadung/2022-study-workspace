@@ -30,6 +30,9 @@ public class App {
     // "메인" 메뉴의 이름을 스택에 등록한다.
     breadcrumbMenu.push("메인");
 
+    // 메뉴명을 저장할 배열을 준비한다.
+    String [] menus = "게시판", "독서록", "방명록", "공지사항", "일기장", "회원"};
+
     loop: while (true) {
 
       // 메인 메뉴 출력
@@ -76,14 +79,14 @@ public class App {
 
     System.out.println("안녕히 가세요!");
     Prompt.close();
-  } // main
+} // main
 
-  static void welcome() {
-    System.out.println("[게시판 애플리케이션]");
-    System.out.println();
-    System.out.println("환영합니다!");
-    System.out.println();
-  }
+static void welcome() {
+  System.out.println("[게시판 애플리케이션]");
+  System.out.println();
+  System.out.println("환영합니다!");
+  System.out.println();
+}
 }
 
 

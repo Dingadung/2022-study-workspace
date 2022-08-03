@@ -16,12 +16,12 @@ public class Stack extends LinkedList{
   }
 
   // 스택이 비어 있는지 여부를 알려준다.
-  public boolean empty() { // 스택이 비어있는지 여부를 알려준다.
-    return size == 0;
+  public boolean empty() { 
+    return size() == 0;
   }
 
   public Object peek() { // 스택의 저장된 맨 마지막 값을 리턴한다. 제거하지 않는다.
-    return get(size-1);
+    return get(size()-1);
   }
 
   @Override
