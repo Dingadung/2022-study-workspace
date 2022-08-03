@@ -71,7 +71,6 @@ public class MemberHandler {
   }
 
   private void onList() {
-    System.out.println("[회원 목록]");
     System.out.println("이메일 이름");
 
     Member[] members = this.memberDao.findAll();
@@ -84,7 +83,6 @@ public class MemberHandler {
   }
 
   private void onDetail() {
-    System.out.println("[회원 상세보기]");
 
     String email = Prompt.inputString("조회할 회원 이메일? ");
 
@@ -102,7 +100,6 @@ public class MemberHandler {
   }
 
   private void onInput() {
-    System.out.println("[회원 등록]");
 
     Member member = new Member();
 
@@ -113,11 +110,10 @@ public class MemberHandler {
 
     this.memberDao.insert(member);
 
-    System.out.println("회워을 등록했습니다.");
+    System.out.println("회원을 등록했습니다.");
   }
 
   private void onDelete() {
-    System.out.println("[회원 삭제]");
 
     String email = Prompt.inputString("삭제할 회원 이메일? ");
 
@@ -129,7 +125,6 @@ public class MemberHandler {
   }
 
   private void onUpdate() {
-    System.out.println("[회원 변경]");
 
     String email = Prompt.inputString("변경할 회원 이메일? ");
 

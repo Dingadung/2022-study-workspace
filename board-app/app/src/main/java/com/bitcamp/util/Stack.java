@@ -1,8 +1,8 @@
 package com.bitcamp.util;
 
 public class Stack extends LinkedList{
-  // 비록, push() 나 pop() 메서드는 LinkedList의 메서드를 호출하는 껍데기에 불과하지만, Stack이라는 개념을 명확하게 표현할 수 있어서
-  // 이렇게 별도의 메서드로 구현하는 것이다.
+  //   비록, push() 나 pop() 메서드는 LinkedList의 메서드를 호출하는 껍데기에 불과하지만, Stack이라는 개념을 명확하게 표현할 수 있어서
+  //   이렇게 별도의 메서드로 구현하는 것이다.
 
   // 스택의 맨 마지막에 값을 추가한다.
   public void push(Object value) {

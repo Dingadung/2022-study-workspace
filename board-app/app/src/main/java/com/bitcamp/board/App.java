@@ -17,9 +17,6 @@ public class App {
   public static void main(String[] args) {
     welcome();
 
-    // 인스턴스를 생성할 때 생성자가 원하는 값을 반드시 줘야 한다.
-    // 주지 않으면 컴파일 오류이다!
-    //
     BoardHandler boardHandler = new BoardHandler();
     BoardHandler readingHandler = new BoardHandler();
     BoardHandler visitHandler = new BoardHandler();
