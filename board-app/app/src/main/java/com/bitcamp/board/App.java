@@ -53,27 +53,9 @@ public class App {
           continue; // while문의 조건 검사로 보낸다.
         }
 
-        switch (mainMenuNo) {
-          case 1: // 게시판
-            boardHandler.execute();
-            break;
-          case 2: // 독서록
-            readingHandler.execute();
-            break;
-          case 3: // 방명록
-            visitHandler.execute();
-            break;
-          case 4: // 공지사항
-            noticeHandler.execute();
-            break;
-          case 5: // 일기장
-            diaryHandler.execute();
-            break;
-          case 6: // 회원
-            memberHandler.execute();
-            break;
-          default: 
-        } // switch
+        // 메뉴 번호로 Handler 레퍼런스에 들어있는 객체를 찾아 실행한다.
+        handlers[mainMenuNo-1].execute();
+
         breadcrumbMenu.pop();
       } catch (Exception ex) {
         System.out.println("입력 값이 옳지 않습니다.");
