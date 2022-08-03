@@ -1,7 +1,5 @@
 package com.eomcs.quiz.ex02;
 
-import java.util.Arrays;
-
 // 출처: codefights.com
 // 
 // 장애물들의 x 좌표(양의 좌표)가 배열로 주어질 때,
@@ -43,19 +41,15 @@ public class Test08 {
 
   static int avoidObstacles(int[] inputArray) {
     // 이 메서드를 완성하시오!
-    int [] temp = inputArray;
-    Arrays.sort(temp);
-    //    for(int i=0;i<inputArray.length;i++) {
-    //      System.out.println(temp[i]);
-    //    }
-    int ans = temp[0]+1;
-    for(int i=1;i<inputArray.length;i++) {
-      if(ans == temp[i]) {
+    int ans = 1;
+    // 점프하는 칸 수가 배열에 주어진 장애물의 좌표의 배수인가?
+    // 배열에 주어진장애물들의 좌표 중에서 점프하는 칸 수의 배수가 있으면 안된다.
+    // 즉, 나누어 떨어지면 안된다는 말이다.
+    for(int i:inputArray) {
+      if(i%ans==0) {
         ans++;
-        //System.out.println(ans);
       }
     }
-
     return ans;
   }
 }
