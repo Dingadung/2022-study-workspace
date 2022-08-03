@@ -53,7 +53,6 @@ public class App {
         }
 
         switch (mainMenuNo) {
-          case 0: break loop;
           case 1: // 게시판
             boardHandler.execute();
             break;

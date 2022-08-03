@@ -49,21 +49,27 @@ public class BoardHandler {
       try {
         int menuNo = Prompt.inputInt("메뉴를 선택하세요[1..5](0: 이전) ");
 
+        if(menuNo > 0 && menuNo <= menus.length) {
+          //메뉴에 진입할 때 breadCrumb메뉴바에 그 메뉴를 등록한다.
+          App.breadcrumbMenu.push(menus[menuNo-1]);
+        } else if(menuNo == 0){
+          return; // 메인 메뉴로 돌아간다.
+        }else {
+          System.out.println("메뉴 번호가 옳지 않습니다!");
+          continue; // while문의 조건 검사로 보낸다.
+        }
+
         displayHeadline();
 
         // 다른 인스턴스 메서드를 호출할 때 this에 보관된 인스턴스 주소를 사용한다. 
         switch (menuNo) {
-          case 0:
-            // 핸들러를 종료할 때, breadcrumb 메뉴에 등록된 이 핸들러의 이름을 꺼낸다.
-            //App.breadcrumbMenu.pop();
-            return;
           case 1: 
             this.onList(); break;
           case 2: this.onDetail(); break;
           case 3: this.onInput(); break;
           case 4: this.onDelete(); break;
           case 5: this.onUpdate(); break;
-          default: System.out.println("메뉴 번호가 옳지 않습니다!");
+          default: 
         }
 
         displayBlankLine();
