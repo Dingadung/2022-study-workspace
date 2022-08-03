@@ -49,7 +49,8 @@ public class BoardHandler {
             // 핸들러를 종료할 때, breadcrumb 메뉴에 등록된 이 핸들러의 이름을 꺼낸다.
             App.breadcrumbMenu.pop();
             return;
-          case 1: this.onList(); break;
+          case 1: 
+            this.onList(); break;
           case 2: this.onDetail(); break;
           case 3: this.onInput(); break;
           case 4: this.onDelete(); break;
