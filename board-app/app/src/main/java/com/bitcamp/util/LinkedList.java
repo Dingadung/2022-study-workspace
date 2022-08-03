@@ -8,11 +8,10 @@ package com.bitcamp.util;
  */
 // LinkedList class도 ObjectList처럼 List 규격에 따라 만든다.
 // 규격이 같으면 두 객체를 서로 교체할 수 있다. ObjectLsit <-> LinkedList class   
-public class LinkedList implements List {
+public class LinkedList extends AbstractList {
 
   private Node head; // 첫 노드의 주소를 저장
   private Node tail; // 마지막 노드의 주소를 저장
-  private int size; // 저장된 데이터의 개수
 
 
   @Override
@@ -93,11 +92,6 @@ public class LinkedList implements List {
     cursor.next = null;
 
     return deleted; // 메서드를 리턴할 때 삭제된 값을 호출자에게 전달한다.
-  }
-
-  @Override
-  public int size() {
-    return size;
   }
 
   @Override
