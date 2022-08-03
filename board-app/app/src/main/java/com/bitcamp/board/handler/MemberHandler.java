@@ -4,6 +4,7 @@
 package com.bitcamp.board.handler;
 
 import java.util.Date;
+import com.bitcamp.board.App;
 import com.bitcamp.board.dao.MemberDao;
 import com.bitcamp.board.domain.Member;
 import com.bitcamp.util.Prompt;
@@ -14,6 +15,7 @@ public class MemberHandler {
 
   public void execute() {
     while (true) {
+      System.out.printf("%s:\n", App.breadcrumbMenu); 
       System.out.println("회원:");
       System.out.println("  1: 목록");
       System.out.println("  2: 상세보기");

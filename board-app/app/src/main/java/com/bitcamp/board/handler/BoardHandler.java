@@ -17,6 +17,18 @@ public class BoardHandler {
   // 게시글 목록을 관리할 객체 준비
   private BoardDao boardDao = new BoardDao();
 
+  // 모든 인스턴스가 같은 서브 메뉴를 가지기 때문에
+  // 메뉴명을 저장할 배열은 스태틱, 클래스 필드로 준비한다.
+  private static String [] menus = {"목록", "상세보기", "등록", "삭제", "변경"};
+
+  static void printMenus(String[] menus) {
+    for(int i=0;i<menus.length; i++) {
+      System.out.printf("  %d: %s\n", i + 1, menus[i]);
+    }
+    System.out.println();
+  }
+
+
   public BoardHandler() {
     this.title = "게시판";
   }
@@ -25,18 +37,14 @@ public class BoardHandler {
     this.title = title;
   }
 
+
+
   public void execute() {
     // 핸들러를 실행할 때, breadCurmb메뉴에 이 핸들러의 이름을 등록한다.
     //App.breadcrumbMenu.push(title);
-
     while (true) {
       System.out.printf("%s:\n", App.breadcrumbMenu); // printf가 알아서 toString을 호출하므로 따로 안붙여줘도 ㄱㅊ
-      System.out.println("  1: 목록");
-      System.out.println("  2: 상세보기");
-      System.out.println("  3: 등록");
-      System.out.println("  4: 삭제");
-      System.out.println("  5: 변경");
-      System.out.println();
+      printMenus(menus);
 
       try {
         int menuNo = Prompt.inputInt("메뉴를 선택하세요[1..5](0: 이전) ");
@@ -193,6 +201,8 @@ public class BoardHandler {
       System.out.println("변경 취소했습니다.");
     }
   }
+
+
 }
 
 

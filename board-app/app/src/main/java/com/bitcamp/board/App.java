@@ -36,13 +36,21 @@ public class App {
     loop: while (true) {
 
       // 메인 메뉴 출력
+      System.out.printf("%s\n", breadcrumbMenu);
       printMenus(menus);
 
       try {
         int mainMenuNo = Prompt.inputInt("메뉴를 선택하세요[1..6](0: 종료) ");
 
-        //메뉴에 진입할 때 breadCrumb메뉴바에 그 메뉴를 등록한다.
-        if(mainMenuNo > 0 && mainMenuNo <= menus.length) breadcrumbMenu.push(menus[mainMenuNo-1]);
+        if(mainMenuNo > 0 && mainMenuNo <= menus.length) {
+          //메뉴에 진입할 때 breadCrumb메뉴바에 그 메뉴를 등록한다.
+          breadcrumbMenu.push(menus[mainMenuNo-1]);
+        } else if(mainMenuNo == 0){
+          break loop;
+        }else {
+          System.out.println("메뉴 번호가 옳지 않습니다!");
+          continue; // while문의 조건 검사로 보낸다.
+        }
 
         switch (mainMenuNo) {
           case 0: break loop;
@@ -64,13 +72,13 @@ public class App {
           case 6: // 회원
             memberHandler.execute();
             break;
-          default: System.out.println("메뉴 번호가 옳지 않습니다!");
+          default: 
         } // switch
+        breadcrumbMenu.pop();
       } catch (Exception ex) {
         System.out.println("입력 값이 옳지 않습니다.");
-      } // switch
+      }
 
-      breadcrumbMenu.pop();
     } // while
 
     System.out.println("안녕히 가세요!");
