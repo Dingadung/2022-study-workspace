@@ -18,6 +18,8 @@ package com.bitcamp.util;
 //      V - Value
 //      S, U, V -2nd, 3rd, 4th types
 public interface List <E>{
+
+  // E가 가리키는 타입은 List를 사용하는 시점에 결정된다!!!!! 사용하는 시점!!
   void add(E value); 
   E get(int index);
   E remove(int index); 
