@@ -24,6 +24,7 @@ public class BoardDao {
     //List규격에 따라 만든 객체를 사용하여 목록에 추가한다.
     // => 메서드를 호출할 때는 List 규격에 따라 호출한다.
     list.add(e);
+    //ctrl하고 눌러도,  list  변수의 타입이 List interface 이기 때문에 실제 add() 를 구현한 LinkedList 로 가지 않는다.
   }
 
   public Board findByNo(int boardNo) {
