@@ -9,7 +9,7 @@ public class ObjectList<E> extends AbstractList<E>{
   private Object[] elementData;
 
   public ObjectList() {
-    elementData = new Object[DEFAULT_CAPACITY];
+    elementData = new Object[DEFAULT_CAPACITY]; // 배열은 제네릭 제공 안한다!!!    그래서 배열은 그냥 Object형 쓴다.
   }
 
   public ObjectList(int initialCapacity) {
@@ -17,7 +17,7 @@ public class ObjectList<E> extends AbstractList<E>{
   }
 
   @Override // 인터페이스 규격에 따라 메서드를 정의하는 것도 오버라이딩으로 간주한다.  
-  public void add(Object e) {
+  public void add(E e) {
     if (size == elementData.length) {
       grow();
     }
@@ -26,7 +26,7 @@ public class ObjectList<E> extends AbstractList<E>{
   }
 
   @Override
-  public Object[] toArray() {
+  public E[] toArray() {
     Object[] arr = new Object[size];
     for (int i = 0; i < arr.length; i++) {
       arr[i] = elementData[i];

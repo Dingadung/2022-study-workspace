@@ -23,6 +23,7 @@ public interface List <E>{
   void add(E value); 
   E get(int index);
   E remove(int index); 
-  E[] toArray(); 
+  Object[] toArray(); 
+  E[] toArray(E[] arr);
   int size();
 }
