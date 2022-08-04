@@ -11,7 +11,7 @@ public class MemberDao {
   // MemberDao는 List 규격에 맞춰 생산한 객체를 사용할 것이다.
   //=> Object List클래스는 List 규격에 맞춰 메서드를 정의한 클래스다.
   // 따라서, List   레퍼런스 변수에 그 주소를 저장할 수 있다.
-  List  list = new LinkedList(); // 이 규칙에 따라 만든 객체 주소를담겠다는 의미이다 List
+  List<Member>  list = new LinkedList<>(); // 이 규칙에 따라 만든 객체 주소를담겠다는 의미이다 List
 
   public void insert(Member member) {
     list.add(member);
@@ -19,7 +19,7 @@ public class MemberDao {
 
   public Member findByEmail(String email) {
     for (int i = 0; i < list.size(); i++) {
-      Member member = (Member) list.get(i);
+      Member member = list.get(i);
       if (member.email.equals(email)) {
         return member;
       }
@@ -29,7 +29,7 @@ public class MemberDao {
 
   public boolean delete(String email) {
     for (int i = 0; i < list.size(); i++) {
-      Member member = (Member) list.get(i);
+      Member member = list.get(i);
       if (member.email.equals(email)) {
         return list.remove(i)  != null;
       }
@@ -39,28 +39,6 @@ public class MemberDao {
 
   public Member[] findAll() {
 
-    Object[] arr = list.toArray();
-
-    Member[] members = new Member[arr.length];
-
-    for (int i = 0; i < arr.length; i++) {
-      members[i] = (Member) arr[i];
-    }
-
-    return members;
+    return list.toArray(new Member[0]); // 빈배열 넘기면 새 배열을 얘가 알아서 만들어준다!  
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
