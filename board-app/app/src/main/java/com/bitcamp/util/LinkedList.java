@@ -6,7 +6,7 @@ package com.bitcamp.util;
  * @author vivi
  *
  */
-public class LinkedList extends AbstractList {
+public class LinkedList<E> extends AbstractList<E> {
 
   private Node head; // 첫 노드의 주소를 저장
   private Node tail; // 마지막 노드의 주소를 저장
