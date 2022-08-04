@@ -3,7 +3,7 @@ package com.bitcamp.util;
 import com.bitcamp.board.domain.Board;
 
 public class ListTest {
-  private void mtin() {
+  public static void main(String[] args) {
     // TODO Auto-generated method stub
     ObjectList<String> list = new ObjectList<>(); // 뒤의 괄호에는 String을 적어도 되고, 안적어도 된다.
     list.add("홍길동");
@@ -20,5 +20,17 @@ public class ListTest {
     Board b = list2.get(0); // 형변환할 필요가 없다! Board b = (Board)list2.get(0);
 
     LinkedList<String> list3 = new LinkedList<>();
+
+    list3.add("홍길동");
+    list3.add("임꺽정");
+
+    //    String[] names = new String[list3.size];
+    //    list3.toArray(names);
+
+    String[] names = list3.toArray(new String[0]);
+
+    for(String name:names) {
+      System.out.println(name);
+    }
   }
 }
