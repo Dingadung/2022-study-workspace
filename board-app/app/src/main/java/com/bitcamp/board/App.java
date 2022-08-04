@@ -37,7 +37,7 @@ public class App {
     loop: while (true) {
 
       // 메인 메뉴 출력
-      System.out.printf("%s\n", breadcrumbMenu);
+      System.out.printf("%s: \n", breadcrumbMenu);
       printMenus(menus);
 
       try {

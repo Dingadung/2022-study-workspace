@@ -28,6 +28,11 @@ public class Test20 {
 
   static int maxDigit(int n) {
     // 이 메서드를 완성하시오!
-    return 0;
+    int max=0;
+    while(n>0) {
+      if(max<n%10)max=n%10;
+      n/=10;
+    }
+    return max;
   }
 }
