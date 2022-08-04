@@ -1,8 +1,8 @@
 package com.bitcamp.board.dao;
 
-import com.bitcamp.board.domain.Member;
-import com.bitcamp.util.LinkedList;
-import com.bitcamp.util.List;
+import java.util.LinkedList;
+import java.util.List;
+import com.bitcamp.board.domain.Member; // ctrl+shift+ Alphabet O
 
 // 회원 목록을 관리하는 역할
 //
