@@ -10,10 +10,17 @@ package com.bitcamp.util;
 // 타입 파라미터 이름: 
 //      - 타입을 받는 파라미터임을 드러내기 위해, 일반 변수와 달리, 대문자로 시작한다.
 //      - 간결하게 유지하기 위해 한 개의 알파벳을 사용한다.
+//      - 예) 
+//      E - Element
+//      K - Key
+//      N - Number
+//      T - Type
+//      V - Value
+//      S, U, V -2nd, 3rd, 4th types
 public interface List <E>{
-  void add(Object value); 
-  Object get(int index);
-  Object remove(int index); 
-  Object[] toArray(); 
+  void add(E value); 
+  E get(int index);
+  E remove(int index); 
+  E[] toArray(); 
   int size();
 }
