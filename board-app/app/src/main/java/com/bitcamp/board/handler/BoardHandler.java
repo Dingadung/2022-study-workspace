@@ -21,6 +21,7 @@ public class BoardHandler extends AbstractHandler{
     // 변수를  선언과 동시에 넣을 때는 new String[]을 생략할 수 있지만, 나중에 집어 넣을 때는 생략할수 없다.
   }
 
+  // 템플릿 메서드 디자인 패턴, 템플릿(틀) -> 템플릿 메서드 패턴(template method pattern)
   // 수퍼클래스의 execute()에서 동작의 전체적인 흐름을 정의하고(틀을 만들고),
   // 서브클래스의 service()에서 구체적인 동작을 정의한다. (세부적인 항목을 구현한다.)
   @Override
@@ -40,7 +41,6 @@ public class BoardHandler extends AbstractHandler{
   private void onList() {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-
     System.out.println("번호 제목 조회수 작성자 등록일");
 
     Board[] boards = this.boardDao.findAll();
@@ -51,11 +51,9 @@ public class BoardHandler extends AbstractHandler{
       System.out.printf("%d\t%s\t%d\t%s\t%s\n",
           board.no, board.title, board.viewCount, board.writer, dateStr);
     }
-
   }
 
   private void onDetail() {
-
     int boardNo = 0;
     while (true) {
       try {
@@ -81,12 +79,9 @@ public class BoardHandler extends AbstractHandler{
     System.out.printf("조회수: %d\n", board.viewCount);
     System.out.printf("작성자: %s\n", board.writer);
     Date date = new Date(board.createdDate);
-    System.out.printf("등록일: %tY-%1$tm-%1$td %1$tH:%1$tM\n", date);
-
   }
 
   private void onInput() {
-
     Board board = new Board();
 
     board.title = Prompt.inputString("제목? ");
@@ -102,7 +97,6 @@ public class BoardHandler extends AbstractHandler{
   }
 
   private void onDelete() {
-
     int boardNo = 0;
     while (true) {
       try {
@@ -121,8 +115,6 @@ public class BoardHandler extends AbstractHandler{
   }
 
   private void onUpdate() {
-
-
     int boardNo = 0;
     while (true) {
       try {
@@ -152,7 +144,6 @@ public class BoardHandler extends AbstractHandler{
       System.out.println("변경 취소했습니다.");
     }
   }
-
 
 }
 

@@ -7,16 +7,16 @@ import java.util.Date;
 import com.bitcamp.board.App;
 import com.bitcamp.board.dao.MemberDao;
 import com.bitcamp.board.domain.Member;
-import com.bitcamp.handler.Handler;
+import com.bitcamp.handler.AbstractHandler;
 import com.bitcamp.util.Prompt;
 
-public class MemberHandler implements Handler{
+public class MemberHandler extends AbstractHandler{
 
   private MemberDao memberDao = new MemberDao();
 
-  // 모든 인스턴스가 같은 서브 메뉴를 가지기 때문에
-  // 메뉴명을 저장할 배열은 스태틱, 클래스 필드로 준비한다.
-  private static String [] menus = {"목록", "상세보기", "등록", "삭제", "변경"};
+  public MemberHandler() {
+    super(new String[] {"목록", "상세보기", "등록", "삭제", "변경"});
+  }
 
   static void printMenus(String[] menus) {
     for(int i=0;i<menus.length; i++) {
@@ -25,50 +25,18 @@ public class MemberHandler implements Handler{
     System.out.println();
   }
 
-  public void execute() {
-    while (true) {
-      System.out.printf("%s:\n", App.breadcrumbMenu); 
-      printMenus(menus);
-
-      try {
-        int menuNo = Prompt.inputInt("메뉴를 선택하세요[1..5](0: 이전) ");
-        displayHeadline();
-
-        if(menuNo > 0 && menuNo <= menus.length) {
-          //메뉴에 진입할 때 breadCrumb메뉴바에 그 메뉴를 등록한다.
-          App.breadcrumbMenu.push(menus[menuNo-1]);
-        } else if(menuNo == 0){
-          return; // 메인 메뉴로 돌아간다.
-        }else {
-          System.out.println("메뉴 번호가 옳지 않습니다!");
-          continue; // while문의 조건 검사로 보낸다.
-        }
-
-        // 서브 메뉴의 제목을 출력한다.
-        System.out.printf("%s: \n",App.breadcrumbMenu);
-        switch (menuNo) {
-          case 1: this.onList(); break;
-          case 2: this.onDetail(); break;
-          case 3: this.onInput(); break;
-          case 4: this.onDelete(); break;
-          case 5: this.onUpdate(); break;
-          default: System.out.println("메뉴 번호가 옳지 않습니다!");
-        }
-
-        displayBlankLine();
-        App.breadcrumbMenu.pop();
-      } catch (Exception ex) {
-        System.out.printf("예외 발생: %s\n", ex.getMessage());
-      }
-    } // 게시판 while
-  }
-
-  private static void displayHeadline() {
-    System.out.println("=========================================");
-  }
-
-  private static void displayBlankLine() {
-    System.out.println(); 
+  @Override
+  public void service(int menuNo) {
+    // 서브 메뉴의 제목을 출력한다.
+    System.out.printf("%s: \n",App.breadcrumbMenu);
+    switch (menuNo) {
+      case 1: this.onList(); break;
+      case 2: this.onDetail(); break;
+      case 3: this.onInput(); break;
+      case 4: this.onDelete(); break;
+      case 5: this.onUpdate(); break;
+      default: System.out.println("메뉴 번호가 옳지 않습니다!");
+    }
   }
 
   private void onList() {
@@ -126,7 +94,6 @@ public class MemberHandler implements Handler{
   }
 
   private void onUpdate() {
-
     String email = Prompt.inputString("변경할 회원 이메일? ");
 
     Member member = this.memberDao.findByEmail(email);
