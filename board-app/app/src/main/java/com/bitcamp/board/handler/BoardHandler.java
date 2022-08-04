@@ -8,10 +8,10 @@ import java.util.Date;
 import com.bitcamp.board.App;
 import com.bitcamp.board.dao.BoardDao;
 import com.bitcamp.board.domain.Board;
-import com.bitcamp.handler.Handler;
+import com.bitcamp.handler.AbstractHandler;
 import com.bitcamp.util.Prompt;
 
-public class BoardHandler implements Handler{
+public class BoardHandler extends AbstractHandler{
 
 
   // 게시글 목록을 관리할 객체 준비
@@ -21,13 +21,9 @@ public class BoardHandler implements Handler{
   // 메뉴명을 저장할 배열은 스태틱, 클래스 필드로 준비한다.
   private static String [] menus = {"목록", "상세보기", "등록", "삭제", "변경"};
 
-  static void printMenus(String[] menus) {
-    for(int i=0;i<menus.length; i++) {
-      System.out.printf("  %d: %s\n", i + 1, menus[i]);
-    }
-    System.out.println();
-  }
 
+  //-----------------------------------------------------------------------------------------------
+  @Override
   public void execute() {
     while (true) {
       System.out.printf("%s:\n", App.breadcrumbMenu); // printf가 알아서 toString을 호출하므로 따로 안붙여줘도 ㄱㅊ
@@ -50,6 +46,7 @@ public class BoardHandler implements Handler{
 
         // 서브 메뉴의 제목을 출력한다.
         System.out.printf("%s: \n",App.breadcrumbMenu);
+
         switch (menuNo) {
           case 1: 
             this.onList(); break;
@@ -66,15 +63,11 @@ public class BoardHandler implements Handler{
         System.out.printf("예외 발생: %s\n", ex.getMessage());
       }
     } // 게시판 while
+    //-----------------------------------------------------------------------------------------------
+
   }
 
-  private static void displayHeadline() {
-    System.out.println("=========================================");
-  }
 
-  private static void displayBlankLine() {
-    System.out.println(); // 메뉴를 처리한 후 빈 줄 출력
-  }
 
   private void onList() {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
