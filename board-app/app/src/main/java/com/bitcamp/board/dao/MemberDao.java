@@ -39,6 +39,6 @@ public class MemberDao {
 
   public Member[] findAll() {
 
-    return list.toArray(new Member[0]); // 빈배열 넘기면 새 배열을 얘가 알아서 만들어준다!  
+    return list.toArray(new Member[0]); // 빈배열 넘기면 새 배열을 얘가 알아서 만들어준다!  , size가 0인것임.
   }
 }
