@@ -18,5 +18,7 @@ public class ListTest {
     //list2.add(new Member()); // 컴파일 오류!
 
     Board b = list2.get(0); // 형변환할 필요가 없다! Board b = (Board)list2.get(0);
+
+    LinkedList<String> list3 = new LinkedList<>();
   }
 }
