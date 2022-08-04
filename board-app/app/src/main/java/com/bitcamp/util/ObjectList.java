@@ -2,7 +2,7 @@ package com.bitcamp.util;
 
 //List  규격에 따라 메서드를 구현할 것이라고 선언한다!
 // 만약 규격에 따라 메서드를 구현하지 않으면 컴파일을 안해준다!
-public class ObjectList extends AbstractList{
+public class ObjectList<E> extends AbstractList<E>{
 
   private static final int DEFAULT_CAPACITY = 10;
 
