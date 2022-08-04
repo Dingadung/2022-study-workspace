@@ -4,7 +4,6 @@
 package com.bitcamp.board.handler;
 
 import java.util.Date;
-import com.bitcamp.board.App;
 import com.bitcamp.board.dao.MemberDao;
 import com.bitcamp.board.domain.Member;
 import com.bitcamp.handler.AbstractHandler;
@@ -28,7 +27,6 @@ public class MemberHandler extends AbstractHandler{
   @Override
   public void service(int menuNo) {
     // 서브 메뉴의 제목을 출력한다.
-    System.out.printf("%s: \n",App.breadcrumbMenu);
     switch (menuNo) {
       case 1: this.onList(); break;
       case 2: this.onDetail(); break;
@@ -52,7 +50,6 @@ public class MemberHandler extends AbstractHandler{
   }
 
   private void onDetail() {
-
     String email = Prompt.inputString("조회할 회원 이메일? ");
 
     Member member = this.memberDao.findByEmail(email);
@@ -69,7 +66,6 @@ public class MemberHandler extends AbstractHandler{
   }
 
   private void onInput() {
-
     Member member = new Member();
 
     member.name = Prompt.inputString("이름? ");
@@ -83,7 +79,6 @@ public class MemberHandler extends AbstractHandler{
   }
 
   private void onDelete() {
-
     String email = Prompt.inputString("삭제할 회원 이메일? ");
 
     if (memberDao.delete(email)) {
