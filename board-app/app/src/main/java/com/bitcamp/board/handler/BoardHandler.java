@@ -5,7 +5,6 @@ package com.bitcamp.board.handler;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import com.bitcamp.board.App;
 import com.bitcamp.board.dao.BoardDao;
 import com.bitcamp.board.domain.Board;
 import com.bitcamp.handler.AbstractHandler;
@@ -16,58 +15,71 @@ public class BoardHandler extends AbstractHandler{
 
   // 게시글 목록을 관리할 객체 준비
   private BoardDao boardDao = new BoardDao();
-
-  // 모든 인스턴스가 같은 서브 메뉴를 가지기 때문에
-  // 메뉴명을 저장할 배열은 스태틱, 클래스 필드로 준비한다.
-  private static String [] menus = {"목록", "상세보기", "등록", "삭제", "변경"};
-
-
-  //-----------------------------------------------------------------------------------------------
-  @Override
-  public void execute() {
-    while (true) {
-      System.out.printf("%s:\n", App.breadcrumbMenu); // printf가 알아서 toString을 호출하므로 따로 안붙여줘도 ㄱㅊ
-      printMenus(menus);
-
-      try {
-        int menuNo = Prompt.inputInt("메뉴를 선택하세요[1..5](0: 이전) ");
-
-        if(menuNo > 0 && menuNo <= menus.length) {
-          //메뉴에 진입할 때 breadCrumb메뉴바에 그 메뉴를 등록한다.
-          App.breadcrumbMenu.push(menus[menuNo-1]);
-        } else if(menuNo == 0){
-          return; // 메인 메뉴로 돌아간다.
-        }else {
-          System.out.println("메뉴 번호가 옳지 않습니다!");
-          continue; // while문의 조건 검사로 보낸다.
-        }
-
-        displayHeadline();
-
-        // 서브 메뉴의 제목을 출력한다.
-        System.out.printf("%s: \n",App.breadcrumbMenu);
-
-        switch (menuNo) {
-          case 1: 
-            this.onList(); break;
-          case 2: this.onDetail(); break;
-          case 3: this.onInput(); break;
-          case 4: this.onDelete(); break;
-          case 5: this.onUpdate(); break;
-          default: 
-        }
-
-        displayBlankLine();
-        App.breadcrumbMenu.pop();
-      } catch (Exception ex) {
-        System.out.printf("예외 발생: %s\n", ex.getMessage());
-      }
-    } // 게시판 while
-    //-----------------------------------------------------------------------------------------------
+  public BoardHandler() {
+    // 수퍼 클래스의 생성자를 호출 할 때 메뉴 목록을 전달한다.
+    super(new String[] {"목록", "상세보기", "등록", "삭제", "변경"});
+    // 변수를  선언과 동시에 넣을 때는 new String[]을 생략할 수 있지만, 나중에 집어 넣을 때는 생략할수 없다.
 
   }
 
+  //-----------------------------------------------------------------------------------------------
+  //  @Override
+  //  public void execute() {
+  //    while (true) {
+  //      System.out.printf("%s:\n", App.breadcrumbMenu); // printf가 알아서 toString을 호출하므로 따로 안붙여줘도 ㄱㅊ
+  //      printMenus(menus);
+  //
+  //      try {
+  //        int menuNo = Prompt.inputInt("메뉴를 선택하세요[1..5](0: 이전) ");
+  //
+  //        if(menuNo > 0 && menuNo <= menus.length) {
+  //          //메뉴에 진입할 때 breadCrumb메뉴바에 그 메뉴를 등록한다.
+  //          App.breadcrumbMenu.push(menus[menuNo-1]);
+  //        } else if(menuNo == 0){
+  //          return; // 메인 메뉴로 돌아간다.
+  //        }else {
+  //          System.out.println("메뉴 번호가 옳지 않습니다!");
+  //          continue; // while문의 조건 검사로 보낸다.
+  //        }
+  //
+  //        displayHeadline();
+  //
+  //        // 서브 메뉴의 제목을 출력한다.
+  //        System.out.printf("%s: \n",App.breadcrumbMenu);
+  //
+  //        switch (menuNo) {
+  //          case 1: 
+  //            this.onList(); break;
+  //          case 2: this.onDetail(); break;
+  //          case 3: this.onInput(); break;
+  //          case 4: this.onDelete(); break;
+  //          case 5: this.onUpdate(); break;
+  //          default: 
+  //        }
+  //
+  //        displayBlankLine();
+  //        App.breadcrumbMenu.pop();
+  //      } catch (Exception ex) {
+  //        System.out.printf("예외 발생: %s\n", ex.getMessage());
+  //      }
+  //    } // 게시판 while
+  //
+  //  }
+  //-----------------------------------------------------------------------------------------------
 
+  @Override
+  public void service(int menuNo) {
+    // TODO Auto-generated method stub
+    switch (menuNo) {
+      case 1: 
+        this.onList(); break;
+      case 2: this.onDetail(); break;
+      case 3: this.onInput(); break;
+      case 4: this.onDelete(); break;
+      case 5: this.onUpdate(); break;
+      default: 
+    }
+  }
 
   private void onList() {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
