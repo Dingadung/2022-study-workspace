@@ -12,61 +12,17 @@ import com.bitcamp.util.Prompt;
 
 public class BoardHandler extends AbstractHandler{
 
-
   // 게시글 목록을 관리할 객체 준비
   private BoardDao boardDao = new BoardDao();
+
   public BoardHandler() {
-    // 수퍼 클래스의 생성자를 호출 할 때 메뉴 목록을 전달한다.
+    // 수퍼 클래스의 생성자를 호출 할 때 메뉴 목록을 전달한다. super class constructor!!!!!!!! super!!!!!
     super(new String[] {"목록", "상세보기", "등록", "삭제", "변경"});
     // 변수를  선언과 동시에 넣을 때는 new String[]을 생략할 수 있지만, 나중에 집어 넣을 때는 생략할수 없다.
-
   }
 
-  //-----------------------------------------------------------------------------------------------
-  //  @Override
-  //  public void execute() {
-  //    while (true) {
-  //      System.out.printf("%s:\n", App.breadcrumbMenu); // printf가 알아서 toString을 호출하므로 따로 안붙여줘도 ㄱㅊ
-  //      printMenus(menus);
-  //
-  //      try {
-  //        int menuNo = Prompt.inputInt("메뉴를 선택하세요[1..5](0: 이전) ");
-  //
-  //        if(menuNo > 0 && menuNo <= menus.length) {
-  //          //메뉴에 진입할 때 breadCrumb메뉴바에 그 메뉴를 등록한다.
-  //          App.breadcrumbMenu.push(menus[menuNo-1]);
-  //        } else if(menuNo == 0){
-  //          return; // 메인 메뉴로 돌아간다.
-  //        }else {
-  //          System.out.println("메뉴 번호가 옳지 않습니다!");
-  //          continue; // while문의 조건 검사로 보낸다.
-  //        }
-  //
-  //        displayHeadline();
-  //
-  //        // 서브 메뉴의 제목을 출력한다.
-  //        System.out.printf("%s: \n",App.breadcrumbMenu);
-  //
-  //        switch (menuNo) {
-  //          case 1: 
-  //            this.onList(); break;
-  //          case 2: this.onDetail(); break;
-  //          case 3: this.onInput(); break;
-  //          case 4: this.onDelete(); break;
-  //          case 5: this.onUpdate(); break;
-  //          default: 
-  //        }
-  //
-  //        displayBlankLine();
-  //        App.breadcrumbMenu.pop();
-  //      } catch (Exception ex) {
-  //        System.out.printf("예외 발생: %s\n", ex.getMessage());
-  //      }
-  //    } // 게시판 while
-  //
-  //  }
-  //-----------------------------------------------------------------------------------------------
-
+  // 수퍼클래스의 execute()에서 동작의 전체적인 흐름을 정의하고(틀을 만들고),
+  // 서브클래스의 service()에서 구체적인 동작을 정의한다. (세부적인 항목을 구현한다.)
   @Override
   public void service(int menuNo) {
     // TODO Auto-generated method stub
