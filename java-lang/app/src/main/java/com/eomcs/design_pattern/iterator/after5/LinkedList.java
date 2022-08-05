@@ -146,26 +146,22 @@ public class LinkedList<E> {
 
   // Iterator 구현체를 제공한다.
   public Iterator<E> iterator(){
-    class LinkedListIterator<T> implements Iterator<T> {
+    Iterator<E> obj = new Iterator<E>() {
       //    LinkedList<E> list;
       int index=0;
-
-      //    public LinkedListIterator(LinkedList  <E> list) {
-      //      this.list = list;
-      //    }
       @Override
       public boolean hasNext() {
         return index < LinkedList.this.size();
       }
       @Override
-      public T next() {
-        return (T)LinkedList.this.get(index++);
+      public E next() {
+        return LinkedList.this.get(index++);
       }
-    }
-    return new LinkedListIterator<E>();
+    };
+    // 그냥 평소랑 똑같이 클래스의 인스턴스를 obj에 넣어준다고 생각하면된다.단, 클래스의 이름이 없을 뿐이다!
+
+    return obj;
   }
-
-
 
 }
 

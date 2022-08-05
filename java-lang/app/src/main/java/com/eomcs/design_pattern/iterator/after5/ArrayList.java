@@ -104,7 +104,8 @@ public class ArrayList<E> {
     // => 문법
     //      인터페이스명 레퍼런스 = new 인터페이스명(){
     //                  인터페이스에 선언된 메서드 구현 
-    //      }
+    //      };
+    // 무슨 객체를 만드는지 바로 확인할 수 있다.
     Iterator<E> iterator = new Iterator<>() {
       int index=0;
 
@@ -118,6 +119,8 @@ public class ArrayList<E> {
         return ArrayList.this.get(index++);
       }
     };
+
+
     return iterator; 
   } // iterator method 끝
 
