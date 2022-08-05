@@ -41,23 +41,18 @@ public class Stack<E> {
 
   // Iterator 구현체를 제공한다.
   public Iterator<E> iterator(){
-    return new StackIterator<E>(this);
+    return new StackIterator<E>();
   }
 
   //Stack에서 데이터를 꺼내줄 객체//
-  static class StackIterator<E> implements Iterator<E> {
-    Stack<E> list;
-
-    public StackIterator(Stack  <E> list) {
-      this.list = list;
-    }
+  class StackIterator<T> implements Iterator<T> {
     @Override
     public boolean hasNext() {
-      return !list.empty(); // 유효한 인덱스!
+      return !Stack.this.empty(); // 유효한 인덱스!
     }
     @Override
-    public E next() {
-      return list.pop();
+    public T next() {
+      return (T)Stack.this.pop();
     }
   }
 
