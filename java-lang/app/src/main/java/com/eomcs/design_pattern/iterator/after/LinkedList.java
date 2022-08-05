@@ -1,5 +1,5 @@
 // 제네릭 적용하기
-package com.eomcs.design_pattern.iterator;
+package com.eomcs.design_pattern.iterator.after;
 
 // LinkedList에 보관되는 값의 타입을 E 라고 가정한다.
 // => E 타입이라고 가정하고 코드를 작성한다.

@@ -10,38 +10,34 @@ import com.bitcamp.board.domain.Board;
 import com.bitcamp.handler.AbstractHandler;
 import com.bitcamp.util.Prompt;
 
-public class BoardHandler extends AbstractHandler{
+public class BoardHandler extends AbstractHandler {
 
   // 게시글 목록을 관리할 객체 준비
   private BoardDao boardDao = new BoardDao();
 
   public BoardHandler() {
-    // 수퍼 클래스의 생성자를 호출 할 때 메뉴 목록을 전달한다. super class constructor!!!!!!!! super!!!!!
+    // 수퍼 클래스의 생성자를 호출할 때 메뉴 목록을 전달한다.
     super(new String[] {"목록", "상세보기", "등록", "삭제", "변경"});
-    // 변수를  선언과 동시에 넣을 때는 new String[]을 생략할 수 있지만, 나중에 집어 넣을 때는 생략할수 없다.
   }
 
-  // 템플릿 메서드 디자인 패턴, 템플릿(틀) -> 템플릿 메서드 패턴(template method pattern)
-  // 수퍼클래스의 execute()에서 동작의 전체적인 흐름을 정의하고(틀을 만들고),
-  // 서브클래스의 service()에서 구체적인 동작을 정의한다. (세부적인 항목을 구현한다.)
+  // 템플릿 메서드 패턴(template method pattern) 
+  //   - 수퍼 클래스의 execute()에서 동작의 전체적인 흐름을 정의하고(틀을 만들고),
+  //   - 서브 클래스의 service()에서 동작을 구제척으로 정의한다.(세부적인 항목을 구현한다)
   @Override
   public void service(int menuNo) {
-    // TODO Auto-generated method stub
     switch (menuNo) {
-      case 1: 
-        this.onList(); break;
+      case 1: this.onList(); break;
       case 2: this.onDetail(); break;
       case 3: this.onInput(); break;
       case 4: this.onDelete(); break;
       case 5: this.onUpdate(); break;
-      default: 
     }
   }
 
   private void onList() {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-    System.out.println("번호 제목 조회수 작성자 등록일");
+    System.out.println("번호\t제목\t조회수\t작성자\t등록일");
 
     Board[] boards = this.boardDao.findAll();
 
@@ -51,6 +47,7 @@ public class BoardHandler extends AbstractHandler{
       System.out.printf("%d\t%s\t%d\t%s\t%s\n",
           board.no, board.title, board.viewCount, board.writer, dateStr);
     }
+
   }
 
   private void onDetail() {
@@ -79,6 +76,8 @@ public class BoardHandler extends AbstractHandler{
     System.out.printf("조회수: %d\n", board.viewCount);
     System.out.printf("작성자: %s\n", board.writer);
     Date date = new Date(board.createdDate);
+    System.out.printf("등록일: %tY-%1$tm-%1$td %1$tH:%1$tM\n", date);
+
   }
 
   private void onInput() {
@@ -144,7 +143,6 @@ public class BoardHandler extends AbstractHandler{
       System.out.println("변경 취소했습니다.");
     }
   }
-
 }
 
 

@@ -9,7 +9,7 @@ import com.bitcamp.board.domain.Member;
 import com.bitcamp.handler.AbstractHandler;
 import com.bitcamp.util.Prompt;
 
-public class MemberHandler extends AbstractHandler{
+public class MemberHandler extends AbstractHandler {
 
   private MemberDao memberDao = new MemberDao();
 
@@ -17,23 +17,14 @@ public class MemberHandler extends AbstractHandler{
     super(new String[] {"목록", "상세보기", "등록", "삭제", "변경"});
   }
 
-  static void printMenus(String[] menus) {
-    for(int i=0;i<menus.length; i++) {
-      System.out.printf("  %d: %s\n", i + 1, menus[i]);
-    }
-    System.out.println();
-  }
-
   @Override
   public void service(int menuNo) {
-    // 서브 메뉴의 제목을 출력한다.
     switch (menuNo) {
       case 1: this.onList(); break;
       case 2: this.onDetail(); break;
       case 3: this.onInput(); break;
       case 4: this.onDelete(); break;
       case 5: this.onUpdate(); break;
-      default: System.out.println("메뉴 번호가 옳지 않습니다!");
     }
   }
 
@@ -75,7 +66,7 @@ public class MemberHandler extends AbstractHandler{
 
     this.memberDao.insert(member);
 
-    System.out.println("회원을 등록했습니다.");
+    System.out.println("회워을 등록했습니다.");
   }
 
   private void onDelete() {
