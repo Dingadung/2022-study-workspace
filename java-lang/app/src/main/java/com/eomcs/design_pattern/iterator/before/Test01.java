@@ -1,6 +1,8 @@
 // iterator 디자인 패턴 : 데이터 목록에서 값을 꺼내는 것을 별도의 객체로 분리하는 설계 방식 
 package com.eomcs.design_pattern.iterator.before;
 
+import java.util.HashSet;
+
 // Iterator 디자인 패턴
 // => 데이터 목록을 관리하는 방식에 상관없이 일관된 방식으로 데이터를 꺼낼 수 있게 해주는 설계 기법
 // => 즉 데이터 목록을 관리하는 객체를 직접 사용하여 값을 꺼내는 것이 아니라,
@@ -35,6 +37,13 @@ public class Test01 {
     list4.offer("ccc4");
     list4.offer("ddd4");
 
+    HashSet<String> list5 = new HashSet<>(); //Ctrl+Shift+O
+    list5.add("aaa5");
+    list5.add("bbb5");
+    list5.add("ccc5");
+    list5.add("ddd5");
+
+
     // 목록에서 값 꺼내기
     // 1) ArrayList 에서 값 꺼내기
     for(int i=0;i<list1.size();i++) {
@@ -62,8 +71,26 @@ public class Test01 {
 
     System.out.println("-----------------------------------------------");
 
+
+    // 5) HashSet 에서 값 꺼내기
+    String[] arr = list5.toArray(new String[0]);
+    for(String s:arr) {
+      System.out.println(s);
+    }
+
+    System.out.println("-----------------------------------------------");
+
+
+
   }
 
+  // 결론!
+  // - 자료 구조에 따라 데이터를 꺼내는 방식이 다르다!
+  // - 데이터 조회에 일관성이 없다!
+  //
+  // 해결책!
+  // - 데이터 조회를 별도의 객체로 분리하자!
+  // - 데이터 조회 방식을 통일하기 위해 인터페이스로 조회 방식을 규격화 하자!
 
 }
 
