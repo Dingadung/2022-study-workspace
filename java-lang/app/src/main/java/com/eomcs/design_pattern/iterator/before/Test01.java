@@ -16,62 +16,54 @@ public class Test01 {
     list1.add("bbb");
     list1.add("ccc");
     list1.add("ddd");
-    
+
     LinkedList<String> list2 = new LinkedList<>();
     list2.add("aaa2");
     list2.add("bbb2");
     list2.add("ccc2");
     list2.add("ddd2");
-    
+
     Stack<String> list3 = new Stack<>();
     list3.push("aaa3");
     list3.push("bbb3");
     list3.push("ccc3");
     list3.push("ddd3");
-    
+
     Queue<String> list4 = new Queue<>();
     list4.offer("aaa4");
     list4.offer("bbb4");
     list4.offer("ccc4");
     list4.offer("ddd4");
-    
-    // ArrayList에서 제공하는 메서드를 사용하여 직접 꺼내지 말고 
-    // 값을 꺼내주는 객체의 도움을 받으라!
-    // 이렇게 하는 이유? 
-    // => 데이터 목록 객체의 종류(ArrayList, LinkedList, Stack, Queue)에 상관없이 
-    //    일관된 방법으로 값을 꺼내기 위함이다.
-    Iterator<String> iterator = list1.iterator();
-    while (iterator.hasNext()) {
-      System.out.print(iterator.next() + ",");
+
+    // 목록에서 값 꺼내기
+    // 1) ArrayList 에서 값 꺼내기
+    for(int i=0;i<list1.size();i++) {
+      System.out.println(list1.get(i));
     }
-    System.out.println();
-    
-    // LinkedList도 ArrayList에서 값을 꺼내는 방식과 동일하게 값을 꺼낼 수 있다.
-    // 이런 이유로 Iterator를 사용하는 것이다.
-    iterator = list2.iterator();
-    while (iterator.hasNext()) {
-      System.out.print(iterator.next() + ",");
+    System.out.println("-----------------------------------------------");
+
+    // 1) LinkedList 에서 값 꺼내기
+    for(int i=0;i<list2.size();i++) {
+      System.out.println(list2.get(i));
     }
-    System.out.println();
-    
-    // Stack이 데이터를 어떻게 관리하는가에 상관없이,
-    // ArrayList에서 값을 꺼내는 방식과 동일하게 값을 꺼낼 수 있다.
-    // 이런 이유로 Iterator를 사용하는 것이다.
-    iterator = list3.iterator();
-    while (iterator.hasNext()) {
-      System.out.print(iterator.next() + ",");
+    System.out.println("-----------------------------------------------");
+
+
+    // 3) Stack 에서 값 꺼내기
+    while(!list3.empty()) {
+      System.out.println(list3.pop());
     }
-    System.out.println();
-    
-    // Queue가 데이터를 어떻게 관리하는가에 상관없이,
-    // ArrayList에서 값을 꺼내는 방식과 동일하게 값을 꺼낼 수 있다.
-    // 이런 이유로 Iterator를 사용하는 것이다.
-    iterator = list4.iterator();
-    while (iterator.hasNext()) {
-      System.out.print(iterator.next() + ",");
+    System.out.println("-----------------------------------------------");
+
+    // 4) QUEUE 에서 값 꺼내기
+    while(!list4.empty()) {
+      System.out.println(list4.poll());
     }
-    System.out.println();
+
+    System.out.println("-----------------------------------------------");
+
   }
+
 
 }
 
