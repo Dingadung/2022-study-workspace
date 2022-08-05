@@ -1,4 +1,4 @@
-// iterator 디자인 패턴 : 3) 인스턴스 멤버(스태틱 중첩 클래스)로 Iterator 클래스 정의하기
+// iterator 디자인 패턴 : 4) 로컬 클래스로 Iterator 클래스 정의하기
 package com.eomcs.design_pattern.iterator.after4;
 
 import java.util.HashSet;
