@@ -1,15 +1,23 @@
 package com.eomcs.design_pattern.iterator.after1;
 
 // ArrayList에서 데이터를 꺼내줄 객체//
-public class ArrayListIterator implements Iterator {
+public class ArrayListIterator<E> implements Iterator<E> {
+  ArrayList<E> list;
+  int index=0;
+
+  public ArrayListIterator(ArrayList<E> list) {
+    this.list = list;
+  }
   @Override
   public boolean hasNext() {
     // TODO Auto-generated method stub
-    return false;
+    return index < list.size();
   }
   @Override
-  public Object next() {
+  public E next() {
     // TODO Auto-generated method stub
-    return null;
+    E obj = list.get(index);
+    index++;
+    return obj;
   }
 }
