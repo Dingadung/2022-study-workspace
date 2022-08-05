@@ -98,21 +98,31 @@ public class ArrayList<E> {
 
   // Iterator 구현체를 제공한다.
   public Iterator<E> iterator(){
-    return new ArrayListIterator<E>(); // list 변수 주소 값이 this에 넘어간다.
+    // 생성자를 호출할 때 바깥 클래스의 인스턴스 주소를 넘겨주지 않아도
+    // 컴파일러가 넘겨주는 코드로 자동 변환한다.
+    //
+    return new ArrayListIterator<E>(); 
+    // list 변수 주소 값이 this에 넘어간다.
+    // 위의 코드는 컴파일될 때다음과 같이 바뀐다.
+    //    return new ArrayListIterator<E>(this);
   }
 
-  // static nested class(스태틱 중첩 클래스)
+  // static nested class(스태틱 중첩 클래스) = inner class
+  // => 바깥 클래스의 인스턴스를 사용하는 경우 논 클래스 중첩 클래스로 선언하라!
+  // => 왜? 바깥 클래스의 인스턴스 주소를 받은 필드와 생성자 파라미터가 자동으로 추가된다.
+  // => 즉, 개발자가 바깥 클래스의 인스턴스 주소를 다룰 필요가 없다.
   class ArrayListIterator<T> implements Iterator<T> {
     // 논스태틱 중첩  클래스인 경우 바깥 클래스의 인스턴스 주소를 받을 필드가 자동 추가된다.
     // 따라서 다음과 같이 개발자가 직접 추가할 필요가 없다.
+    //ArrayList<E> list; // 자동 생성된다. -> ArrayList<E> this$0;
 
-    //ArrayList<E> list;
     int index=0;
 
     // 논스태틱 중첩 클래스인 경우 바깥 클래스의 인스턴스 주소를 받는 파라미터가 생성자가 자동으로 추가된다,
     //개발자가 직접 추가할 필요가 없다!
-    //    public ArrayListIterator(ArrayList<E> list) {
+    //    public ArrayListIterator(ArrayList<E> this$0) {
     //      this.list = list;
+    //      -> this.this$0 = this$0;
     //    }
     @Override
     public boolean hasNext() {
