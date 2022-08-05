@@ -1,4 +1,4 @@
-package com.eomcs.design_pattern.iterator.after3;
+package com.eomcs.design_pattern.iterator.after4;
 
 public class Stack<E> {
 
@@ -41,21 +41,21 @@ public class Stack<E> {
 
   // Iterator 구현체를 제공한다.
   public Iterator<E> iterator(){
+    //Stack에서 데이터를 꺼내줄 객체//
+    class StackIterator<T> implements Iterator<T> {
+      @Override
+      public boolean hasNext() {
+        return !Stack.this.empty(); // 유효한 인덱스!
+      }
+      @SuppressWarnings("unchecked")
+      @Override
+      public T next() {
+        return (T)Stack.this.pop();
+      }
+    }
     return new StackIterator<E>();
   }
 
-  //Stack에서 데이터를 꺼내줄 객체//
-  class StackIterator<T> implements Iterator<T> {
-    @Override
-    public boolean hasNext() {
-      return !Stack.this.empty(); // 유효한 인덱스!
-    }
-    @SuppressWarnings("unchecked")
-    @Override
-    public T next() {
-      return (T)Stack.this.pop();
-    }
-  }
 
 }
 
