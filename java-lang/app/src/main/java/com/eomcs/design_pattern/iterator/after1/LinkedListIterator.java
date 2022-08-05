@@ -1,11 +1,11 @@
 package com.eomcs.design_pattern.iterator.after1;
 
-// ArrayList에서 데이터를 꺼내줄 객체//
-public class ArrayListIterator<E> implements Iterator<E> {
-  ArrayList<E> list;
+// LinkedList에서 데이터를 꺼내줄 객체//
+public class LinkedListIterator<E> implements Iterator<E> {
+  LinkedList<E> list;
   int index=0;
 
-  public ArrayListIterator(ArrayList<E> list) {
+  public LinkedListIterator(LinkedList<E> list) {
     this.list = list;
   }
   @Override
