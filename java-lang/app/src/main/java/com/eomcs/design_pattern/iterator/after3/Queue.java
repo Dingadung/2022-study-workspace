@@ -22,23 +22,24 @@ public class Queue<E> extends LinkedList<E> {
   // Iterator 구현체를 제공한다.
   @Override
   public Iterator<E> iterator(){
-    return new QueueIterator<E>(this);
+    return new QueueIterator<E>();
   }
 
   //Queue에서 데이터를 꺼내줄 객체//
-  static class QueueIterator<E> implements Iterator<E> {
-    Queue<E> list;
+  class QueueIterator<T> implements Iterator<T> {
+    //Queue<E> list;
 
-    public QueueIterator(Queue  <E> list) {
-      this.list = list;
-    }
+    //    public QueueIterator(Queue  <E> list) {
+    //      this.list = list;
+    //    }
     @Override
     public boolean hasNext() {
-      return !list.empty(); // 유효한 인덱스!
+      return !Queue.this.empty(); // 유효한 인덱스!
     }
+    @SuppressWarnings("unchecked")
     @Override
-    public E next() {
-      return list.poll();
+    public T next() {
+      return(T) Queue.this.poll();
     }
   }
 }
