@@ -1,7 +1,8 @@
-// iterator 디자인 패턴 : 1) 패키지 멤버로 Iterator 클래스 정의하기
-package com.eomcs.design_pattern.iterator.after1;
+// iterator 디자인 패턴 : 2) 클래스 멤버(스태틱 중첩 클래스)로 Iterator 클래스 정의하기
+package com.eomcs.design_pattern.iterator.after2;
 
 import java.util.HashSet;
+import com.eomcs.design_pattern.iterator.after2.ArrayList.ArrayListIterator;
 
 // Iterator 디자인 패턴
 // => 데이터 목록을 관리하는 방식에 상관없이 일관된 방식으로 데이터를 꺼낼 수 있게 해주는 설계 기법
@@ -13,7 +14,7 @@ import java.util.HashSet;
 public class Test01 {
 
   public static void main(String[] args) {
-    ArrayList<String> list1 = new ArrayList<>();
+    ArrayList<String> list1 = new ArrayList<>(); // 이 list 객체 변수에 들어 있는 주소 값을 나중에 ArrayListIterator를 호출해서 Iterator객체를 만들 때 this에 들어가게 된다
     list1.add("aaa");
     list1.add("bbb");
     list1.add("ccc");
@@ -47,7 +48,10 @@ public class Test01 {
     // 목록에서 값 꺼내기
     // 1) ArrayList 에서 값 꺼내기
     // => ArrayList에게 값을 꺼내는 일을 할 객체를 달라고 요구한다.
-    Iterator<String> iterator1 = list1.iterator();
+    ArrayListIterator<String> iterator1_1 = (ArrayListIterator<String>) list1.iterator(); // iterator() 메소드가 Iterator를 리턴하므로 형변환을 해주어야한다!
+    Iterator<String> iterator1 =list1.iterator(); // 하지만, 굳이 얘가 어디의 Iterator인지 알 필요가 없다.그냥 Iterator의 규칙을 따로 있는지만 알면 되는거다!
+    // Test01에서 ArrayList(list1)에 Iterator 달라고 요구, ArrayList가 ArrayListIterator에게 자신에게 넘어온 객체 주소를  Iterator에게 전달하면서
+    // Iterator 객체 만들달라고 요구해서 ArrayListIterator가 iterator를 만들어서 리턴해준다!
     while(iterator1.hasNext()) {
       System.out.println(iterator1.next());
     }
