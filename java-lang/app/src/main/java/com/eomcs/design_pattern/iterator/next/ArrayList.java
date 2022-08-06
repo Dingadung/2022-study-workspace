@@ -98,7 +98,7 @@ public class ArrayList<E> {
 
   Iterator<E> iterator(){
 
-    Iterator<E> iterator = new Iterator<>() {
+    return new Iterator<>() {
       int index=0;
       @Override
       public boolean hasNext() {
@@ -111,7 +111,6 @@ public class ArrayList<E> {
       }
     };
 
-    return iterator;
   }
 
 
