@@ -98,7 +98,7 @@ public class ArrayList<E> {
 
   Iterator<E> iterator(){
 
-    class ArrayListIterator<E> implements Iterator<E>{
+    Iterator<E> iterator = new Iterator<>() {
       int index=0;
       @Override
       public boolean hasNext() {
@@ -107,12 +107,11 @@ public class ArrayList<E> {
       @SuppressWarnings("unchecked")
       @Override
       public E next() {
-        return(E) ArrayList.this.get(index++);
+        return ArrayList.this.get(index++);
       }
+    };
 
-    }//ArrayListIterator class
-
-    return new ArrayListIterator<E>();
+    return iterator;
   }
 
 
