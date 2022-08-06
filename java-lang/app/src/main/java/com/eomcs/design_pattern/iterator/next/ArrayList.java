@@ -97,24 +97,25 @@ public class ArrayList<E> {
   }
 
   Iterator<E> iterator(){
+
+    class ArrayListIterator<E> implements Iterator<E>{
+      int index=0;
+      @Override
+      public boolean hasNext() {
+        return ArrayList.this.size > index;
+      }
+      @SuppressWarnings("unchecked")
+      @Override
+      public E next() {
+        return(E) ArrayList.this.get(index++);
+      }
+
+    }//ArrayListIterator class
+
     return new ArrayListIterator<E>();
   }
 
-  private class ArrayListIterator<T> implements Iterator<T>{
-    int index=0;
-    @Override
-    public boolean hasNext() {
-      // TODO Auto-generated method stub
-      return ArrayList.this.size > index;
-    }
 
-    @Override
-    public T next() {
-      // TODO Auto-generated method stub
-      return(T) ArrayList.this.get(index++);
-    }
-
-  }//ArrayListIterator class
 
 }
 
