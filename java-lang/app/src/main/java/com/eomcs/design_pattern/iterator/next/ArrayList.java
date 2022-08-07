@@ -98,14 +98,12 @@ public class ArrayList<E> {
 
   Iterator<E> iterator(){
 
-    return new Iterator<>() {
+    return new Iterator<>() { // Iterator 인터페이스를 구현하는 클래스를 익명 클래스로 만들어준 것.
       int index=0;
-      @Override
       public boolean hasNext() {
         return ArrayList.this.size > index;
       }
       @SuppressWarnings("unchecked")
-      @Override
       public E next() {
         return ArrayList.this.get(index++);
       }
