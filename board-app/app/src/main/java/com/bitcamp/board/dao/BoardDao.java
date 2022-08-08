@@ -21,7 +21,7 @@ public class BoardDao {
     load();
   }
 
-  public void load() throws Exception{
+  public void load() throws FileNotFoundException{
     throw new FileNotFoundException();
   }
   public void save() throws FileNotFoundException{ 
