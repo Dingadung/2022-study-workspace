@@ -3,8 +3,6 @@
  */
 package com.bitcamp.board.handler;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import com.bitcamp.board.dao.BoardDao;
@@ -22,16 +20,14 @@ public class BoardHandler extends AbstractHandler {
     super(new String[] {"목록", "상세보기", "등록", "삭제", "변경"});
     try{
       boardDao = new BoardDao(fileName);
-    }catch(FileNotFoundException e) {
-      System.out.printf("%s 파일이 존재하지 않습니다.\n", fileName);
-    }catch(IOException e) {
-      System.out.printf("파일 입출력 중 오류 발생! - %s\n", e.getMessage());
+    }catch(Exception e) {
+      System.out.printf("%s 파일 로딩 중 오류 발생!\n", e.getMessage());
     }
   }
 
-  // 템플릿 메서드 패턴(template method pattern) 
-  //   - 수퍼 클래스의 execute()에서 동작의 전체적인 흐름을 정의하고(틀을 만들고),
-  //   - 서브 클래스의 service()에서 동작을 구제척으로 정의한다.(세부적인 항목을 구현한다)
+  //   템플릿 메서드 패턴(template method pattern) 
+  //     - 수퍼 클래스의 execute()에서 동작의 전체적인 흐름을 정의하고(틀을 만들고),
+  //     - 서브 클래스의 service()에서 동작을 구제척으로 정의한다.(세부적인 항목을 구현한다)
   @Override
   public void service(int menuNo) {
     switch (menuNo) {

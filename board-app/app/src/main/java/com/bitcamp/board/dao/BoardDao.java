@@ -2,7 +2,6 @@ package com.bitcamp.board.dao;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,14 +17,12 @@ public class BoardDao {
   String fileName;
 
   // 인스턴스 값을 유효한 값으로 초기화 시키기 위해 생성자를 사용한다.
-  public  BoardDao(String fileName) throws IOException, FileNotFoundException{ 
+  public  BoardDao(String fileName) throws Exception{ 
     this.fileName = fileName;
-
     load();
-
   }
 
-  public void load() throws IOException, FileNotFoundException{ // 두 오류 모두 넘긴다.
+  public void load() throws Exception{ // 두 오류 모두 넘긴다.
     FileInputStream in = new FileInputStream(fileName);
     // FileInputStream 도구를 사용하여 파일로부터 데이터를 읽어들인다.
     in.close();
