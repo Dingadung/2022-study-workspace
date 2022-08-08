@@ -98,13 +98,14 @@ public class ObjectList<E> extends AbstractList<E> {
     //      
     //    }
     return new Iterator<E>() {
+      int index =0;
       @Override
       public boolean hasNext() {
-        return false;
+        return index < ObjectList.this.size; // 바깥 클래스의 필드에 저장된 값 가져오기
       }
       @Override
       public E next() {
-        return null;
+        return ObjectList.this.get(index++);
       }
     };
   }

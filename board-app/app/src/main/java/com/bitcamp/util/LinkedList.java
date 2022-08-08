@@ -154,15 +154,15 @@ public class LinkedList<E> extends AbstractList<E> {
   @Override
   public Iterator<E> iterator() {
     return new Iterator<E>() {
+      int index=0;
       @Override
       public boolean hasNext() {
-        // TODO Auto-generated method stub
-        return false;
+        return LinkedList.this.size > index;
       }
       @Override
       public E next() {
         // TODO Auto-generated method stub
-        return null;
+        return LinkedList.this.get(index++);
       }
     };
   }
