@@ -30,14 +30,15 @@ public class Stack<E> extends LinkedList<E> {
 
   @Override
   public String toString() {
+    Iterator<E> iterator = iterator();
     // 스택에 저장된 객체를 순서대로 꺼내 문자열로 저장한다.
     StringBuffer buf = new StringBuffer();
 
-    for (int i = 0; i < size(); i++) { // 스택에 저장된 개수만큼 반복한다.
+    while(iterator.hasNext()) { // 스택에 저장된 개수만큼 반복한다.
       if (buf.length() > 0) { // 이미 버퍼에 저장된 문자열이 있다면
         buf.append(" > ");
       }
-      buf.append(get(i));
+      buf.append(iterator.next());
     }
 
     return buf.toString();
