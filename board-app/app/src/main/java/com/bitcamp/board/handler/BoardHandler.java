@@ -3,7 +3,6 @@
  */
 package com.bitcamp.board.handler;
 
-import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import com.bitcamp.board.dao.BoardDao;
@@ -16,7 +15,7 @@ public class BoardHandler extends AbstractHandler {
   // 게시글 목록을 관리할 객체 준비
   private BoardDao boardDao;
 
-  public BoardHandler(String fileName) throws FileNotFoundException{
+  public BoardHandler(String fileName){
     // 수퍼 클래스의 생성자를 호출할 때 메뉴 목록을 전달한다.
     super(new String[] {"목록", "상세보기", "등록", "삭제", "변경"});
     boardDao = new BoardDao(fileName);

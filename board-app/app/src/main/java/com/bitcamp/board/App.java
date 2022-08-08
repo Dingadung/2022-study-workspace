@@ -4,7 +4,6 @@
  */
 package com.bitcamp.board;
 
-import java.io.FileNotFoundException;
 import java.util.Stack;
 import com.bitcamp.board.handler.BoardHandler;
 import com.bitcamp.board.handler.MemberHandler;
@@ -18,7 +17,7 @@ public class App  {
   // breadcrumb 메뉴를 저장할 스택을 준비
   public static Stack<String> breadcrumbMenu = new Stack<>();
 
-  public static void main(String[] args) throws FileNotFoundException{
+  public static void main(String[] args){
     try {
       welcome();
 
@@ -82,7 +81,7 @@ public class App  {
       // 사용자에게 간단한 예외 메시지를 남기고
       // 필요하다면 로그 파일에 오류 기록을 남기고,
       // 실행을 종료한다.
-      System.out.printf("실행 오류 발생! - %s: %s\n",e.getClass().getName(), e.getMessage() != null? e.getMessage() : "");
+      System.out.printf("실행 오류 발생! - %s: %s\n", e.getClass().getName(), e.getMessage() != null? e.getMessage() : ""); // 하위에서 오류를 처리했더라도, 얘는 무조건 추가하자! 
     }
     System.out.println("안녕히 가세요!");
   } // main
