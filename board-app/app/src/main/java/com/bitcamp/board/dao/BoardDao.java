@@ -10,8 +10,9 @@ import com.bitcamp.board.domain.Board;
 public class BoardDao {
 
   List<Board> list = new LinkedList<>();
-
   private int boardNo = 0;
+
+  String fileName;
 
   public void insert(Board board) {
     board.no = nextNo();
