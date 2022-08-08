@@ -14,6 +14,11 @@ public class BoardDao {
 
   String fileName;
 
+  // 인스턴스 값을 유효한 값으로 초기화 시키기 위해 생성자를 사용한다.
+  public  BoardDao(String fileName){
+    this.fileName = fileName;
+  }
+
   public void insert(Board board) {
     board.no = nextNo();
     list.add(board);
