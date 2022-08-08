@@ -83,7 +83,7 @@ public abstract class AbstractHandler implements Handler {
   // 서브 클래스가 반드시 만들어야 할 메서드
   // => 메뉴 번호를 받으면 그 메뉴에 해당하는 작업을 수행한다.
   // => 서브 클래스에게 구현을 강제하기 위해 추상 메서드로 선언한다.
-  public abstract void service(int menuNo) throws Exception;
+  public abstract void service(int menuNo);
 }
 
 
