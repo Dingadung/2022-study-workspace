@@ -92,23 +92,6 @@ public class ObjectList<E> extends AbstractList<E> {
     elementData = newArray;
   }
 
-  @Override
-  public Iterator<E> iterator() {
-    //    class MyIterator implements Iterator<E>{ // 이렇게 구현해도 되지만, 한 번 사용할 클래스이기 때문에 밑에와 같이 익명 클래스로 생성해준다.
-    //      
-    //    }
-    return new Iterator<E>() {
-      int index =0;
-      @Override
-      public boolean hasNext() {
-        return index < ObjectList.this.size; // 바깥 클래스의 필드에 저장된 값 가져오기
-      }
-      @Override
-      public E next() {
-        return ObjectList.this.get(index++);
-      }
-    };
-  }
 }
 
 

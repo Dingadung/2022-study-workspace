@@ -22,6 +22,22 @@ public abstract class AbstractList<E> implements List<E> {
 
   // List 인터페이스의 나머지 메서드는 추상 메서드인채로 그냥 둔다.
   // 왜? 서브 클래스마다 구현하는 방법이 다르기 때문이다.
+
+  @Override
+  public Iterator<E> iterator() {
+    return new Iterator<E>() {
+      int index=0;
+      @Override
+      public boolean hasNext() {
+        return AbstractList.this.size > index;
+      }
+      @Override
+      public E next() {
+        // TODO Auto-generated method stub
+        return AbstractList.this.get(index++);
+      }
+    };
+  }
 }
 
 
