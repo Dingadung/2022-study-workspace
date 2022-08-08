@@ -16,11 +16,12 @@ public class BoardDao {
   String fileName;
 
   // 인스턴스 값을 유효한 값으로 초기화 시키기 위해 생성자를 사용한다.
-  public  BoardDao(String fileName){
+  public  BoardDao(String fileName) throws FileNotFoundException{
     this.fileName = fileName;
+    load();
   }
 
-  public void load() throws FileNotFoundException{
+  public void load() throws Exception{
     throw new FileNotFoundException();
   }
   public void save() throws FileNotFoundException{ 
