@@ -1,5 +1,6 @@
 package com.bitcamp.board.dao;
 
+import java.io.FileNotFoundException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,10 +20,15 @@ public class BoardDao {
     this.fileName = fileName;
   }
 
-  public void load() {
-
+  public void load() throws FileNotFoundException{
+    throw new FileNotFoundException();
   }
-  public void save() {
+  public void save() throws FileNotFoundException{ 
+    throw new FileNotFoundException();
+    //FileOutputStream out = new FileOutputStream(fileName); // try-catch로 묶어주거나, 묶기 싫으면, 오류를 위임해버려 줘야 한다. 둘 중 하나는 해줘야 함.
+    //    for (Board board :list) {
+    //    }
+
 
   }
 
