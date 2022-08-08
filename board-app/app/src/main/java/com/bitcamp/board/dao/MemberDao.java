@@ -1,10 +1,10 @@
 package com.bitcamp.board.dao;
 
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import com.bitcamp.board.domain.Member;
-import com.bitcamp.util.Iterator;
-import com.bitcamp.util.LinkedList;
-import com.bitcamp.util.List;
 
 // 회원 목록을 관리하는 역할
 //
