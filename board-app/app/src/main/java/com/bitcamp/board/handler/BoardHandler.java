@@ -18,8 +18,11 @@ public class BoardHandler extends AbstractHandler {
   public BoardHandler(String fileName){
     // 수퍼 클래스의 생성자를 호출할 때 메뉴 목록을 전달한다.
     super(new String[] {"목록", "상세보기", "등록", "삭제", "변경"});
+
+    boardDao = new BoardDao(fileName); // 객체 생성 따로, 로딩 따로!  생성자에서 예외를 던지는 것은 조심해야한다.
+    // 생성자에서 객체가 저장되지도 못하고 null인상태로 남을 수 있기 때문이다.!
     try{
-      boardDao = new BoardDao(fileName);
+      boardDao.load();
     }catch(Exception e) {
       System.out.printf("%s 파일 로딩 중 오류 발생!\n", e.getMessage());
     }
@@ -29,13 +32,18 @@ public class BoardHandler extends AbstractHandler {
   //     - 수퍼 클래스의 execute()에서 동작의 전체적인 흐름을 정의하고(틀을 만들고),
   //     - 서브 클래스의 service()에서 동작을 구제척으로 정의한다.(세부적인 항목을 구현한다)
   @Override
-  public void service(int menuNo) {
-    switch (menuNo) {
-      case 1: this.onList(); break;
-      case 2: this.onDetail(); break;
-      case 3: this.onInput(); break;
-      case 4: this.onDelete(); break;
-      case 5: this.onUpdate(); break;
+  public void service(int menuNo) { //상위 클래스에서 service메소드가 예외를 던지지 않았기 때문에 여기서도 직접적으로 던질 수는 없지만,
+    // 예외를 상위 호출자에게 보내고 싶으면 RuntimeException으로 던질  수 있다!!!
+    try {
+      switch (menuNo) {
+        case 1: this.onList(); break;
+        case 2: this.onDetail(); break;
+        case 3: this.onInput(); break;
+        case 4: this.onDelete(); break;
+        case 5: this.onUpdate(); break;
+      }
+    }catch(Exception e) {
+      throw new RuntimeException(e); // 
     }
   }
 
@@ -59,6 +67,7 @@ public class BoardHandler extends AbstractHandler {
     int boardNo = 0;
     while (true) {
       try {
+
         boardNo = Prompt.inputInt("조회할 게시글 번호? ");
         break;
       } catch (Exception ex) {
@@ -85,7 +94,7 @@ public class BoardHandler extends AbstractHandler {
 
   }
 
-  private void onInput() {
+  private void onInput() throws Exception{
     Board board = new Board();
 
     board.title = Prompt.inputString("제목? ");
@@ -96,11 +105,12 @@ public class BoardHandler extends AbstractHandler {
     board.createdDate = System.currentTimeMillis();
 
     this.boardDao.insert(board);
+    this.boardDao.save();
 
     System.out.println("게시글을 등록했습니다.");
   }
 
-  private void onDelete() {
+  private void onDelete() throws Exception{
     int boardNo = 0;
     while (true) {
       try {
@@ -112,13 +122,14 @@ public class BoardHandler extends AbstractHandler {
     }
 
     if (boardDao.delete(boardNo)) {
+      this.boardDao.save();
       System.out.println("삭제하였습니다.");
     } else {
       System.out.println("해당 번호의 게시글이 없습니다!");
     }
   }
 
-  private void onUpdate() {
+  private void onUpdate() throws Exception{
     int boardNo = 0;
     while (true) {
       try {
@@ -143,6 +154,7 @@ public class BoardHandler extends AbstractHandler {
     if (input.equals("y")) {
       board.title = newTitle;
       board.content = newContent;
+      this.boardDao.save();
       System.out.println("변경했습니다.");
     } else {
       System.out.println("변경 취소했습니다.");

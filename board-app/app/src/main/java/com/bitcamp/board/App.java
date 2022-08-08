@@ -28,7 +28,7 @@ public class App  {
           new BoardHandler("reading.data"), // 독서록
           new BoardHandler("visit.data"), // 방명록
           new BoardHandler("notice.data"), // 공지사항
-          new BoardHandler("dirary.data"), // 일기장
+          new BoardHandler("daily.data"), // 일기장
           new MemberHandler("member.data") // 회원
       };
 

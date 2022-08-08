@@ -9,4 +9,14 @@ public class Board {
   public String password;
   public int viewCount;
   public long createdDate;
+  @Override
+  public String toString() {
+    return "Board [no=" + no + ", title=" + title + ", content=" + content + ", writer=" + writer
+        + ", password=" + password + ", viewCount=" + viewCount 
+        + ", createdDate=" + new java.sql.Date(createdDate)
+        + "]";
+  } // 오른ㄷ쪽 마우스 키, gernerate, toString()
+  // 중간중간 domain의 변수의 값들을 확인하곳 ㅣㅍ을 때 toString을오버라딩한다.
+
+
 }
