@@ -9,8 +9,12 @@ import com.bitcamp.board.domain.Member;
 // 회원 목록을 관리하는 역할
 //
 public class MemberDao {
-
   List<Member> list = new LinkedList<Member>();
+
+  String fileName;
+  public MemberDao(String fileName) {
+    this.fileName = fileName;
+  }
 
   public void insert(Member member) {
     list.add(member);
