@@ -32,15 +32,36 @@ public class BoardDao {
     FileOutputStream out = new FileOutputStream(fileName); // try-catch로 묶어주거나, 묶기 싫으면, 오류를 위임해버려 줘야 한다. 둘 중 하나는 해줘야 함.
     for (Board board :list) {
       // int => byte[] 로 변경하여 출력하기
-      // board.no = 0x12345678
+      // 예: board.no = 0x12345678
       out.write(board.no >>> 24); //0x00000012|345678 / 0x12345678 
       out.write(board.no >>> 16); // 0x00001234|5678 /  0x12345678 
       out.write(board.no >>> 8); // 0x00123456|78 /  0x12345678 
       out.write(board.no); //  0x12345678 
 
-      //board.title = "Hello";
       // String (UTF -16 )=> UTF -8
-      out.write(board.title.getBytes("UTF-8"));
+      out.write(board.title.getBytes("UTF-8")); // 무엇으로 인코딩할지 강제로 알려주기 -> UTF-8로 인코딩해라!!
+      out.write(board.content.getBytes("UTF-8"));
+      out.write(board.writer.getBytes("UTF-8"));
+      out.write(board.password.getBytes("UTF-8"));
+
+      // int ==> byte[]
+      out.write(board.viewCount >> 24);
+      out.write(board.viewCount >> 16);
+      out.write(board.viewCount >> 8);
+      out.write(board.viewCount);
+
+      // long ==> byte[]
+      out.write((int) (board.createdDate>> 56));
+      out.write((int) (board.createdDate>> 48));
+      out.write((int) (board.createdDate>> 40));
+      out.write((int) (board.createdDate>> 32));
+      out.write((int) (board.createdDate>> 24));
+      out.write((int) (board.createdDate>> 16));
+      out.write((int) (board.createdDate>> 8));
+      out.write((int) (board.createdDate));
+
+
+
     }
     out.close();
   }
