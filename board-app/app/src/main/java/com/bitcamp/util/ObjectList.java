@@ -94,8 +94,19 @@ public class ObjectList<E> extends AbstractList<E> {
 
   @Override
   public Iterator<E> iterator() {
-
-    return null;
+    //    class MyIterator implements Iterator<E>{ // 이렇게 구현해도 되지만, 한 번 사용할 클래스이기 때문에 밑에와 같이 익명 클래스로 생성해준다.
+    //      
+    //    }
+    return new Iterator<E>() {
+      @Override
+      public boolean hasNext() {
+        return false;
+      }
+      @Override
+      public E next() {
+        return null;
+      }
+    };
   }
 }
 
