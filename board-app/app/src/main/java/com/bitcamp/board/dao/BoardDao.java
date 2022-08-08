@@ -18,15 +18,11 @@ public class BoardDao {
   String fileName;
 
   // 인스턴스 값을 유효한 값으로 초기화 시키기 위해 생성자를 사용한다.
-  public  BoardDao(String fileName) { // File 오류는 상위 호출자로 넘기고, IO오류는 여기서 처리한다.
+  public  BoardDao(String fileName) throws IOException, FileNotFoundException{ 
     this.fileName = fileName;
-    try {
-      load();
-    }catch(FileNotFoundException e) {
-      System.out.printf("%s 파일이 존재하지 않습니다.\n", fileName);
-    }catch(IOException e) {
-      System.out.printf("파일 입출력 중 오류 발생! - %s\n", e.getMessage());
-    }
+
+    load();
+
   }
 
   public void load() throws IOException, FileNotFoundException{ // 두 오류 모두 넘긴다.
