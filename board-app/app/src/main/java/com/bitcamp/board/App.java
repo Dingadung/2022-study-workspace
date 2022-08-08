@@ -82,7 +82,7 @@ public class App  {
       // 사용자에게 간단한 예외 메시지를 남기고
       // 필요하다면 로그 파일에 오류 기록을 남기고,
       // 실행을 종료한다.
-      System.out.printf("실행 오류 발생! - %s: %s\n",e.getClass().getName(), e.getMessage());
+      System.out.printf("실행 오류 발생! - %s: %s\n",e.getClass().getName(), e.getMessage() != null? e.getMessage() : "");
     }
     System.out.println("안녕히 가세요!");
   } // main
