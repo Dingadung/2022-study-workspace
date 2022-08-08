@@ -19,6 +19,13 @@ public class BoardDao {
     this.fileName = fileName;
   }
 
+  public void load() {
+
+  }
+  public void save() {
+
+  }
+
   public void insert(Board board) {
     board.no = nextNo();
     list.add(board);

@@ -20,7 +20,7 @@ public class App {
     welcome();
 
     // 핸들러를 담을 레퍼런스 배열을 준비한다.
-    Handler[] handlers = new Handler[] {
+    Handler[] handlers = new Handler[] { // 파일명을 목적에 맞게 각각 전달
         new BoardHandler("board.data"), // 게시판
         new BoardHandler("reading.data"), // 독서록
         new BoardHandler("visit.data"), // 방명록
