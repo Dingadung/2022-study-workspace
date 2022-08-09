@@ -1,4 +1,4 @@
-//FIleInputStream: read() 사용법
+//FIleInputStream: 문자열 읽기
 package com.bitcamp.study;
 
 import java.io.FileInputStream;
@@ -7,12 +7,22 @@ public class Test01_in {
 
   public static void main(String[] args) throws Exception{
     // TODO Auto-generated method stub
-    FileInputStream in = new FileInputStream("test.data");
+    FileInputStream in = new FileInputStream("test8.data");
+    byte[] arr = new byte[1024];
+    int len = 0;
 
-    // 1바이트 읽기
-    int b = in.read(); // 얘가 int 값 받는다고 해서 read가 4바이트를 읽는 것은 아니다!
-    System.out.printf("%08x\n", b);
 
+    len = (in.read() << 24) + (in.read() << 16) + (in.read() <<8)+in.read();
+    in.read(arr, 0, len);
+    String name = new String(arr, 0, len,"UTF-8");
+
+    len = (in.read() << 24) + (in.read() << 16) + (in.read() <<8)+in.read();
+    in.read(arr, 0, len);
+    String gender = new String(arr, 0, len,"UTF-8");
+
+
+    System.out.println(name);
+    System.out.println(gender);
     in.close();
     System.out.println("finish!");
   }
