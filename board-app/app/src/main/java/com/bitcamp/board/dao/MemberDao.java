@@ -19,7 +19,7 @@ public class MemberDao {
   }//MemberDao{}
 
   public void load() throws Exception {
-    try(FileInputStream in = new FileInputStream(fileName);){
+    try(FileInputStream in = new FileInputStream(fileName)){
 
       // => 먼저 회원 개수를 읽는다.
       int size = (in.read() << 24) + (in.read() << 16) + (in.read() << 8) + in.read();
@@ -69,68 +69,65 @@ public class MemberDao {
         list.add(member);
 
       }
-    }
-    //in.close();
+    } // try() ==> try block을 벗어나기 전에 자동으로 in.close()가 실행된다.
   }
 
   public void save() throws Exception{ 
-    FileOutputStream out = new FileOutputStream(fileName); // try-catch로 묶어주거나, 묶기 싫으면, 오류를 위임해버려 줘야 한다. 둘 중 하나는 해줘야 함.
-
-    // 첫 번째로 먼저 게시글의 개수를 4바이트 int 값으로 먼저 출력한다.
-    out.write(list.size()>>> 24);
-    out.write(list.size() >>> 16);
-    out.write(list.size() >>> 8);
-    out.write(list.size()); 
+    try(FileOutputStream out = new FileOutputStream(fileName)){
+      out.write(list.size()>>> 24);
+      out.write(list.size() >>> 16);
+      out.write(list.size() >>> 8);
+      out.write(list.size()); 
 
 
-    for (Member member :list) {
-      out.write(member.no >>> 24); //0x00000012|345678 / 0x12345678 
-      out.write(member.no >>> 16); // 0x00001234|5678 /  0x12345678 
-      out.write(member.no >>> 8); // 0x00123456|78 /  0x12345678 
-      out.write(member.no); //  0x12345678 
+      for (Member member :list) {
+        out.write(member.no >>> 24); //0x00000012|345678 / 0x12345678 
+        out.write(member.no >>> 16); // 0x00001234|5678 /  0x12345678 
+        out.write(member.no >>> 8); // 0x00123456|78 /  0x12345678 
+        out.write(member.no); //  0x12345678 
 
-      // 출력할 바이트 배열의 개수를 먼저 출력한다. (2 바이트)
-      byte[] bytes = member.name.getBytes("UTF-8");
-      out.write(bytes.length >> 24);
-      out.write(bytes.length>> 16);
-      out.write(bytes.length>> 8);
-      out.write(bytes.length);
-      out.write(bytes);
-
-
-      //out.write(board.title.getBytes("UTF-8")); // 무엇으로 인코딩할지 강제로 알려주기 -> UTF-8로 인코딩해라!!
-      System.out.printf("%s\n", member.email); // String 데이터 타입 객체가 byte 타입으로 반환된다.
-      //out.write(board.content.getBytes("UTF-8"));
-      bytes = member.email.getBytes("UTF-8");
-      out.write(bytes.length >> 24);
-      out.write(bytes.length>> 16);
-      out.write(bytes.length>> 8);
-      out.write(bytes.length);
-      out.write(bytes);
+        // 출력할 바이트 배열의 개수를 먼저 출력한다. (2 바이트)
+        byte[] bytes = member.name.getBytes("UTF-8");
+        out.write(bytes.length >> 24);
+        out.write(bytes.length>> 16);
+        out.write(bytes.length>> 8);
+        out.write(bytes.length);
+        out.write(bytes);
 
 
-      System.out.printf("%s\n", member.password);
-      //out.write(board.password.getBytes("UTF-8"));
-      bytes = member.password.getBytes("UTF-8");
-      out.write(bytes.length >> 24);
-      out.write(bytes.length>> 16);
-      out.write(bytes.length>> 8);
-      out.write(bytes.length);
-      out.write(bytes);
+        //out.write(board.title.getBytes("UTF-8")); // 무엇으로 인코딩할지 강제로 알려주기 -> UTF-8로 인코딩해라!!
+        System.out.printf("%s\n", member.email); // String 데이터 타입 객체가 byte 타입으로 반환된다.
+        //out.write(board.content.getBytes("UTF-8"));
+        bytes = member.email.getBytes("UTF-8");
+        out.write(bytes.length >> 24);
+        out.write(bytes.length>> 16);
+        out.write(bytes.length>> 8);
+        out.write(bytes.length);
+        out.write(bytes);
 
-      // long ==> byte[]
-      System.out.printf("%016x\n", member.createdDate);
-      out.write((int) (member.createdDate>> 56));
-      out.write((int) (member.createdDate>> 48));
-      out.write((int) (member.createdDate>> 40));
-      out.write((int) (member.createdDate>> 32));
-      out.write((int) (member.createdDate>> 24));
-      out.write((int) (member.createdDate>> 16));
-      out.write((int) (member.createdDate>> 8));
-      out.write((int) (member.createdDate));
 
-    }
-    out.close();
+        System.out.printf("%s\n", member.password);
+        //out.write(board.password.getBytes("UTF-8"));
+        bytes = member.password.getBytes("UTF-8");
+        out.write(bytes.length >> 24);
+        out.write(bytes.length>> 16);
+        out.write(bytes.length>> 8);
+        out.write(bytes.length);
+        out.write(bytes);
+
+        // long ==> byte[]
+        System.out.printf("%016x\n", member.createdDate);
+        out.write((int) (member.createdDate>> 56));
+        out.write((int) (member.createdDate>> 48));
+        out.write((int) (member.createdDate>> 40));
+        out.write((int) (member.createdDate>> 32));
+        out.write((int) (member.createdDate>> 24));
+        out.write((int) (member.createdDate>> 16));
+        out.write((int) (member.createdDate>> 8));
+        out.write((int) (member.createdDate));
+
+      }
+    }// try() ==> try block을 벗어나기 전에 out.close()가 자동으로 실행된다.
   }
 
   public void insert(Member member) {
