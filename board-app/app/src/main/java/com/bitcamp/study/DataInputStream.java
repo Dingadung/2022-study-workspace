@@ -46,4 +46,10 @@ public class DataInputStream {
     return in.read() == 1? true:false;
   }
 
+  public String readUtF() throws Exception{
+    int len = readInt();
+    byte[] bytes = new byte[len];
+    return new String(bytes, "UTF-8");  
+  }
+
 }
