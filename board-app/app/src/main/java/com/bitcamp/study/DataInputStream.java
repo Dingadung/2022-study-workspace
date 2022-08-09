@@ -31,4 +31,19 @@ public class DataInputStream {
         + ((long)in.read() << 8)
         + (in.read());
   }
+
+  public float readFloat() throws Exception{
+    int value = readInt();
+    return    Float.intBitsToFloat(value);
+  }
+
+  public double readDouble() throws Exception{
+    long value = readLong();
+    return Double.longBitsToDouble(value);
+  }
+
+  public boolean readBoolean() throws Exception{
+    return in.read() == 1? true:false;
+  }
+
 }
