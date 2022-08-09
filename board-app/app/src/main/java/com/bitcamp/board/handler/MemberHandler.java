@@ -39,12 +39,12 @@ public class MemberHandler extends AbstractHandler {
   }
 
   private void onList() {
-    System.out.println("이메일 이름");
+    System.out.println("이메일         이름");
 
     Member[] members = this.memberDao.findAll();
 
     for (Member member : members) {
-      System.out.printf("%s\t%s\n",
+      System.out.printf("%s               %s\n",
           member.email, member.name);
     }
 
@@ -84,8 +84,8 @@ public class MemberHandler extends AbstractHandler {
     String email = Prompt.inputString("삭제할 회원 이메일? ");
 
     if (memberDao.delete(email)) {
-      System.out.println("삭제하였습니다.");
       this.memberDao.save();
+      System.out.println("삭제하였습니다.");
     } else {
       System.out.println("해당 이메일의 회원이 없습니다!");
     }
@@ -108,8 +108,8 @@ public class MemberHandler extends AbstractHandler {
     if (input.equals("y")) {
       member.name = newName;
       member.email = newEmail;
-      System.out.println("변경했습니다.");
       this.memberDao.save();
+      System.out.println("변경했습니다.");
     } else {
       System.out.println("변경 취소했습니다.");
     }

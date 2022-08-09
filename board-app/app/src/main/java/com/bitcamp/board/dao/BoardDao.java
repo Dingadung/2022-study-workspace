@@ -115,16 +115,16 @@ public class BoardDao {
     for (Board board :list) {
       // int => byte[] 로 변경하여 출력하기
       // 예: board.no = 0x12345678
-      System.out.println("------------------------------------------------");
-      System.out.printf("%08x\n", board.no);
+      //System.out.println("------------------------------------------------");
+      //System.out.printf("%08x\n", board.no);
       out.write(board.no >>> 24); //0x00000012|345678 / 0x12345678 
       out.write(board.no >>> 16); // 0x00001234|5678 /  0x12345678 
       out.write(board.no >>> 8); // 0x00123456|78 /  0x12345678 
       out.write(board.no); //  0x12345678 
 
       // String (UTF -16 )=> UTF -8
-      System.out.println("------------------------------------------------");
-      System.out.printf("%s\n", board.title);
+      //System.out.println("------------------------------------------------");
+      //System.out.printf("%s\n", board.title);
       // 출력할 바이트 배열의 개수를 먼저 출력한다. (2 바이트)
       byte[] bytes = board.title.getBytes("UTF-8");
       out.write(bytes.length >> 24);
@@ -135,7 +135,7 @@ public class BoardDao {
 
 
       //out.write(board.title.getBytes("UTF-8")); // 무엇으로 인코딩할지 강제로 알려주기 -> UTF-8로 인코딩해라!!
-      System.out.printf("%s\n", board.content); // String 데이터 타입 객체가 byte 타입으로 반환된다.
+      //System.out.printf("%s\n", board.content); // String 데이터 타입 객체가 byte 타입으로 반환된다.
       //out.write(board.content.getBytes("UTF-8"));
       bytes = board.content.getBytes("UTF-8");
       out.write(bytes.length >> 24);
@@ -145,7 +145,7 @@ public class BoardDao {
       out.write(bytes);
 
 
-      System.out.printf("%s\n", board.writer);
+      //System.out.printf("%s\n", board.writer);
       //out.write(board.writer.getBytes("UTF-8"));
       bytes = board.writer.getBytes("UTF-8");
       out.write(bytes.length >> 24);
@@ -155,7 +155,7 @@ public class BoardDao {
       out.write(bytes);
 
 
-      System.out.printf("%s\n", board.password);
+      //System.out.printf("%s\n", board.password);
       //out.write(board.password.getBytes("UTF-8"));
       bytes = board.password.getBytes("UTF-8");
       out.write(bytes.length >> 24);
@@ -165,14 +165,14 @@ public class BoardDao {
       out.write(bytes);
 
       // int ==> byte[]
-      System.out.printf("%08x\n", board.viewCount);
+      //System.out.printf("%08x\n", board.viewCount);
       out.write(board.viewCount >> 24);
       out.write(board.viewCount >> 16);
       out.write(board.viewCount >> 8);
       out.write(board.viewCount);
 
       // long ==> byte[]
-      System.out.printf("%016x\n", board.createdDate);
+      //System.out.printf("%016x\n", board.createdDate);
       out.write((int) (board.createdDate>> 56));
       out.write((int) (board.createdDate>> 48));
       out.write((int) (board.createdDate>> 40));

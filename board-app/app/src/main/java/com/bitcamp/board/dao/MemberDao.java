@@ -19,58 +19,58 @@ public class MemberDao {
   }//MemberDao{}
 
   public void load() throws Exception {
-    FileInputStream in = new FileInputStream(fileName);
+    try(FileInputStream in = new FileInputStream(fileName);){
 
-    // => 먼저 회원 개수를 읽는다.
-    int size = (in.read() << 24) + (in.read() << 16) + (in.read() << 8) + in.read();
+      // => 먼저 회원 개수를 읽는다.
+      int size = (in.read() << 24) + (in.read() << 16) + (in.read() << 8) + in.read();
 
-    for (int i = 0; i < size; i++) {
-      Member member = new Member();
+      for (int i = 0; i < size; i++) {
+        Member member = new Member();
 
-      // => 저장된 순서로 데이터를 읽는다.
-      // 1) 회원 번호 읽기
-      int value = 0;
-      value += in.read() << 24; // 예) 12 => 12000000
-      value += in.read() << 16; // 예) 34 => 00340000
-      value += in.read() << 8;  // 예) 56 => 00005600
-      value += in.read();       // 예) 78 => 00000078
-      member.no = value;
+        // => 저장된 순서로 데이터를 읽는다.
+        // 1) 회원 번호 읽기
+        int value = 0;
+        value += in.read() << 24; // 예) 12 => 12000000
+        value += in.read() << 16; // 예) 34 => 00340000
+        value += in.read() << 8;  // 예) 56 => 00005600
+        value += in.read();       // 예) 78 => 00000078
+        member.no = value;
 
-      // 2) 회원 이름 읽기
-      int len = 0;
-      len = (in.read() << 24) + (in.read() << 16) + (in.read() << 8) + in.read();
-      byte[] bytes = new byte[len];
-      in.read(bytes);
-      member.name = new String(bytes, "UTF-8");
+        // 2) 회원 이름 읽기
+        int len = 0;
+        len = (in.read() << 24) + (in.read() << 16) + (in.read() << 8) + in.read();
+        byte[] bytes = new byte[len];
+        in.read(bytes);
+        member.name = new String(bytes, "UTF-8");
 
-      // 3) 회원 이메일 읽기
-      len = (in.read() << 24) + (in.read() << 16) + (in.read() << 8) + in.read();
-      bytes = new byte[len];
-      in.read(bytes);
-      member.email = new String(bytes, "UTF-8");
+        // 3) 회원 이메일 읽기
+        len = (in.read() << 24) + (in.read() << 16) + (in.read() << 8) + in.read();
+        bytes = new byte[len];
+        in.read(bytes);
+        member.email = new String(bytes, "UTF-8");
 
-      // 4) 회원 암호 읽기
-      len = (in.read() << 24) + (in.read() << 16) + (in.read() << 8) + in.read();
-      bytes = new byte[len];
-      in.read(bytes);
-      member.password = new String(bytes, "UTF-8");
+        // 4) 회원 암호 읽기
+        len = (in.read() << 24) + (in.read() << 16) + (in.read() << 8) + in.read();
+        bytes = new byte[len];
+        in.read(bytes);
+        member.password = new String(bytes, "UTF-8");
 
-      // 5) 게시글 등록일 읽기
-      member.createdDate = 
-          (((long)in.read()) << 56) + 
-          (((long)in.read()) << 48) +
-          (((long)in.read()) << 40) +
-          (((long)in.read()) << 32) +
-          (((long)in.read()) << 24) +
-          (((long)in.read()) << 16) +
-          (((long)in.read()) << 8) +
-          ((in.read()));
+        // 5) 게시글 등록일 읽기
+        member.createdDate = 
+            (((long)in.read()) << 56) + 
+            (((long)in.read()) << 48) +
+            (((long)in.read()) << 40) +
+            (((long)in.read()) << 32) +
+            (((long)in.read()) << 24) +
+            (((long)in.read()) << 16) +
+            (((long)in.read()) << 8) +
+            ((in.read()));
 
-      list.add(member);
+        list.add(member);
 
+      }
     }
-
-    in.close();
+    //in.close();
   }
 
   public void save() throws Exception{ 
@@ -84,16 +84,11 @@ public class MemberDao {
 
 
     for (Member member :list) {
-      System.out.println("------------------------------------------------");
-      System.out.printf("%08x\n", member.no);
       out.write(member.no >>> 24); //0x00000012|345678 / 0x12345678 
       out.write(member.no >>> 16); // 0x00001234|5678 /  0x12345678 
       out.write(member.no >>> 8); // 0x00123456|78 /  0x12345678 
       out.write(member.no); //  0x12345678 
 
-      // String (UTF -16 )=> UTF -8
-      System.out.println("------------------------------------------------");
-      System.out.printf("%s\n", member.name);
       // 출력할 바이트 배열의 개수를 먼저 출력한다. (2 바이트)
       byte[] bytes = member.name.getBytes("UTF-8");
       out.write(bytes.length >> 24);
