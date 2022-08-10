@@ -24,14 +24,7 @@ public class MemberDao {
       String str;
       while ((str = in.readLine()) != null) {
 
-        String[] values = str.split(",");
-
-        Member member = new Member();
-        member.no = Integer.parseInt(values[0]);
-        member.name = values[1];
-        member.email = values[2];
-        member.password = values[3];
-        member.createdDate = Long.parseLong(values[4]);
+        Member member = Member.create(str);
 
         list.add(member);
       }
@@ -41,12 +34,7 @@ public class MemberDao {
   public void save() throws Exception{ 
     try(FileWriter out = new FileWriter(fileName)){
       for (Member member :list) {
-        out.write(String.format("%d,%s,%s,%s,%d\n", 
-            member.no,
-            member.name, 
-            member.email, 
-            member.password, 
-            member.createdDate));
+        out.write(member.toCsv() + "\n");
       }
     }// try() ==> try block을 벗어나기 전에 out.close()가 자동으로 실행된다.
   }
