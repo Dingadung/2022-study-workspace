@@ -1,14 +1,20 @@
-package com.bitcamp.study;
+package com.bitcamp.util;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 
-public class DataInputStream {
+public class DataInputStream implements AutoCloseable{
   FileInputStream in;
   public DataInputStream(FileInputStream in) {
     this.in = in;
   }
 
-  public int readByte() throws Exception {
+  @Override
+  public void close() throws IOException{
+    in.close();
+  }
+
+  public byte readByte() throws Exception {
     return (byte) (in.read());
   }
 
@@ -46,10 +52,11 @@ public class DataInputStream {
     return in.read() == 1? true:false;
   }
 
-  public String readUtF() throws Exception{
+  public String readUTF() throws Exception {
     int len = readInt();
     byte[] bytes = new byte[len];
-    return new String(bytes, "UTF-8");  
+    in.read(bytes);
+    return new String(bytes, "UTF-8");
   }
 
 }

@@ -1,30 +1,38 @@
-//FIleInputStream: 문자열 읽기
 package com.bitcamp.study;
 
 import java.io.FileInputStream;
+import com.bitcamp.util.DataInputStream;
 
 public class Test01_in {
 
-  public static void main(String[] args) throws Exception{
-    // TODO Auto-generated method stub
-    FileInputStream in = new FileInputStream("test8.data");
-    byte[] arr = new byte[1024];
-    int len = 0;
+  public static void main(String[] args) throws Exception {
+    FileInputStream in = new FileInputStream("test.data");
+    DataInputStream in2 = new DataInputStream(in);
 
+    byte b = in2.readByte();
+    short s = in2.readShort();
+    int i = in2.readInt();
+    long l = in2.readLong();
+    float f = in2.readFloat();
+    double d = in2.readDouble();
+    boolean bool = in2.readBoolean();
+    String str1 = in2.readUTF();
+    String str2 = in2.readUTF();
 
-    len = (in.read() << 24) + (in.read() << 16) + (in.read() <<8)+in.read();
-    in.read(arr, 0, len);
-    String name = new String(arr, 0, len,"UTF-8");
+    System.out.println(b);
+    System.out.println(s);
+    System.out.println(i);
+    System.out.println(l);
+    System.out.println(f);
+    System.out.println(d);
+    System.out.println(bool);
+    System.out.println(str1);
+    System.out.println(str2);
 
-    len = (in.read() << 24) + (in.read() << 16) + (in.read() <<8)+in.read();
-    in.read(arr, 0, len);
-    String gender = new String(arr, 0, len,"UTF-8");
-
-
-    System.out.println(name);
-    System.out.println(gender);
+    in2.close();
     in.close();
-    System.out.println("finish!");
+
+    System.out.println("실행 완료!");
   }
 
 }
