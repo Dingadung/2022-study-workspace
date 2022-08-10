@@ -31,6 +31,20 @@ public class Board implements Serializable{
         + ", password=" + password + ", viewCount=" + viewCount 
         + ", createdDate=" + new java.sql.Date(createdDate)
         + "]";
-  } 
+  }
 
+  public static Board create(String csv) { // 인스턴스를 리턴해야하므로 static으로 선언한다.
+    String[] values = csv.split(",");
+
+    Board board = new Board();
+    board.no = Integer.parseInt(values[0]);
+    board.title = values[1];
+    board.content = values[2];
+    board.writer = values[3];
+    board.password = values[4];
+    board.viewCount = Integer.parseInt(values[5]);
+    board.createdDate = Long.parseLong(values[6]);
+
+    return board;
+  }
 }

@@ -25,16 +25,7 @@ public class BoardDao {
       String str;
       while ((str = in.readLine()) != null) {
 
-        String[] values = str.split(",");
-
-        Board board = new Board();
-        board.no = Integer.parseInt(values[0]);
-        board.title = values[1];
-        board.content = values[2];
-        board.writer = values[3];
-        board.password = values[4];
-        board.viewCount = Integer.parseInt(values[5]);
-        board.createdDate = Long.parseLong(values[6]);
+        Board board = Board.create(str);
 
         list.add(board);
         boardNo = board.no;
