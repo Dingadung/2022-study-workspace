@@ -1,9 +1,8 @@
 package com.bitcamp.board.dao;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,25 +23,21 @@ public class BoardDao {
   }
 
   public void load() throws Exception {
-    try( ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName))){
+    try(
+        BufferedReader in = new BufferedReader(new FileReader(fileName))){
       // => 먼저 게시글 개수를 읽는다.
-      int size = in.readInt();
-      for (int i = 0; i < size; i++) {
-        Board board = (Board) in.readObject();
-
-        // 게시글 데이터가 저장된 Board 객체를 목록에 추가한다.
-        list.add(board);
-
-        boardNo = board.no;
+      String str;
+      while((str = in.readLine()) != null) {
+        System.out.println(str);
       }
     }
   }
 
   public void save() throws Exception{ 
-    try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName))){
-      out.writeInt(list.size());
+    try(FileWriter out = new FileWriter(fileName)){
       for (Board board :list) {
-        out.writeObject(board);
+        out.write(String.format("%d, %s, %s, %s, %s, %d, %d\n",
+            board.no, board.title, board.content, board.writer, board.password, board.viewCount, board.createdDate));
       }
     }
   }
