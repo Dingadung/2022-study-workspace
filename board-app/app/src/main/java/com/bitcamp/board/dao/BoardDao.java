@@ -36,14 +36,7 @@ public class BoardDao {
   public void save() throws Exception {
     try (FileWriter out = new FileWriter(filename)) {
       for (Board board : list) {
-        out.write(String.format("%d,%s,%s,%s,%s,%d,%d\n",
-            board.no,
-            board.title,
-            board.content,
-            board.writer,
-            board.password,
-            board.viewCount,
-            board.createdDate));
+        out.write(board.toCsv());
       }
     }
   }

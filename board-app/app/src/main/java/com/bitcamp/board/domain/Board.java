@@ -33,6 +33,8 @@ public class Board implements Serializable{
         + "]";
   }
 
+  // GoF의 Factory Method 패턴
+  // - 객체의 생성 과정이 복잡할 때 별도의 메서드로 캡슐화 한다.
   public static Board create(String csv) { // 인스턴스를 리턴해야하므로 static으로 선언한다.
     String[] values = csv.split(",");
 
@@ -46,5 +48,19 @@ public class Board implements Serializable{
     board.createdDate = Long.parseLong(values[6]);
 
     return board;
+  }
+
+  // 인스턴스 필드를 사용해야 하는 메서드이므로  논스태틱으로 선언한다.
+  // GRASP 패턴의 InformationExpert 패턴.
+  // => 정보 생성은 그 데이터를 가지고 있는 전문가에게 맡긴다.
+  public  String toCsv() {
+    return String.format("%d,%s,%s,%s,%s,%d,%d",
+        this.no,
+        this.title,
+        this.content,
+        this.writer,
+        this.password,
+        this.viewCount,
+        this.createdDate);
   }
 }
