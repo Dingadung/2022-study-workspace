@@ -1,14 +1,14 @@
 package com.bitcamp.board.dao;
 
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import com.bitcamp.board.domain.Member;
-import com.bitcamp.util.DataInputStream;
-import com.bitcamp.util.DataOutputStream;
 
 // 회원 목록을 관리하는 역할
 //
