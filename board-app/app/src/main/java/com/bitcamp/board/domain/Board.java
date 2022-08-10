@@ -15,6 +15,7 @@ public class Board implements Serializable{
   private static final long serialVersionUID = 1L;
   // serialVersionUID  필드 설정
   // - 인스턴스를 저장하고 읽을 때 클래스의 변화 여부를 검증하기 위해 버전 번호를 지정한다.
+  // - 처음 버전 번호를부여한 후 클래스의 필드를 추가하거나 삭제할 때마다 버전번호를 증가시킨다.
 
   // 인스턴스를 생성할 때 준비되는 메모리를 선언
   public int no;

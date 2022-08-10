@@ -1,10 +1,10 @@
 package com.bitcamp.board.dao;
 
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,28 +21,12 @@ public class MemberDao {
   }//MemberDao{}
 
   public void load() throws Exception {
-    try(DataInputStream in = new DataInputStream(new FileInputStream(fileName))){
+    try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName))){
       // => 먼저 회원 개수를 읽는다.
       int size = in.readInt();
 
       for (int i = 0; i < size; i++) {
-        Member member = new Member();
-        // => 저장된 순서로 데이터를 읽는다.
-        // 1) 회원 번호 읽기
-
-        member.no = in.readInt();
-
-        // 2) 회원 이름 읽기
-        member.name = in.readUTF();
-
-        // 3) 회원 이메일 읽기
-        member.email = in.readUTF();
-
-        // 4) 회원 암호 읽기
-        member.password =in.readUTF();
-
-        // 5) 게시글 등록일 읽기
-        member.createdDate = in.readLong();
+        Member member = (Member)in.readObject();
 
         list.add(member);
 
@@ -51,15 +35,11 @@ public class MemberDao {
   }
 
   public void save() throws Exception{ 
-    try(DataOutputStream out = new DataOutputStream(new FileOutputStream(fileName))){
+    try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName))){
       out.writeInt(list.size());
 
       for (Member member :list) {
-        out.writeInt(member.no);
-        out.writeUTF(member.name);
-        out.writeUTF(member.email);
-        out.writeUTF(member.password);
-        out.writeLong(member.createdDate);
+        out.writeObject(member);
       }
     }// try() ==> try block을 벗어나기 전에 out.close()가 자동으로 실행된다.
   }

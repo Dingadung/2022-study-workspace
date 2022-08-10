@@ -1,9 +1,9 @@
 package com.bitcamp.board.dao;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,28 +24,11 @@ public class BoardDao {
   }
 
   public void load() throws Exception {
-    try( DataInputStream in = new DataInputStream(new FileInputStream(fileName))){
+    try( ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName))){
       // => 먼저 게시글 개수를 읽는다.
       int size = in.readInt();
       for (int i = 0; i < size; i++) {
-        Board board = new Board();
-        // 1) 게시글 번호 읽기
-        board.no = in.readInt();
-        // 2) 게시글 제목 읽기
-        board.title =in.readUTF();
-        // 3) 게시글 내용 읽기
-        board.content = in.readUTF();
-        // 4) 게시글 작성자 읽기
-        board.writer =in.readUTF();
-
-        // 5) 게시글 암호 읽기
-        board.password =in.readUTF();
-
-        // 6) 게시글 조회수 읽기
-        board.viewCount = in.readInt();
-
-        // 6) 게시글 등록일 읽기
-        board.createdDate = in.readLong();
+        Board board = (Board) in.readObject();
 
         // 게시글 데이터가 저장된 Board 객체를 목록에 추가한다.
         list.add(board);
@@ -56,16 +39,10 @@ public class BoardDao {
   }
 
   public void save() throws Exception{ 
-    try(DataOutputStream out = new DataOutputStream(new FileOutputStream(fileName))){
+    try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName))){
       out.writeInt(list.size());
       for (Board board :list) {
-        out.writeInt(board.no);
-        out.writeUTF(board.title);
-        out.writeUTF(board.content);
-        out.writeUTF(board.writer);
-        out.writeUTF(board.password);
-        out.writeInt(board.viewCount);
-        out.writeLong(board.createdDate);
+        out.writeObject(board);
       }
     }
   }
