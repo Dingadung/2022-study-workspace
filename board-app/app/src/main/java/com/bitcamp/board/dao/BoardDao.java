@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import com.bitcamp.board.domain.Board;
+import com.google.gson.Gson;
 
 // 게시글 목록을 관리하는 역할
 //
@@ -35,9 +36,9 @@ public class BoardDao {
 
   public void save() throws Exception {
     try (FileWriter out = new FileWriter(filename)) {
-      for (Board board : list) {
-        out.write(board.toCsv() + "\n");
-      }
+      Board[] boards = list.toArray(new Board[0]);
+      //String json = new Gson().toJson(boards);
+      out.write( new Gson().toJson(boards));
     }
   }
 

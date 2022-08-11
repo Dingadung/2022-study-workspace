@@ -52,6 +52,7 @@ public class Test02 {
     }
     System.out.println(arr2);
 
+    System.out.println(arr == arr2);//false
   }
 
 }
