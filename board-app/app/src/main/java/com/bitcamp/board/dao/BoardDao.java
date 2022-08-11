@@ -23,21 +23,28 @@ public class BoardDao {
 
   public void load() throws Exception {
     try (BufferedReader in = new BufferedReader(new FileReader(filename))) {
+
+      // 파일에서 JSON 문자열을 모두 읽어 StringBuilder에  담는다.
+      StringBuilder stringBuilder = new StringBuilder();
       String str;
       while ((str = in.readLine()) != null) {
+        stringBuilder.append(str);
+      }
 
-        Board board = Board.create(str);
+      // StringBuilde에  보관된 JSON 문자열을 가지고 Board[]을 생성한다./
+      Board[] arr = new Gson().fromJson(stringBuilder.toString(), Board[].class);
 
-        list.add(board);
-        boardNo = board.no;
+      // Board[]배열의 저장된 객체를 List로 옮긴다.
+      for(int i=0;i<arr.length;i++) {
+        list.add(arr[i]);
       }
     }
   }
 
   public void save() throws Exception {
     try (FileWriter out = new FileWriter(filename)) {
-      Board[] boards = list.toArray(new Board[0]);
-      //String json = new Gson().toJson(boards);
+      Board[] boards = list.toArray(new Board[0]); // 현재 list에 들어 있는 보드 객체들 받아오기
+      //String json = new Gson().toJson(boards); // 이렇게 코딩 안하고, 그냥 바로 넣어버린다.
       out.write( new Gson().toJson(boards));
     }
   }
