@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import com.bitcamp.board.domain.Member;
+import com.google.gson.Gson;
 
 // 회원 목록을 관리하는 역할
 //
@@ -21,21 +22,24 @@ public class MemberDao {
 
   public void load() throws Exception {
     try(BufferedReader in = new BufferedReader(new FileReader(fileName))){
+      StringBuilder stringBuilder = new StringBuilder();
       String str;
       while ((str = in.readLine()) != null) {
-
-        Member member = Member.create(str);
-
-        list.add(member);
+        stringBuilder.append(str);
       }
+      Member[] members = new Gson().fromJson(stringBuilder.toString(),Member[].class);
+
+      for(int i=0;i<members.length;i++) {
+        list.add(members[i]);
+      }
+
     } // try() ==> try block을 벗어나기 전에 자동으로 in.close()가 실행된다.
   }
 
   public void save() throws Exception{ 
     try(FileWriter out = new FileWriter(fileName)){
-      for (Member member :list) {
-        out.write(member.toCsv() + "\n");
-      }
+      Member[] members = list.toArray(new Member[0]);
+      out.write(new Gson().toJson(members));
     }// try() ==> try block을 벗어나기 전에 out.close()가 자동으로 실행된다.
   }
 
