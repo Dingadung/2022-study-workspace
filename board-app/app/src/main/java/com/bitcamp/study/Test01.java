@@ -19,7 +19,12 @@ public class Test01 {
     Gson gson = new Gson();
 
     String json = gson.toJson(b);
-    System.out.println(json);
+    System.out.println(json); // "property 명" : "값"
+
+    Board b2 = gson.fromJson(json, Board.class); // Board의 클래스 정보를 담아놓은 레퍼런스
+    System.out.println(b2);
+
+    System.out.println(b == b2); // false
   }
 
 }
