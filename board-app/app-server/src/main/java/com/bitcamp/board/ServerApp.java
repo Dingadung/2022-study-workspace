@@ -1,5 +1,7 @@
 package com.bitcamp.board;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
@@ -26,8 +28,18 @@ public class ServerApp {
       // 클라이언트가 보낸 데이터를 읽을 때 사용할 도구를 준비한다.
       InputStream in = socket.getInputStream();
 
+      // 클라이언트와 데이터를 주고 받고 싶은데, socket이 주는 데이터는 byte로만 전달한다. => 부품, dataInputStream을 장착한다.
+      // => 즉,  데이터를 읽을 때 primitive type 또는 String 타입의 값을 보다 손쉽게 읽을 수 있도록 기존의 입력 도구에 보조 도구(decorator)를 붙여서 사용한다. 
+      DataInputStream in2 = new DataInputStream(in); // File을 넘기면 FIle을, socket을 넘기면 socket을 알아서 읽어준다.
+
       // => 클라이언트로 데이터를 보낼 때 사용할 도구를 준비한다.
       OutputStream out = socket.getOutputStream();
+
+      // => 즉,  데이터를 출력할 때 primitive type 또는 String 타입의 값을 보다 손쉽게 출력할 수 있도록 기존의 입력 도구에 보조 도구(decorator)를 붙여서 사용한다. 
+      DataOutputStream out2 = new DataOutputStream(out); // File을 넘기면 FIle을, socket을 넘기면 socket을 알아서 읽어준다.
+
+      // 클라이언트와 서버 사이에 정해진 규칙(protocol)에 따라 데이터를 주고 받는다.
+
 
       // 클라이언트와 연결된 것을 끊는다.
       // => 클라이언트와 연결될 때까지 리턴하지 않는다.
