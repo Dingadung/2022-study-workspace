@@ -1,6 +1,6 @@
 package com.bitcamp.handler;
 
-import com.bitcamp.board.App;
+import com.bitcamp.board.ClientApp;
 import com.bitcamp.util.Prompt;
 
 // Handler 규격에 맞춰 서브 클래스에게 물려줄 공통 필드나 메서드를 구현한다.
@@ -18,9 +18,6 @@ public abstract class AbstractHandler implements Handler {
     this.menus = menus;
   }
 
-  // 다음 메서드는 execute()에서 메뉴를 출력할 때 사용된다.
-  // 다만 서브 클래스서 출력 형식을 바꾸기 위해 오버라이딩 할 수 있도록 
-  // 접근 범위를 protected로 설정한다.
   protected void printMenus() {
     for (int i = 0; i < menus.length; i++) {
       System.out.printf("  %d: %s\n", i + 1, menus[i]);
@@ -37,7 +34,7 @@ public abstract class AbstractHandler implements Handler {
 
   protected static void printTitle() {
     StringBuilder builder = new StringBuilder();
-    for(String title:App.breadcrumbMenu) {
+    for(String title: ClientApp.breadcrumbMenu) {
       if(!builder.isEmpty()) {
         builder.append(" > ");
       }
@@ -66,7 +63,7 @@ public abstract class AbstractHandler implements Handler {
         }
 
         // 메뉴에 진입할 때 breadcrumb 메뉴바에 그 메뉴를 등록한다.
-        App.breadcrumbMenu.push(menus[menuNo - 1]);
+        ClientApp.breadcrumbMenu.push(menus[menuNo - 1]);
 
         printHeadline();
 
@@ -78,7 +75,7 @@ public abstract class AbstractHandler implements Handler {
 
         printBlankLine();
 
-        App.breadcrumbMenu.pop();
+        ClientApp.breadcrumbMenu.pop();
 
       } catch (Exception ex) {
         System.out.printf("예외 발생: %s\n", ex.getMessage());
@@ -87,9 +84,6 @@ public abstract class AbstractHandler implements Handler {
 
   }
 
-  // 서브 클래스가 반드시 만들어야 할 메서드
-  // => 메뉴 번호를 받으면 그 메뉴에 해당하는 작업을 수행한다.
-  // => 서브 클래스에게 구현을 강제하기 위해 추상 메서드로 선언한다.
   public abstract void service(int menuNo);
 }
 

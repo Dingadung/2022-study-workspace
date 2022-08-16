@@ -56,7 +56,7 @@ public class BoardHandler extends AbstractHandler {
   private void onList() {
     try {
       out.writeUTF(dataName);
-      out.writeUTF("findeAll");
+      out.writeUTF("findAll");
       System.out.println(in.readUTF());
     }catch(Exception e) {
       throw new RuntimeException(e);
@@ -81,7 +81,7 @@ public class BoardHandler extends AbstractHandler {
 
     try {
       out.writeUTF(dataName);
-      out.writeUTF("findeByNumber");
+      out.writeUTF("findByNumber");
       System.out.println(in.readUTF());
     }catch(Exception e) {
       throw new RuntimeException(e);

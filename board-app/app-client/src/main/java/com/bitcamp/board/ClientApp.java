@@ -82,18 +82,6 @@ public class ClientApp {
 
       Prompt.close();
 
-      // 통신 프로토콜에 따라 요청한다. 먼저 서버에 전송!
-      //out.writeUTF("board");
-      //out.writeUTF("insert");
-
-      // 두개 전송후, 서버 응답할때까지 기다리기!
-      // 통신 프로토콜에 따라 응답을 처리한다.
-      //String status = in.readUTF();
-      //System.out.println(status);
-
-      // 네트워크 끊기
-      // => 서버와 연결된 것을 끊는다.
-      //socket.close();
       System.out.println("연결을 끊었음!");
     } catch (Exception e) {
       e.printStackTrace();
