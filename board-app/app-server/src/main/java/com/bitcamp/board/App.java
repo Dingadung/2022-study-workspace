@@ -5,8 +5,8 @@
 package com.bitcamp.board;
 
 import java.util.Stack;
-import com.bitcamp.board.handler.BoardHandler;
-import com.bitcamp.board.handler.MemberHandler;
+import com.bitcamp.board.servlet.BoardServlet;
+import com.bitcamp.board.servlet.MemberServlet;
 import com.bitcamp.servlet.Servlet;
 import com.bitcamp.util.Prompt;
 
@@ -24,12 +24,12 @@ public class App  {
 
       // 핸들러를 담을 레퍼런스 배열을 준비한다.
       Servlet[] handlers = new Servlet[] { // 파일명을 목적에 맞게 각각 전달
-          new BoardHandler("board.json"), // 게시판
-          new BoardHandler("reading.json"), // 독서록
-          new BoardHandler("visit.json"), // 방명록
-          new BoardHandler("notice.json"), // 공지사항
-          new BoardHandler("daily.json"), // 일기장
-          new MemberHandler("member.json") // 회원
+          new BoardServlet("board.json"), // 게시판
+          new BoardServlet("reading.json"), // 독서록
+          new BoardServlet("visit.json"), // 방명록
+          new BoardServlet("notice.json"), // 공지사항
+          new BoardServlet("daily.json"), // 일기장
+          new MemberServlet("member.json") // 회원
       };
 
       // "메인" 메뉴의 이름을 스택에 등록한다.
