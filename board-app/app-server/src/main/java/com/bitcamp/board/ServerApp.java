@@ -41,6 +41,8 @@ public class ServerApp {
       {
         System.out.println(" 클라이언트와 연결 되었음!");
 
+        // 클라이언트 요청을 처리할 객체 준비
+
         while(true) {
           // 클라이언트와 서버 사이에 정해진 규칙(protocol)에 따라 데이터를 주고 받는다.
           // 데이터 명 읽기
