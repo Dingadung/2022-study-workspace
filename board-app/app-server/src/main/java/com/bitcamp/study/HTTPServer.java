@@ -9,7 +9,8 @@ import java.net.Socket;
 public class HTTPServer {
 
   public static void main(String[] args) throws Exception{
-    try(ServerSocket ss = new ServerSocket(80);){
+    try(ServerSocket ss = new ServerSocket(80);){ // http://127.0.0.1/ 이 다음은 내가 원하는 옵션인데 이 서버단에서 설정을 안해줘서 그냥 계속 안녕하세요!만 출력한다.
+      // 그리고 80으로 127.0.0.1은 그냥 기본 port num 80을 의미한다.
       System.out.println("서버 시작!!!!!!");
       while(true) {
 
@@ -31,7 +32,7 @@ public class HTTPServer {
 
           // 클라이언트에게 응답한다.
           out.println("HTTP/1.1 200 OK");
-          out.println("Content-Type: text/html;charset=UTF-8");
+          out.println("Content-Type: text/html;charset=UTF-8"); // content의 정보
           out.println(); // 이제부터 본격적으로 콘텐트를 보내겠다고 알린다.
           out.println("<html>");
           out.println("<head>");

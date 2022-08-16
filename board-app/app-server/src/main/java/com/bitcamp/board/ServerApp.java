@@ -39,7 +39,8 @@ public class ServerApp {
       DataOutputStream out2 = new DataOutputStream(out); // File을 넘기면 FIle을, socket을 넘기면 socket을 알아서 읽어준다.
 
       // 클라이언트와 서버 사이에 정해진 규칙(protocol)에 따라 데이터를 주고 받는다.
-
+      // 명령 읽기
+      String 
 
       // 클라이언트와 연결된 것을 끊는다.
       // => 클라이언트와 연결될 때까지 리턴하지 않는다.
