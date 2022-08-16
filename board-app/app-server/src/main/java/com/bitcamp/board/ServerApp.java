@@ -20,7 +20,7 @@ public class ServerApp {
           // 클라이언트의 연결을 기다림
           // => 클라이언트와 연결되면 그 클라이언트와 통신할 준비를 한다.
           // 즉, Socket 객체 리턴 (연결 -> socket 객체 받기)
-          Socket socket = serverSocket.accept();
+          Socket socket = serverSocket.accept(); //처음에 여기서 소켓 받을 때까지 기다림, 
 
 
           // 클라이언트와 데이터를 주고 받는다.
@@ -42,7 +42,7 @@ public class ServerApp {
 
         // 클라이언트와 서버 사이에 정해진 규칙(protocol)에 따라 데이터를 주고 받는다.
         // 데이터 명 읽기
-        String dataName = in.readUTF();
+        String dataName = in.readUTF(); // 클라이언트가 문자열 보낼때 까지 기다린다. // read는 내가 원하는 값이 들어올 때까지 기다린다. 내가 원할 때 읽는 것 X.
         // 명령 읽기
         String command = in.readUTF();
 
