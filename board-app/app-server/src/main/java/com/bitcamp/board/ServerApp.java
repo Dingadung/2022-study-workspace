@@ -39,9 +39,23 @@ public class ServerApp {
           )//try()
       {
         System.out.println(" 클라이언트와 연결 되었음!");
+
         // 클라이언트와 서버 사이에 정해진 규칙(protocol)에 따라 데이터를 주고 받는다.
+        // 데이터 명 읽기
+        String dataName = in.readUTF();
         // 명령 읽기
-        String data = in.readUTF();
+        String command = in.readUTF();
+
+        switch(dataName) {
+          case "board":
+            out.writeUTF("success");
+            break;
+          case "member":
+            out.writeUTF("success");
+            break;
+          default:
+            out.writeUTF("fail");
+        }
 
 
         // 클라이언트와 연결된 것을 끊는다.
