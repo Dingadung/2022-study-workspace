@@ -5,7 +5,6 @@ import java.io.DataOutputStream;
 import java.net.Socket;
 import java.util.Stack;
 import com.bitcamp.board.handler.BoardHandler;
-import com.bitcamp.board.handler.MemberHandler;
 import com.bitcamp.handler.Handler;
 import com.bitcamp.util.Prompt;
 
@@ -35,7 +34,7 @@ public class ClientApp {
           new BoardHandler("visit", in, out), // 방명록
           new BoardHandler("notice", in, out), // 공지사항
           new BoardHandler("daily", in, out), // 일기장
-          new MemberHandler("member", in, out) // 회원
+          //new MemberHandler("member", in, out) // 회원
       };
 
       // "메인" 메뉴의 이름을 스택에 등록한다.
@@ -62,6 +61,7 @@ public class ClientApp {
               continue; // while 문의 조건 검사로 보낸다.
 
             } else if (mainMenuNo == 0) {
+              out.writeUTF("exit"); // client가 서버와의 연결에서  나가겠다고 하는 순간.
               break loop;
             }
 

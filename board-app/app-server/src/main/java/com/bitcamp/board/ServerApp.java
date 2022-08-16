@@ -40,21 +40,27 @@ public class ServerApp {
       {
         System.out.println(" 클라이언트와 연결 되었음!");
 
-        // 클라이언트와 서버 사이에 정해진 규칙(protocol)에 따라 데이터를 주고 받는다.
-        // 데이터 명 읽기
-        String dataName = in.readUTF(); // 클라이언트가 문자열 보낼때 까지 기다린다. // read는 내가 원하는 값이 들어올 때까지 기다린다. 내가 원할 때 읽는 것 X.
-        // 명령 읽기
-        String command = in.readUTF();
+        while(true) {
+          // 클라이언트와 서버 사이에 정해진 규칙(protocol)에 따라 데이터를 주고 받는다.
+          // 데이터 명 읽기
+          String dataName = in.readUTF(); // 클라이언트가 문자열 보낼때 까지 기다린다. // read는 내가 원하는 값이 들어올 때까지 기다린다. 내가 원할 때 읽는 것 X.
+          // 명령 읽기
 
-        switch(dataName) {
-          case "board":
-            out.writeUTF("success");
+          if(dataName.equals("exit")) { // client에서 exit할때까지 반복
             break;
-          case "member":
-            out.writeUTF("success");
-            break;
-          default:
-            out.writeUTF("fail");
+          }
+          String command = in.readUTF();
+
+          switch(dataName) {
+            case "board":
+              out.writeUTF("success");
+              break;
+            case "member":
+              out.writeUTF("success");
+              break;
+            default:
+              out.writeUTF("fail");
+          }
         }
 
 
