@@ -11,6 +11,8 @@ public class HTTPClient {
         Socket socket = new Socket("stores.auction.co.kr", 80); // web server port number: 80
         BufferedReader in = new BufferedReader( new InputStreamReader(socket.getInputStream())); // (new InputStream)
         PrintStream out = new PrintStream(socket.getOutputStream());){ // (OutputStream) // printStream이 무슨 역할이지?
+      // 프로토콜: 두 프로그램 사ㅣ에 데이터를 주고 받는 규칙 
+      // 프로토콜만 알고 있으면 서버와 클라이언트를 다룰 숭 ㅣㅆ다.
 
       // HTTP 프로토콜에 따라서 메인 웹 페이지를 요청한다.
       out.println("GET /thisbike HTTP/1.1"); // root 에 있는 메인 페이지를원한다.
