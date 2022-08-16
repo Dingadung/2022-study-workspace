@@ -3,11 +3,15 @@ package com.bitcamp.board;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
+import java.util.Stack;
 import com.bitcamp.board.handler.BoardHandler;
 import com.bitcamp.board.handler.MemberHandler;
 import com.bitcamp.handler.Handler;
 
 public class ClientApp {
+
+  //breadcrumb 메뉴를 저장할 스택을 준비
+  public static Stack<String> breadcrumbMenu = new Stack<>();
 
   public static void main(String[] args) {
     System.out.println("[게시글 관리 클라이언트]");
@@ -56,4 +60,28 @@ public class ClientApp {
     System.out.println("종료");
   }//main()
 
+
+  static void welcome() {
+    System.out.println("[게시판 애플리케이션]");
+    System.out.println();
+    System.out.println("환영합니다!");
+    System.out.println();
+  }
+
+  static void printMenus(String[] menus) {
+    for (int i = 0; i < menus.length; i++) {
+      System.out.printf("  %d: %s\n", i + 1, menus[i]);
+    }
+  }
+
+  protected static void printTitle() {
+    StringBuilder builder = new StringBuilder();
+    for(String title:App.breadcrumbMenu) {
+      if(!builder.isEmpty()) {
+        builder.append(" > ");
+      }
+      builder.append(title);
+    }
+    System.out.printf("%s:\n", builder.toString());
+  }
 }

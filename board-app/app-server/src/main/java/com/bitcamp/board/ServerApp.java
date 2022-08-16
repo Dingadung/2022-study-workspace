@@ -20,7 +20,7 @@ public class ServerApp {
           // 클라이언트의 연결을 기다림
           // => 클라이언트와 연결되면 그 클라이언트와 통신할 준비를 한다.
           // 즉, Socket 객체 리턴 (연결 -> socket 객체 받기)
-          Socket socket = serverSocket.accept(); //처음에 여기서 소켓 받을 때까지 기다림, 
+          Socket socket = serverSocket.accept(); //처음에 여기서 소켓 받을 때까지 기다린다.
 
 
           // 클라이언트와 데이터를 주고 받는다.
