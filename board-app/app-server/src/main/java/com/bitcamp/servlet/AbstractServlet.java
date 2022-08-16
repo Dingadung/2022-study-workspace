@@ -1,11 +1,11 @@
-package com.bitcamp.handler;
+package com.bitcamp.servlet;
 
 import com.bitcamp.board.App;
 import com.bitcamp.util.Prompt;
 
 // Handler 규격에 맞춰 서브 클래스에게 물려줄 공통 필드나 메서드를 구현한다.
 // 
-public abstract class AbstractHandler implements Handler {
+public abstract class AbstractServlet implements Servlet {
 
   // 핸들러가 사용할 메뉴 목록을 담을 배열을 준비한다.
   // => 메뉴 목록은 생성자를 통해 초기화시킨다.
@@ -14,7 +14,7 @@ public abstract class AbstractHandler implements Handler {
 
   // 반드시 메뉴 목록을 초기화시키도록 강제하기 위해 
   // 기본 생성자 대신 메뉴 목록을 배열로 받는 생성자를 준비한다.
-  public AbstractHandler(String[] menus) {
+  public AbstractServlet(String[] menus) {
     this.menus = menus;
   }
 
@@ -47,7 +47,7 @@ public abstract class AbstractHandler implements Handler {
   }
 
   @Override
-  public void execute() {
+  public void service() {
     while (true) {
       printTitle();
       printMenus();

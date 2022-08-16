@@ -7,10 +7,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import com.bitcamp.board.dao.BoardDao;
 import com.bitcamp.board.domain.Board;
-import com.bitcamp.handler.AbstractHandler;
+import com.bitcamp.servlet.AbstractServlet;
 import com.bitcamp.util.Prompt;
 
-public class BoardHandler extends AbstractHandler {
+public class BoardHandler extends AbstractServlet {
 
   // 게시글 목록을 관리할 객체 준비
   private BoardDao boardDao;

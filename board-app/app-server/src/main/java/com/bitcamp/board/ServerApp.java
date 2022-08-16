@@ -13,7 +13,8 @@ public class ServerApp {
     try (
         // 네트워크 준비(TCP 방식)
         // => 클라이언트 연결을 관리할 객체를 준비한다.
-        ServerSocket serverSocket = new ServerSocket(8888);){
+        ServerSocket serverSocket = new ServerSocket(8888);)
+    {
       System.out.println("서버 소켓 준비 완료!");
 
       try(

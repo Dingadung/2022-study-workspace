@@ -61,7 +61,7 @@ public class ClientApp {
               continue; // while 문의 조건 검사로 보낸다.
 
             } else if (mainMenuNo == 0) {
-              out.writeUTF("exit"); // client가 서버와의 연결에서  나가겠다고 하는 순간.
+              out.writeUTF("exit"); // client가 서버와의 연결에서  나가겠다고 하는 순간. // out은 서버로 보내는 것이다.
               break loop;
             }
 
@@ -83,13 +83,13 @@ public class ClientApp {
       Prompt.close();
 
       // 통신 프로토콜에 따라 요청한다. 먼저 서버에 전송!
-      out.writeUTF("board");
-      out.writeUTF("insert");
+      //out.writeUTF("board");
+      //out.writeUTF("insert");
 
       // 두개 전송후, 서버 응답할때까지 기다리기!
       // 통신 프로토콜에 따라 응답을 처리한다.
-      String status = in.readUTF();
-      System.out.println(status);
+      //String status = in.readUTF();
+      //System.out.println(status);
 
       // 네트워크 끊기
       // => 서버와 연결된 것을 끊는다.
@@ -99,7 +99,7 @@ public class ClientApp {
       e.printStackTrace();
     }//try-catch()
 
-    System.out.println("종료");
+    System.out.println("종료!\n");
   }//main()
 
 
@@ -118,7 +118,7 @@ public class ClientApp {
 
   protected static void printTitle() {
     StringBuilder builder = new StringBuilder();
-    for(String title:App.breadcrumbMenu) {
+    for(String title: breadcrumbMenu) {
       if(!builder.isEmpty()) {
         builder.append(" > ");
       }

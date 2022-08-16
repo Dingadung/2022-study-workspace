@@ -6,10 +6,10 @@ package com.bitcamp.board.handler;
 import java.util.Date;
 import com.bitcamp.board.dao.MemberDao;
 import com.bitcamp.board.domain.Member;
-import com.bitcamp.handler.AbstractHandler;
+import com.bitcamp.servlet.AbstractServlet;
 import com.bitcamp.util.Prompt;
 
-public class MemberHandler extends AbstractHandler {
+public class MemberHandler extends AbstractServlet {
 
   private MemberDao memberDao;
 
