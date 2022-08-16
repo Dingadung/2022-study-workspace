@@ -58,15 +58,13 @@ public class ServerApp {
           if(dataName.equals("exit")) { // client에서 exit할때까지 반복
             break;
           }
-          String command = in.readUTF();
 
           switch(dataName) {
-            case "board":
-              out.writeUTF("success");
-              break;
-            case "member":
-              out.writeUTF("success");
-              break;
+            case "board":  boardServlet.service(in, out); break;
+            case "reading": readingServlet.service(in, out); break;
+            case "visit": visitServlet.service(in, out); break;
+            case "notice": noticeServlet.service(in, out); break;
+            case "daily": dailyServlet.service(in, out); break;
             default:
               out.writeUTF("fail");
           }
