@@ -75,7 +75,12 @@ public class BoardServlet implements Servlet{
           break;
 
         case "delete": 
-          out.writeUTF("success");
+          no = in.readInt(); // client가 보낸 데이터 추가로 읽기
+          if(boardDao.delete(no)) {
+            out.writeUTF("success");
+          } else {
+            out.writeUTF("fail");
+          }
           break;
 
         default:
