@@ -33,7 +33,6 @@ public class MemberServlet implements Servlet {
 
       // 여러 군데에서 사용하기 위해 여기서 선언
       Member member = null; 
-      //int no = 0;
       String email = null;
       String json = null;
 
@@ -83,7 +82,6 @@ public class MemberServlet implements Servlet {
             out.writeUTF(FAIL);
           }
           break;
-
         default:
           out.writeUTF(FAIL);
       }//switch

@@ -48,7 +48,6 @@ public class BoardDao {
   public void save() throws Exception {
     try (FileWriter out = new FileWriter(filename)) {
       Board[] boards = list.toArray(new Board[0]); // 현재 list에 들어 있는 보드 객체들 받아오기
-      //String json = new Gson().toJson(boards); // 이렇게 코딩 안하고, 그냥 바로 넣어버린다.
       out.write( new Gson().toJson(boards));
     }
   }
