@@ -122,26 +122,28 @@ public class BoardHandler extends AbstractHandler {
   private void onInput() throws Exception{
 
     try {
+      // 사용자로부터 입력 받기
+      Board board = new Board();
+      board.title = Prompt.inputString("제목? ");
+      board.content = Prompt.inputString("내용? ");
+      board.writer = Prompt.inputString("작성자? ");
+      board.password = Prompt.inputString("암호? ");
+      board.viewCount = 0;
+      board.createdDate = System.currentTimeMillis();
+
       out.writeUTF(dataName);
       out.writeUTF("insert");
-      System.out.println(in.readUTF());
+      String json = new Gson().toJson(board);
+      out.writeUTF(json); // json 서버로 보내기
+
+      if(in.readUTF().equals("success")) {
+        System.out.println("게시글을 등록했습니다.");
+      } else {
+        System.out.println("게시글 등록에 실패했습니다!");
+      }
     }catch(Exception e) {
       throw new RuntimeException(e);
     }
-    //    Board board = new Board();
-    //
-    //    board.title = Prompt.inputString("제목? ");
-    //    board.content = Prompt.inputString("내용? ");
-    //    board.writer = Prompt.inputString("작성자? ");
-    //    board.password = Prompt.inputString("암호? ");
-    //    board.viewCount = 0;
-    //    board.createdDate = System.currentTimeMillis();
-    //
-    //    this.boardDao.insert(board);
-    //    this.boardDao.save();
-    //
-    //    System.out.println("게시글을 등록했습니다.");
-    //  }
   }
 
   private void onDelete() throws Exception{

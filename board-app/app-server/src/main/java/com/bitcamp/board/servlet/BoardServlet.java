@@ -45,7 +45,7 @@ public class BoardServlet implements Servlet{
           out.writeUTF(new Gson().toJson(boards)); //client에게 전송
           break;
 
-        case "findByNumber":
+        case "findByNo":
           no = in.readInt(); // client가 보낸 데이터 추가로 읽기
           board = boardDao.findByNo(no);
           if(board != null) {
