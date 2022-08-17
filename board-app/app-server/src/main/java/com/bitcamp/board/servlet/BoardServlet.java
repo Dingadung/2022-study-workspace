@@ -12,16 +12,18 @@ public class BoardServlet implements Servlet{
 
   // 게시글 목록을 관리할 객체 준비
   private BoardDao boardDao;
+  private String fileName;
 
   public BoardServlet(String dataName){
-    //    boardDao = new BoardDao(dataName); // 객체 생성 따로, 로딩 따로!  생성자에서 예외를 던지는 것은 조심해야한다.
-    //    // 생성자에서 객체가 저장되지도 못하고 null인상태로 남을 수 있기 때문이다.!
-    //    try{
-    //      boardDao.load();
-    //    }catch(Exception e) {
-    //      System.out.printf("%s 파일 로딩 중 오류 발생!\n", e.getMessage());
-    //      // e.printStackTrace();
-    //    }
+    fileName = dataName + ".json";
+    boardDao = new BoardDao(fileName); 
+
+    try{
+      boardDao.load();
+    }catch(Exception e) {
+      System.out.printf("%s 파일 로딩 중 오류 발생!\n", fileName);
+      e.printStackTrace();
+    }
   }
 
   @Override
