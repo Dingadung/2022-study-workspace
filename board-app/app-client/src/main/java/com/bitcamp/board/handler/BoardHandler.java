@@ -175,42 +175,49 @@ public class BoardHandler extends AbstractHandler {
 
   private void onUpdate() throws Exception{
     try {
+      //    변경할 번호 입력 받기
+      int boardNo = 0;
+      while (true) {
+        try {
+          boardNo = Prompt.inputInt("변경할 게시글 번호? ");
+          break;
+        } catch (Throwable ex) {
+          System.out.println("입력 값이 옳지 않습니다!");
+        }
+      }
+
+      // 변경할 게시글 가져오기
+      out.writeUTF(dataName);
+      out.writeUTF("findByNo");
+      out.writeInt(boardNo);
+
+      if(in.readUTF().equals("fail")) {
+        System.out.println("해당 번호의 게시글이 없습니다!");
+        return;
+      }
+      String json = in.readUTF();
+      Board board = new Gson().fromJson(json, Board.class);
+
+      String newTitle = Prompt.inputString("제목?(" + board.title + ") ");
+      String newContent = Prompt.inputString(String.format("내용?(%s) ", board.content));
+
+      String input = Prompt.inputString("변경하시겠습니까?(y/n) ");
+      if (input.equals("y")) {
+        board.title = newTitle;
+        board.content = newContent;
+        this.boardDao.save();
+        System.out.println("변경했습니다.");
+      } else {
+        System.out.println("변경 취소했습니다.");
+      }
+
       out.writeUTF(dataName);
       out.writeUTF("update");
       System.out.println(in.readUTF());
     }catch(Exception e) {
       throw new RuntimeException(e);
     }
-    //    int boardNo = 0;
-    //    while (true) {
-    //      try {
-    //        boardNo = Prompt.inputInt("변경할 게시글 번호? ");
-    //        break;
-    //      } catch (Throwable ex) {
-    //        System.out.println("입력 값이 옳지 않습니다!");
-    //      }
-    //    }
-    //
-    //    Board board = this.boardDao.findByNo(boardNo);
-    //
-    //    if (board == null) {
-    //      System.out.println("해당 번호의 게시글이 없습니다!");
-    //      return;
-    //    }
-    //
-    //    String newTitle = Prompt.inputString("제목?(" + board.title + ") ");
-    //    String newContent = Prompt.inputString(String.format("내용?(%s) ", board.content));
-    //
-    //    String input = Prompt.inputString("변경하시겠습니까?(y/n) ");
-    //    if (input.equals("y")) {
-    //      board.title = newTitle;
-    //      board.content = newContent;
-    //      this.boardDao.save();
-    //      System.out.println("변경했습니다.");
-    //    } else {
-    //      System.out.println("변경 취소했습니다.");
-    //    }
-    //  }
+
   }
 }
 
