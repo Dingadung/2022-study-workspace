@@ -58,16 +58,20 @@ public class BoardServlet implements Servlet{
           break;
 
         case "insert": 
-          String json = in.readUTF(); // json 형식의 문자열 읽기
+          json = in.readUTF(); // json 형식의 문자열 읽기
           board = new Gson().fromJson(json, Board.class); // 객체의 타입정보 알려주기
           boardDao.insert(board);
           out.writeUTF("success");
           break;
 
         case "update":
-          String json = in.readUTF(); // json 형식의 문자열 읽기
+          json = in.readUTF(); // json 형식의 문자열 읽기
           board = new Gson().fromJson(json, Board.class); // 객체의 타입정보 알려주기
-          out.writeUTF("success");
+          if(boardDao.update(board)) {
+            out.writeUTF("success");
+          }else {
+            out.writeUTF("fail");
+          }
           break;
 
         case "delete": 
