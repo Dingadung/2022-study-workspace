@@ -195,30 +195,34 @@ public class BoardHandler extends AbstractHandler {
         System.out.println("해당 번호의 게시글이 없습니다!");
         return;
       }
+
+
       String json = in.readUTF();
       Board board = new Gson().fromJson(json, Board.class);
 
-      String newTitle = Prompt.inputString("제목?(" + board.title + ") ");
-      String newContent = Prompt.inputString(String.format("내용?(%s) ", board.content));
+      board.title = Prompt.inputString("제목?(" + board.title + ") ");
+      board.content= Prompt.inputString(String.format("내용?(%s) ", board.content));
 
       String input = Prompt.inputString("변경하시겠습니까?(y/n) ");
       if (input.equals("y")) {
-        board.title = newTitle;
-        board.content = newContent;
-        this.boardDao.save();
-        System.out.println("변경했습니다.");
+        out.writeUTF(dataName);
+        out.writeUTF("update");
+        out.writeUTF(new Gson().toJson(board));
+        if(in.readUTF().equals("success")) {
+          System.out.println("변경했습니다.");
+        }else {
+          System.out.println("변경 실패했습니다!");
+        }
       } else {
         System.out.println("변경 취소했습니다.");
       }
 
-      out.writeUTF(dataName);
-      out.writeUTF("update");
       System.out.println(in.readUTF());
     }catch(Exception e) {
       throw new RuntimeException(e);
     }
-
   }
+
 }
 
 
