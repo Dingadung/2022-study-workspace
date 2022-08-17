@@ -5,8 +5,13 @@ package com.bitcamp.board.handler;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import com.bitcamp.board.dao.BoardDao;
+import com.bitcamp.board.domain.Board;
 import com.bitcamp.handler.AbstractHandler;
+import com.bitcamp.util.Prompt;
+import com.google.gson.Gson;
 
 public class BoardHandler extends AbstractHandler {
 
@@ -25,7 +30,7 @@ public class BoardHandler extends AbstractHandler {
     this.in = in;
     this.out =out;
 
-    boardDao = new BoardDao(dataName); // 객체 생성 따로, 로딩 따로!  생성자에서 예외를 던지는 것은 조심해야한다.
+    boardDao = new BoardDao(dataName); 
     // 이제 로드는 서버애서!
 
     // 생성자에서 객체가 저장되지도 못하고 null인상태로 남을 수 있기 때문이다.!
@@ -57,62 +62,60 @@ public class BoardHandler extends AbstractHandler {
     try {
       out.writeUTF(dataName);
       out.writeUTF("findAll");
-      System.out.println(in.readUTF());
+      String status = in.readUTF();
+      String json = in.readUTF();
+      Board[] boards = new Gson().fromJson(json, Board[].class);
+      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+      System.out.println("번호\t제목\t조회수\t작성자\t등록일");
+
+      for (Board board : boards) {
+        Date date = new Date(board.createdDate);
+        String dateStr = formatter.format(date); 
+        System.out.printf("%d\t%s\t%d\t%s\t%s\n",
+            board.no, board.title, board.viewCount, board.writer, dateStr);
+      }
     }catch(Exception e) {
       throw new RuntimeException(e);
     }
-
-    //    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-    //
-    //    System.out.println("번호\t제목\t조회수\t작성자\t등록일");
-    //
-    //    Board[] boards = this.boardDao.findAll();
-    //
-    //    for (Board board : boards) {
-    //      Date date = new Date(board.createdDate);
-    //      String dateStr = formatter.format(date); 
-    //      System.out.printf("%d\t%s\t%d\t%s\t%s\n",
-    //          board.no, board.title, board.viewCount, board.writer, dateStr);
-    //    }
 
   }
 
   private void onDetail() {
 
     try {
+      int boardNo = 0;
+      while (true) {
+        try {
+
+          boardNo = Prompt.inputInt("조회할 게시글 번호? ");
+          break;
+        } catch (Exception ex) {
+          System.out.println("입력 값이 옳지 않습니다!");
+        }
+      }
+
       out.writeUTF(dataName);
-      out.writeUTF("findByNumber");
-      System.out.println(in.readUTF());
+      out.writeUTF("findByNo");
+      out.writeInt(boardNo);
+      if(in.readUTF().equals("fail")) {
+        System.out.println("해당 번호의 게시글이 없습니다!");
+        return;
+      }
+      String json = in.readUTF();
+      Board board = new Gson().fromJson(json, Board.class);
+
+      System.out.printf("번호: %d\n", board.no);
+      System.out.printf("제목: %s\n", board.title);
+      System.out.printf("내용: %s\n", board.content);
+      System.out.printf("조회수: %d\n", board.viewCount);
+      System.out.printf("작성자: %s\n", board.writer);
+      Date date = new Date(board.createdDate);
+      System.out.printf("등록일: %tY-%1$tm-%1$td %1$tH:%1$tM\n", date);
+
     }catch(Exception e) {
       throw new RuntimeException(e);
     }
-    //    int boardNo = 0;
-    //    while (true) {
-    //      try {
-    //
-    //        boardNo = Prompt.inputInt("조회할 게시글 번호? ");
-    //        break;
-    //      } catch (Exception ex) {
-    //        System.out.println("입력 값이 옳지 않습니다!");
-    //      }
-    //    }
-    //
-    //    // 해당 번호의 게시글이 몇 번 배열에 들어 있는지 알아내기
-    //    Board board = this.boardDao.findByNo(boardNo);
-    //
-    //    // 사용자가 입력한 번호에 해당하는 게시글을 못 찾았다면
-    //    if (board == null) {
-    //      System.out.println("해당 번호의 게시글이 없습니다!");
-    //      return;
-    //    }
-    //
-    //    System.out.printf("번호: %d\n", board.no);
-    //    System.out.printf("제목: %s\n", board.title);
-    //    System.out.printf("내용: %s\n", board.content);
-    //    System.out.printf("조회수: %d\n", board.viewCount);
-    //    System.out.printf("작성자: %s\n", board.writer);
-    //    Date date = new Date(board.createdDate);
-    //    System.out.printf("등록일: %tY-%1$tm-%1$td %1$tH:%1$tM\n", date);
 
   }
 

@@ -12,7 +12,6 @@ import com.google.gson.Gson;
 
 public class BoardServlet implements Servlet{
 
-
   // 게시글 목록을 관리할 객체 준비
   private BoardDao boardDao;
   private String fileName;
