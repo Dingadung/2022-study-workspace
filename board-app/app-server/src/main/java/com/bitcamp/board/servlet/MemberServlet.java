@@ -3,118 +3,98 @@
  */
 package com.bitcamp.board.servlet;
 
-import java.util.Date;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import com.bitcamp.board.dao.MemberDao;
 import com.bitcamp.board.domain.Member;
-import com.bitcamp.servlet.AbstractServlet;
-import com.bitcamp.util.Prompt;
+import com.bitcamp.servlet.Servlet;
+import com.google.gson.Gson;
 
-public class MemberServlet extends AbstractServlet {
+public class MemberServlet implements Servlet {
 
   private MemberDao memberDao;
+  private String fileName;
 
-  public MemberServlet(String fileName) {
-    super(new String[] {"목록", "상세보기", "등록", "삭제", "변경"});
+  public MemberServlet(String dataName) {
+    fileName = dataName + ".json";
     memberDao = new MemberDao(fileName);
     try {
       memberDao.load();
     }catch(Exception e) {
-      System.out.printf("%s 파일 로딩 중 오류 발생!\n", e.getMessage());
+      System.out.printf("%s 파일 로딩 중 오류 발생!\n", fileName);
+      e.printStackTrace();
     }
   }
 
   @Override
-  public void service(int menuNo){
-    try{
-      switch (menuNo) {
-        case 1: this.onList(); break;
-        case 2: this.onDetail(); break;
-        case 3: this.onInput(); break;
-        case 4: this.onDelete(); break;
-        case 5: this.onUpdate(); break;
-      }
+  public void service(DataInputStream in, DataOutputStream out){
+    try {
+      String command = in.readUTF();
+
+      // 여러 군데에서 사용하기 위해 여기서 선언
+      Member member = null; 
+      //int no = 0;
+      String email = null;
+      String json = null;
+
+      switch (command) {
+        case "findAll": 
+          Member[] members = memberDao.findAll();
+          out.writeUTF(SUCCESS); // client에게 응답
+          out.writeUTF(new Gson().toJson(members)); //client에게 전송
+          break;
+
+        case "findByEmail":
+          email = in.readUTF(); // client가 보낸 데이터 추가로 읽기
+          member = memberDao.findByEmail(email);
+          if(member != null) {
+            out.writeUTF(SUCCESS);
+            out.writeUTF(new Gson().toJson(member));
+          }else {
+            out.writeUTF(FAIL);
+          }
+          break;
+
+        case "insert": 
+          json = in.readUTF(); // json 형식의 문자열 읽기
+          member = new Gson().fromJson(json, Member.class); // 객체의 타입정보 알려주기
+          memberDao.insert(member);
+          memberDao.save();
+          out.writeUTF(SUCCESS);
+          break;
+
+        case "update":
+          json = in.readUTF(); // json 형식의 문자열 읽기
+          member = new Gson().fromJson(json, Member.class); // 객체의 타입정보 알려주기
+          if(memberDao.update(member)) {
+            memberDao.save();
+            out.writeUTF(SUCCESS);
+          }else {
+            out.writeUTF(FAIL);
+          }
+          break;
+
+        case "delete": 
+          email = in.readUTF(); // client가 보낸 데이터 추가로 읽기
+          if(memberDao.delete(email)) {
+            memberDao.save();
+            out.writeUTF(SUCCESS);
+          } else {
+            out.writeUTF(FAIL);
+          }
+          break;
+
+        default:
+          out.writeUTF(FAIL);
+      }//switch
     }catch(Exception e) {
-      throw new RuntimeException();
-    }
-  }
-
-  private void onList() {
-    System.out.println("이메일         이름");
-
-    Member[] members = this.memberDao.findAll();
-
-    for (Member member : members) {
-      System.out.printf("%s               %s\n",
-          member.email, member.name);
-    }
+      throw new RuntimeException(e); 
+    }//try-catch
 
   }
 
-  private void onDetail() {
-    String email = Prompt.inputString("조회할 회원 이메일? ");
-
-    Member member = this.memberDao.findByEmail(email);
-
-    if (member == null) {
-      System.out.println("해당 이메일의 회원이 없습니다!");
-      return;
-    }
-
-    System.out.printf("이름: %s\n", member.name);
-    System.out.printf("이메일: %s\n", member.email);
-    Date date = new Date(member.createdDate);
-    System.out.printf("등록일: %tY-%1$tm-%1$td %1$tH:%1$tM\n", date);
-  }
-
-  private void onInput() throws Exception{
-    Member member = new Member();
-
-    member.name = Prompt.inputString("이름? ");
-    member.email = Prompt.inputString("이메일? ");
-    member.password = Prompt.inputString("암호? ");
-    member.createdDate = System.currentTimeMillis();
-
-    this.memberDao.insert(member);
-    this.memberDao.save();
-
-    System.out.println("회원을 등록했습니다.");
-  }
-
-  private void onDelete() throws Exception{
-    String email = Prompt.inputString("삭제할 회원 이메일? ");
-
-    if (memberDao.delete(email)) {
-      this.memberDao.save();
-      System.out.println("삭제하였습니다.");
-    } else {
-      System.out.println("해당 이메일의 회원이 없습니다!");
-    }
-  }
-
-  private void onUpdate() throws Exception{
-    String email = Prompt.inputString("변경할 회원 이메일? ");
-
-    Member member = this.memberDao.findByEmail(email);
-
-    if (member == null) {
-      System.out.println("해당 이메일의 회원이 없습니다!");
-      return;
-    }
-
-    String newName = Prompt.inputString("이름?(" + member.name + ") ");
-    String newEmail = Prompt.inputString(String.format("이메일?(%s) ", member.email));
-
-    String input = Prompt.inputString("변경하시겠습니까?(y/n) ");
-    if (input.equals("y")) {
-      member.name = newName;
-      member.email = newEmail;
-      this.memberDao.save();
-      System.out.println("변경했습니다.");
-    } else {
-      System.out.println("변경 취소했습니다.");
-    }
-  }
 }
+
 
 
 

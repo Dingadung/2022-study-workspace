@@ -87,10 +87,10 @@ public class BoardServlet implements Servlet{
 
         default:
           out.writeUTF(FAIL);
-      }
+      }//switch
     }catch(Exception e) {
       throw new RuntimeException(e); 
-    }//switch
+    }//try-catch
   }// service
 
 

@@ -7,7 +7,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import com.bitcamp.board.dao.BoardDao;
 import com.bitcamp.board.domain.Board;
 import com.bitcamp.handler.AbstractHandler;
 import com.bitcamp.util.Prompt;
@@ -16,7 +15,6 @@ import com.google.gson.Gson;
 public class BoardHandler extends AbstractHandler {
 
   // 게시글 목록을 관리할 객체 준비
-  private BoardDao boardDao;
 
   String dataName;
   DataInputStream in;
@@ -30,7 +28,6 @@ public class BoardHandler extends AbstractHandler {
     this.in = in;
     this.out =out;
 
-    boardDao = new BoardDao(dataName); 
     // 이제 로드는 서버애서!
   }
 
@@ -214,7 +211,7 @@ public class BoardHandler extends AbstractHandler {
         System.out.println("변경 취소했습니다.");
       }
 
-      System.out.println(in.readUTF());
+
     }catch(Exception e) {
       throw new RuntimeException(e);
     }
