@@ -12,8 +12,6 @@ import com.google.gson.Gson;
 
 public class BoardServlet implements Servlet{
 
-  static final String SUCCESS = "success";
-  static final String FAIL = "fail";
 
   // 게시글 목록을 관리할 객체 준비
   private BoardDao boardDao;
@@ -32,11 +30,10 @@ public class BoardServlet implements Servlet{
   }
 
   @Override
-  public void service(DataInputStream in, DataOutputStream out) { //상위 클래스에서 service메소드가 예외를 던지지 않았기 때문에 여기서도 직접적으로 던질 수는 없지만,
-    // 예외를 상위 호출자에게 보내고 싶으면 RuntimeException으로 던질  수 있다!!!
+  public void service(DataInputStream in, DataOutputStream out) {
     try {
-
       String command = in.readUTF();
+
       // 여러 군데에서 사용하기 위해 여기서 선언
       Board board = null; 
       int no = 0;
@@ -93,7 +90,6 @@ public class BoardServlet implements Servlet{
       throw new RuntimeException(e); 
     }//switch
   }// service
-
 
 
 }
