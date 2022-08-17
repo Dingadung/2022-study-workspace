@@ -149,28 +149,28 @@ public class BoardHandler extends AbstractHandler {
   private void onDelete() throws Exception{
 
     try {
+      // 삭제할 게시글 번호 받기
+      int boardNo = 0;
+      while (true) {
+        try {
+          boardNo = Prompt.inputInt("삭제할 게시글 번호? ");
+          break;
+        } catch (Exception ex) {
+          System.out.println("입력 값이 옳지 않습니다!");
+        }
+      }
+
       out.writeUTF(dataName);
       out.writeUTF("delete");
-      System.out.println(in.readUTF());
+      out.writeInt(boardNo);
+      if(in.readUTF().equals("success")) {
+        System.out.println("삭제하였습니다.");
+      } else {
+        System.out.println("해당 번호의 게시글이 없습니다!");
+      }
     }catch(Exception e) {
       throw new RuntimeException(e);
     }
-    //    int boardNo = 0;
-    //    while (true) {
-    //      try {
-    //        boardNo = Prompt.inputInt("삭제할 게시글 번호? ");
-    //        break;
-    //      } catch (Exception ex) {
-    //        System.out.println("입력 값이 옳지 않습니다!");
-    //      }
-    //    }
-    //
-    //    if (boardDao.delete(boardNo)) {
-    //      this.boardDao.save();
-    //      System.out.println("삭제하였습니다.");
-    //    } else {
-    //      System.out.println("해당 번호의 게시글이 없습니다!");
-    //    }
   }
 
   private void onUpdate() throws Exception{
