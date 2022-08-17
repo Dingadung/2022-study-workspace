@@ -12,6 +12,9 @@ import com.google.gson.Gson;
 
 public class BoardServlet implements Servlet{
 
+  static final String SUCCESS = "success";
+  static final String FAIL = "fail";
+
   // 게시글 목록을 관리할 객체 준비
   private BoardDao boardDao;
   private String fileName;
@@ -42,7 +45,7 @@ public class BoardServlet implements Servlet{
       switch (command) {
         case "findAll": 
           Board[] boards = boardDao.findAll();
-          out.writeUTF("success"); // client에게 응답
+          out.writeUTF(SUCCESS); // client에게 응답
           out.writeUTF(new Gson().toJson(boards)); //client에게 전송
           break;
 
@@ -50,10 +53,10 @@ public class BoardServlet implements Servlet{
           no = in.readInt(); // client가 보낸 데이터 추가로 읽기
           board = boardDao.findByNo(no);
           if(board != null) {
-            out.writeUTF("success");
+            out.writeUTF(SUCCESS);
             out.writeUTF(new Gson().toJson(board));
           }else {
-            out.writeUTF("fail");
+            out.writeUTF(FAIL);
           }
           break;
 
@@ -61,35 +64,35 @@ public class BoardServlet implements Servlet{
           json = in.readUTF(); // json 형식의 문자열 읽기
           board = new Gson().fromJson(json, Board.class); // 객체의 타입정보 알려주기
           boardDao.insert(board);
-          out.writeUTF("success");
+          out.writeUTF(SUCCESS);
           break;
 
         case "update":
           json = in.readUTF(); // json 형식의 문자열 읽기
           board = new Gson().fromJson(json, Board.class); // 객체의 타입정보 알려주기
           if(boardDao.update(board)) {
-            out.writeUTF("success");
+            out.writeUTF(SUCCESS);
           }else {
-            out.writeUTF("fail");
+            out.writeUTF(FAIL);
           }
           break;
 
         case "delete": 
           no = in.readInt(); // client가 보낸 데이터 추가로 읽기
           if(boardDao.delete(no)) {
-            out.writeUTF("success");
+            out.writeUTF(SUCCESS);
           } else {
-            out.writeUTF("fail");
+            out.writeUTF(FAIL);
           }
           break;
 
         default:
-          out.writeUTF("fail");
+          out.writeUTF(FAIL);
       }
     }catch(Exception e) {
-      throw new RuntimeException(e); // 
-    }
-  }
+      throw new RuntimeException(e); 
+    }//switch
+  }// service
 
 
 
