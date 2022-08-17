@@ -6,7 +6,9 @@ package com.bitcamp.board.servlet;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import com.bitcamp.board.dao.BoardDao;
+import com.bitcamp.board.domain.Board;
 import com.bitcamp.servlet.Servlet;
+import com.google.gson.Gson;
 
 public class BoardServlet implements Servlet{
 
@@ -35,7 +37,9 @@ public class BoardServlet implements Servlet{
 
       switch (command) {
         case "findAll": 
-          out.writeUTF("success");
+          Board[] boards = boardDao.findAll();
+          out.writeUTF("success"); // client에게 응답
+          out.writeUTF(new Gson().toJson(boards)); //client에게 전송
           break;
         case "findByNumber":
           out.writeUTF("success");
