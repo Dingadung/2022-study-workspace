@@ -34,7 +34,10 @@ public class BoardServlet implements Servlet{
     try {
 
       String command = in.readUTF();
-      Board board = null; // 여러 군데에서 사용하기 위해 여기서 선언
+      // 여러 군데에서 사용하기 위해 여기서 선언
+      Board board = null; 
+      int no = 0;
+      String json = null;
 
       switch (command) {
         case "findAll": 
@@ -44,7 +47,7 @@ public class BoardServlet implements Servlet{
           break;
 
         case "findByNumber":
-          int no = in.readInt(); // client가 보낸 데이터 추가로 읽기
+          no = in.readInt(); // client가 보낸 데이터 추가로 읽기
           board = boardDao.findByNo(no);
           if(board != null) {
             out.writeUTF("success");
@@ -55,13 +58,15 @@ public class BoardServlet implements Servlet{
           break;
 
         case "insert": 
-          String json = in.readUTF();
-          board = new Gson().fromJson(json, Board.class);
+          String json = in.readUTF(); // json 형식의 문자열 읽기
+          board = new Gson().fromJson(json, Board.class); // 객체의 타입정보 알려주기
           boardDao.insert(board);
           out.writeUTF("success");
           break;
 
         case "update":
+          String json = in.readUTF(); // json 형식의 문자열 읽기
+          board = new Gson().fromJson(json, Board.class); // 객체의 타입정보 알려주기
           out.writeUTF("success");
           break;
 
