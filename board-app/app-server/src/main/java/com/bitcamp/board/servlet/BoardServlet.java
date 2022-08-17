@@ -60,6 +60,7 @@ public class BoardServlet implements Servlet{
           json = in.readUTF(); // json 형식의 문자열 읽기
           board = new Gson().fromJson(json, Board.class); // 객체의 타입정보 알려주기
           boardDao.insert(board);
+          boardDao.save();
           out.writeUTF(SUCCESS);
           break;
 
@@ -67,6 +68,7 @@ public class BoardServlet implements Servlet{
           json = in.readUTF(); // json 형식의 문자열 읽기
           board = new Gson().fromJson(json, Board.class); // 객체의 타입정보 알려주기
           if(boardDao.update(board)) {
+            boardDao.save();
             out.writeUTF(SUCCESS);
           }else {
             out.writeUTF(FAIL);
@@ -76,6 +78,7 @@ public class BoardServlet implements Servlet{
         case "delete": 
           no = in.readInt(); // client가 보낸 데이터 추가로 읽기
           if(boardDao.delete(no)) {
+            boardDao.save();
             out.writeUTF(SUCCESS);
           } else {
             out.writeUTF(FAIL);

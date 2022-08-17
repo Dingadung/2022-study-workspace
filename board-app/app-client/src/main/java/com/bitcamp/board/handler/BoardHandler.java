@@ -32,19 +32,10 @@ public class BoardHandler extends AbstractHandler {
 
     boardDao = new BoardDao(dataName); 
     // 이제 로드는 서버애서!
-
-    // 생성자에서 객체가 저장되지도 못하고 null인상태로 남을 수 있기 때문이다.!
-    //    try{
-    //      boardDao.load();
-    //    }catch(Exception e) {
-    //      System.out.printf("%s 파일 로딩 중 오류 발생!\n", e.getMessage());
-    //      // e.printStackTrace();
-    //    }
   }
 
   @Override
-  public void service(int menuNo) { //상위 클래스에서 service메소드가 예외를 던지지 않았기 때문에 여기서도 직접적으로 던질 수는 없지만,
-    // 예외를 상위 호출자에게 보내고 싶으면 RuntimeException으로 던질  수 있다!!!
+  public void service(int menuNo) { 
     try {
       switch (menuNo) {
         case 1: this.onList(); break;
@@ -62,7 +53,12 @@ public class BoardHandler extends AbstractHandler {
     try {
       out.writeUTF(dataName);
       out.writeUTF("findAll");
-      String status = in.readUTF();
+
+      if(in.readUTF().equals("fail")) {
+        System.out.println("목록을 가져오는데 실패했습니다!");
+        return;
+      }
+
       String json = in.readUTF();
       Board[] boards = new Gson().fromJson(json, Board[].class);
       SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -205,6 +201,7 @@ public class BoardHandler extends AbstractHandler {
 
       String input = Prompt.inputString("변경하시겠습니까?(y/n) ");
       if (input.equals("y")) {
+        // 게시글 변경하기
         out.writeUTF(dataName);
         out.writeUTF("update");
         out.writeUTF(new Gson().toJson(board));
