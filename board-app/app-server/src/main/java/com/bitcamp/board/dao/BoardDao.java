@@ -38,6 +38,7 @@ public class BoardDao {
       for(int i=0;i<arr.length;i++) {
         list.add(arr[i]);
       }
+      boardNo = arr[arr.length-1].no; // 새 게시물의 번호 설정
     }
   }
 
