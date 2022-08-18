@@ -59,7 +59,7 @@ public class Exam0242 {
     list.add(m2);
     list.add(m3);
 
-    list.forEach(new Consumer<>() {
+    list.forEach(new Consumer<>() { // list안에 들어있는 요소의 개수만큼 호출한다.
       @Override
       public void accept(Member m) {
         System.out.printf("이름: %s, 나이: %d\n", m.name, m.age);

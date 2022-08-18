@@ -69,11 +69,9 @@ public class BoardHandler extends AbstractHandler {
           board.no, board.title, board.viewCount, board.writer, dateStr);
     }
 
-
   }
 
   private void onDetail() throws Exception{
-
 
     int boardNo = 0;
     while (true) {
@@ -103,15 +101,9 @@ public class BoardHandler extends AbstractHandler {
     System.out.printf("작성자: %s\n", board.writer);
     Date date = new Date(board.createdDate);
     System.out.printf("등록일: %tY-%1$tm-%1$td %1$tH:%1$tM\n", date);
-
-
-
-
   }
 
   private void onInput() throws Exception{
-
-
     // 사용자로부터 입력 받기
     Board board = new Board();
     board.title = Prompt.inputString("제목? ");
@@ -121,21 +113,21 @@ public class BoardHandler extends AbstractHandler {
     board.viewCount = 0;
     board.createdDate = System.currentTimeMillis();
 
+    //서버에 데이터 요청 정보 전송
     out.writeUTF(dataName);
     out.writeUTF("insert");
     String json = new Gson().toJson(board);
     out.writeUTF(json); // json 서버로 보내기
 
+    // 서버로부터 요청했던 데이터 읽어오기
     if(in.readUTF().equals("success")) {
       System.out.println("게시글을 등록했습니다.");
     } else {
       System.out.println("게시글 등록에 실패했습니다!");
     }
-
   }
 
   private void onDelete() throws Exception{
-
     // 삭제할 게시글 번호 받기
     int boardNo = 0;
     while (true) {
@@ -158,9 +150,7 @@ public class BoardHandler extends AbstractHandler {
   }
 
 
-
   private void onUpdate() throws Exception{
-
     //    변경할 번호 입력 받기
     int boardNo = 0;
     while (true) {
@@ -181,7 +171,6 @@ public class BoardHandler extends AbstractHandler {
       System.out.println("해당 번호의 게시글이 없습니다!");
       return;
     }
-
 
     String json = in.readUTF();
     Board board = new Gson().fromJson(json, Board.class);

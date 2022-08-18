@@ -24,6 +24,8 @@ public class Exam0211 {
     String[] arr = new String[set.size()];
     set.toArray(arr);
 
+    String[] arr2 = set.toArray(new String[set.size()]); // 위의 방법보다,이 방법 권장
+
     for (String value : arr) {
       System.out.print(value + ", ");
     }
