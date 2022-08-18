@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Stack;
 import com.bitcamp.board.handler.BoardHandler;
+import com.bitcamp.board.handler.MemberHandler;
 import com.bitcamp.handler.Handler;
 import com.bitcamp.util.Prompt;
 
@@ -35,7 +36,7 @@ public class ClientApp {
       handlers.add(new BoardHandler("visit", in, out));
       handlers.add(new BoardHandler("notice", in, out));
       handlers.add(new BoardHandler("daily", in, out));
-      handlers.add(new BoardHandler("member", in, out));
+      handlers.add(new MemberHandler("member", in, out));
       //      Handler[] handlers = new Handler[] { // 파일명을 목적에 맞게 각각 전달
       //          new BoardHandler("board", in, out), // 게시판
       //          new BoardHandler("reading", in, out), // 독서록
