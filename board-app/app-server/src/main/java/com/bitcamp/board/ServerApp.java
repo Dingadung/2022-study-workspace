@@ -6,7 +6,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Hashtable;
 import com.bitcamp.board.servlet.BoardServlet;
-import com.bitcamp.board.servlet.MemberServlet;
 import com.bitcamp.servlet.Servlet;
 
 public class ServerApp {
@@ -31,13 +30,6 @@ public class ServerApp {
         System.out.println(" 클라이언트와 연결 되었음!");
 
         // 클라이언트 요청을 처리할 객체 준비
-        BoardServlet boardServlet = new BoardServlet("board");
-        BoardServlet readingServlet = new BoardServlet("reading");
-        BoardServlet visitServlet = new BoardServlet("visit");
-        BoardServlet noticeServlet = new BoardServlet("notice");
-        BoardServlet dailyServlet = new BoardServlet("daily");
-        MemberServlet memberServlet = new MemberServlet("member");
-
         Hashtable<String, Servlet> servletMap = new Hashtable<>();
         servletMap.put("board", new BoardServlet("board"));
         servletMap.put("reading", new BoardServlet("reading"));
@@ -54,27 +46,33 @@ public class ServerApp {
             break;
           }
 
-          switch(dataName) {
-            case "board":  boardServlet.service(in, out); break;
-            case "reading": readingServlet.service(in, out); break;
-            case "visit": visitServlet.service(in, out); break;
-            case "notice": noticeServlet.service(in, out); break;
-            case "daily": dailyServlet.service(in, out); break;
-            case "member":memberServlet.service(in, out);break;
-            default:
-              out.writeUTF("fail");
+          Servlet servlet = servletMap.get(dataName);
+          if(servlet != null) {
+            servlet.service(in, out);
+          } else {
+            out.writeUTF("fail");
+            //          }
+            //          switch(dataName) {
+            //            case "board":  boardServlet.service(in, out); break;
+            //            case "reading": readingServlet.service(in, out); break;
+            //            case "visit": visitServlet.service(in, out); break;
+            //            case "notice": noticeServlet.service(in, out); break;
+            //            case "daily": dailyServlet.service(in, out); break;
+            //            case "member":memberServlet.service(in, out);break;
+            //            default:
+            //              out.writeUTF("fail");
+            //          }
           }
-        }
 
 
-        System.out.println("클라이언트와 연결을 끊었음!");
-      }// 안쪽 try
+          System.out.println("클라이언트와 연결을 끊었음!");
+        }// 안쪽 try
 
-    }catch (Exception e) {
-      e.printStackTrace();
-    }// 바깥쪽 try-catch()
+      }catch (Exception e) {
+        e.printStackTrace();
+      }// 바깥쪽 try-catch()
 
-    System.out.println("서버 종료!");
-  }//main()
-}
+      System.out.println("서버 종료!");
+    }//main()
+  }
 
