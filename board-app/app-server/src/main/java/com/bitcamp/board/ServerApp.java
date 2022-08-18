@@ -18,10 +18,19 @@ public class ServerApp {
         ServerSocket serverSocket = new ServerSocket(8888);)
     {
       System.out.println("서버 소켓 준비 완료!");
+
+      // 클라이언트 요청을 처리할 객체 준비
+      Hashtable<String, Servlet> servletMap = new Hashtable<>();
+      servletMap.put("board", new BoardServlet("board"));
+      servletMap.put("reading", new BoardServlet("reading"));
+      servletMap.put("visit", new BoardServlet("visit"));
+      servletMap.put("notice", new BoardServlet("notice"));
+      servletMap.put("daily", new BoardServlet("daily"));
+      servletMap.put("member", new MemberServlet("member"));
+
       while(true) {
         try(
             Socket socket = serverSocket.accept(); 
-
 
             DataInputStream in = new DataInputStream( socket.getInputStream()); 
 
@@ -29,15 +38,6 @@ public class ServerApp {
             )//try()
         {
           System.out.println(" 클라이언트와 연결 되었음!");
-
-          // 클라이언트 요청을 처리할 객체 준비
-          Hashtable<String, Servlet> servletMap = new Hashtable<>();
-          servletMap.put("board", new BoardServlet("board"));
-          servletMap.put("reading", new BoardServlet("reading"));
-          servletMap.put("visit", new BoardServlet("visit"));
-          servletMap.put("notice", new BoardServlet("notice"));
-          servletMap.put("daily", new BoardServlet("daily"));
-          servletMap.put("member", new MemberServlet("member"));
 
           while(true) {
             String dataName = in.readUTF(); 
@@ -49,6 +49,7 @@ public class ServerApp {
 
             Servlet servlet = servletMap.get(dataName); // dataName(key)를 가지고 BoardServlet을 데려옴
             if(servlet != null) {
+              // 클라이언트가 달라질 때마다 그에 맞는 in, out을 서버에 전달한다.
               servlet.service(in, out);
             } else {
               out.writeUTF("fail");
