@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.util.Iterator;
 import com.bitcamp.board.domain.Board;
+import com.google.gson.Gson;
 
 // BoardDao와 통신을 담당할 대행 객체 <- server 개발자 입장에서 개발 클라이언트 개발자를 위하여!
 
@@ -21,9 +22,18 @@ public class BoardDaoProxy {
 
 
 
-  public void insert(Board board) {
-    board.no = nextNo();
-    list.add(board);
+  public void insert(Board board)throws Exception {
+    out.writeUTF(dataName);
+    out.writeUTF("insert");
+    String json = new Gson().toJson(board);
+    out.writeUTF(json); // json 서버로 보내기
+
+    // 서버로부터 요청했던 데이터 읽어오기
+    if(in.readUTF().equals("success")) {
+      System.out.println("게시글을 등록했습니다.");
+    } else {
+      System.out.println("게시글 등록에 실패했습니다!");
+    }
   }
 
   public boolean update(Board board) {
