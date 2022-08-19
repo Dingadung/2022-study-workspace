@@ -17,7 +17,7 @@ public class BoardHandler extends AbstractHandler {
 
   // 게시글 목록을 관리할 객체 준비
 
-  BoardDaoProxy boardDao;
+  BoardDaoProxy boardDao; // client는 통신에 대하여 몰라도 된다!
 
   public BoardHandler(String dataName, DataInputStream in, DataOutputStream out){
     // 수퍼 클래스의 생성자를 호출할 때 메뉴 목록을 전달한다.
@@ -62,11 +62,9 @@ public class BoardHandler extends AbstractHandler {
   }
 
   private void onDetail() throws Exception{
-
     int boardNo = 0;
     while (true) {
       try {
-
         boardNo = Prompt.inputInt("조회할 게시글 번호? ");
         break;
       } catch (Exception ex) {
@@ -99,14 +97,8 @@ public class BoardHandler extends AbstractHandler {
     board.viewCount = 0;
     board.createdDate = System.currentTimeMillis();
 
-    //서버에 데이터 요청 정보 전송
-    out.writeUTF(dataName);
-    out.writeUTF("insert");
-    String json = new Gson().toJson(board);
-    out.writeUTF(json); // json 서버로 보내기
-
     // 서버로부터 요청했던 데이터 읽어오기
-    if(in.readUTF().equals("success")) {
+    if(boardDao.insert(board)) {
       System.out.println("게시글을 등록했습니다.");
     } else {
       System.out.println("게시글 등록에 실패했습니다!");
