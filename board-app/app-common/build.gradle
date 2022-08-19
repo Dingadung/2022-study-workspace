@@ -1,5 +1,5 @@
 plugins {
-    id 'java' // app 이 아니라 다른 프로젝트에 의해서 공유 되어짐
+    id 'java-library' // app 이 아니라 다른 프로젝트에 의해서 공유 되어짐
     id 'eclipse'
 }
 
