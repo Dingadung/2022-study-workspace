@@ -36,4 +36,11 @@ public class Member implements Serializable{
         this.password,
         this.createdDate);
   }
+
+  @Override
+  public String toString() {
+    // TODO Auto-generated method stub
+    return "Board [no=" + no + ", name=" + name + ", email=" + email + ", password=" + password + ", createdDate=" + new java.sql.Date(createdDate)
+        + "]";
+  }
 }
