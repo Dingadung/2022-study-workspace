@@ -2,7 +2,6 @@ package com.bitcamp.board.dao;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.util.Iterator;
 import com.bitcamp.board.domain.Board;
 import com.google.gson.Gson;
 
@@ -52,24 +51,17 @@ public class BoardDaoProxy {
     return in.readUTF().equals("success");
   }
 
-  public Board[] findAll() {
+  public Board[] findAll() throws Exception{
+    out.writeUTF(dataName);
+    out.writeUTF("findAll");
 
-    // 목록에서 값을 꺼내는 일을 할 객체를 준비한다.
-    Iterator<Board> iterator = list.iterator();
-
-    // 역순으로 정렬하여 리턴한다.
-    Board[] arr = new Board[list.size()];
-
-    int index = list.size() - 1;
-    while (iterator.hasNext()) {
-      arr[index--] = iterator.next();
+    if(in.readUTF().equals("fail")) {
+      return null;
     }
-    return arr;
+
+    return new Gson().fromJson( in.readUTF(), Board[].class);
   }
 
-  private int nextNo() {
-    return ++boardNo;
-  }
 }
 
 
