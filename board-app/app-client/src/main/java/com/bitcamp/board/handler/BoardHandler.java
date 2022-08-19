@@ -74,15 +74,11 @@ public class BoardHandler extends AbstractHandler {
       }
     }
 
-    out.writeUTF(dataName);
-    out.writeUTF("findByNo");
-    out.writeInt(boardNo);
-    if(in.readUTF().equals("fail")) {
+    Board board = boardDao.findByNo(boardNo);
+    if(board == null) {
       System.out.println("해당 번호의 게시글이 없습니다!");
       return;
     }
-    String json = in.readUTF();
-    Board board = new Gson().fromJson(json, Board.class);
 
     System.out.printf("번호: %d\n", board.no);
     System.out.printf("제목: %s\n", board.title);
