@@ -22,18 +22,14 @@ public class BoardDaoProxy {
 
 
 
-  public void insert(Board board)throws Exception {
+  public boolean insert(Board board)throws Exception {
     out.writeUTF(dataName);
     out.writeUTF("insert");
     String json = new Gson().toJson(board);
-    out.writeUTF(json); // json 서버로 보내기
+    out.writeUTF(json); // json을 서버로 보내기
 
     // 서버로부터 요청했던 데이터 읽어오기
-    if(in.readUTF().equals("success")) {
-      System.out.println("게시글을 등록했습니다.");
-    } else {
-      System.out.println("게시글 등록에 실패했습니다!");
-    }
+    return in.readUTF().equals("success");
   }
 
   public boolean update(Board board) {
