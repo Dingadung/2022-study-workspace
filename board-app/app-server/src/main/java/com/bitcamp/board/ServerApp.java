@@ -28,38 +28,36 @@ public class ServerApp {
       servletMap.put("daily", new BoardServlet("daily"));
       servletMap.put("member", new MemberServlet("member"));
 
-      while(true) {
-        try(
-            Socket socket = serverSocket.accept(); 
+      try(
+          Socket socket = serverSocket.accept(); 
 
-            DataInputStream in = new DataInputStream( socket.getInputStream()); 
+          DataInputStream in = new DataInputStream( socket.getInputStream()); 
 
-            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-            )//try()
-        {
-          System.out.println(" 클라이언트와 연결 되었음!");
+          DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+          )//try()
+      {
+        System.out.println(" 클라이언트와 연결 되었음!");
 
-          while(true) {
-            String dataName = in.readUTF(); 
-            // 명령 읽기
+        while(true) {
+          String dataName = in.readUTF(); 
+          // 명령 읽기
 
-            if(dataName.equals("exit")) { 
-              break;
-            }
-
-            Servlet servlet = servletMap.get(dataName); // dataName(key)를 가지고 BoardServlet을 데려옴
-            if(servlet != null) {
-              // 클라이언트가 달라질 때마다 그에 맞는 in, out을 서버에 전달한다.
-              servlet.service(in, out);
-            } else {
-              out.writeUTF("fail");
-            }
+          if(dataName.equals("exit")) { 
+            break;
           }
 
+          Servlet servlet = servletMap.get(dataName); // dataName(key)를 가지고 BoardServlet을 데려옴
+          if(servlet != null) {
+            // 클라이언트가 달라질 때마다 그에 맞는 in, out을 서버에 전달한다.
+            servlet.service(in, out);
+          } else {
+            out.writeUTF("fail");
+          }
+        }
 
-          System.out.println("클라이언트와 연결을 끊었음!");
-        }// 안쪽 try
-      }
+        System.out.println("클라이언트와 연결을 끊었음!");
+      }// 안쪽 try
+
     }catch (Exception e) {
       e.printStackTrace();
     }// 바깥쪽 try-catch()
