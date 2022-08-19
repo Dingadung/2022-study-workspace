@@ -42,9 +42,7 @@ public class BoardDaoProxy {
     if(in.readUTF().equals("fail")) {
       return null;
     }
-    String json = in.readUTF();
-    Board board = new Gson().fromJson(json, Board.class);
-    return board;
+    return  new Gson().fromJson( in.readUTF(), Board.class);
   }
 
   public boolean delete(int boardNo) {
