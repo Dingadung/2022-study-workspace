@@ -19,7 +19,13 @@ public class BoardDaoProxyTest {
       for(Board b : boards) {
         System.out.println(b);
       }
-      System.out.println("------------------------------------------------------");
+      System.out.println("--------------------------------------------------");
+
+      // Test2 상세 데이터 가져오기
+      Board board = boardDao.findByNo(5);
+      System.out.println(board);
+      System.out.println("--------------------------------------------------");
+      out.writeUTF("exit");
 
     }
   }
