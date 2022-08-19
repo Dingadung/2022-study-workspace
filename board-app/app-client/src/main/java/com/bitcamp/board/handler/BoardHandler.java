@@ -11,7 +11,6 @@ import com.bitcamp.board.dao.BoardDaoProxy;
 import com.bitcamp.board.domain.Board;
 import com.bitcamp.handler.AbstractHandler;
 import com.bitcamp.util.Prompt;
-import com.google.gson.Gson;
 
 public class BoardHandler extends AbstractHandler {
 
@@ -117,7 +116,6 @@ public class BoardHandler extends AbstractHandler {
       }
     }
 
-
     if(boardDao.delete(boardNo)) {
       System.out.println("삭제하였습니다.");
     } else {
@@ -137,19 +135,11 @@ public class BoardHandler extends AbstractHandler {
         System.out.println("입력 값이 옳지 않습니다!");
       }
     }
-
-    // 변경할 게시글 가져오기
-    out.writeUTF(dataName);
-    out.writeUTF("findByNo");
-    out.writeInt(boardNo);
-
-    if(in.readUTF().equals("fail")) {
+    Board board = boardDao.findByNo(boardNo);
+    if(board == null) {
       System.out.println("해당 번호의 게시글이 없습니다!");
       return;
     }
-
-    String json = in.readUTF();
-    Board board = new Gson().fromJson(json, Board.class);
 
     board.title = Prompt.inputString("제목?(" + board.title + ") ");
     board.content= Prompt.inputString(String.format("내용?(%s) ", board.content));
@@ -157,10 +147,7 @@ public class BoardHandler extends AbstractHandler {
     String input = Prompt.inputString("변경하시겠습니까?(y/n) ");
     if (input.equals("y")) {
       // 게시글 변경하기
-      out.writeUTF(dataName);
-      out.writeUTF("update");
-      out.writeUTF(new Gson().toJson(board));
-      if(in.readUTF().equals("success")) {
+      if(boardDao.update(board)) {
         System.out.println("변경했습니다.");
       }else {
         System.out.println("변경 실패했습니다!");
@@ -168,9 +155,6 @@ public class BoardHandler extends AbstractHandler {
     } else {
       System.out.println("변경 취소했습니다.");
     }
-
-
-
   }
 
 }
