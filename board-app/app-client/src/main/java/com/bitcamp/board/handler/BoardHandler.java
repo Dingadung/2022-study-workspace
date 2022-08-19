@@ -117,10 +117,8 @@ public class BoardHandler extends AbstractHandler {
       }
     }
 
-    out.writeUTF(dataName);
-    out.writeUTF("delete");
-    out.writeInt(boardNo);
-    if(in.readUTF().equals("success")) {
+
+    if(boardDao.delete(boardNo)) {
       System.out.println("삭제하였습니다.");
     } else {
       System.out.println("해당 번호의 게시글이 없습니다!");
