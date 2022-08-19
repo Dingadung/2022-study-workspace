@@ -6,8 +6,8 @@ import com.bitcamp.board.domain.Board;
 import com.google.gson.Gson;
 
 // BoardDao와 통신을 담당할 대행 객체 <- server 개발자 입장에서 개발 클라이언트 개발자를 위하여!
+// 모든 out은 서버로 보내는 것이다.
 
-//
 public class BoardDaoProxy {
   String dataName;
   DataInputStream in;
