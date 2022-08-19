@@ -24,7 +24,6 @@ public class BoardDaoProxy {
     out.writeUTF(dataName);
     out.writeUTF("insert");
     out.writeUTF(new Gson().toJson(board)); // json을 서버로 보내기
-
     // 서버로부터 요청했던 데이터 읽어오기
     return in.readUTF().equals("success");
   }
@@ -36,14 +35,16 @@ public class BoardDaoProxy {
     return in.readUTF().equals("success");
   }
 
-  public Board findByNo(int boardNo) {
-    for (int i = 0; i < list.size(); i++) {
-      Board board = list.get(i);
-      if (board.no == boardNo) {
-        return board;
-      }
+  public Board findByNo(int boardNo)  throws Exception{
+    out.writeUTF(dataName);
+    out.writeUTF("findByNo");
+    out.writeInt(boardNo);
+    if(in.readUTF().equals("fail")) {
+      return null;
     }
-    return null;
+    String json = in.readUTF();
+    Board board = new Gson().fromJson(json, Board.class);
+    return board;
   }
 
   public boolean delete(int boardNo) {
