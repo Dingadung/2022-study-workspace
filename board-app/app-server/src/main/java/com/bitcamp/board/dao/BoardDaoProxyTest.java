@@ -37,12 +37,26 @@ public class BoardDaoProxyTest {
 
       System.out.println(boardDao.insert(board));
       System.out.println("--------------------------------------------------");
-
+      // insert() 잘작동 되는지 목록 확인
       boards =  boardDao.findAll();
       for(Board b : boards) {
         System.out.println(b);
       }
       System.out.println("--------------------------------------------------");
+
+
+      // Test4 데이터 변경하기
+      board = boardDao.findByNo(3);
+      board.title = "okokok";
+      board.content ="jimijijmi";
+      System.out.println(boardDao.update(board));    
+      System.out.println("--------------------------------------------------");
+      // 변경된 게시물 확인
+      board = boardDao.findByNo(3);
+      System.out.println(board);
+      System.out.println("--------------------------------------------------");
+
+
       out.writeUTF("exit");
     }
   }
