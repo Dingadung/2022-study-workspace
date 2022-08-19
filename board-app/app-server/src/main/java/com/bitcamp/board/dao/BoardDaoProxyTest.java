@@ -56,6 +56,16 @@ public class BoardDaoProxyTest {
       System.out.println(board);
       System.out.println("--------------------------------------------------");
 
+      //Test5 데이터 삭제하기
+      System.out.println(boardDao.delete(6));
+      System.out.println("--------------------------------------------------");
+      // delete() 잘작동 되는지 목록 확인
+      boards =  boardDao.findAll();
+      for(Board b : boards) {
+        System.out.println(b);
+      }
+      System.out.println("--------------------------------------------------");
+
 
       out.writeUTF("exit");
     }
