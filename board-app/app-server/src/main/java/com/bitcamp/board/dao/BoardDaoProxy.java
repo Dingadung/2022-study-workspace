@@ -20,8 +20,6 @@ public class BoardDaoProxy {
     this.out = out;
   }
 
-
-
   public boolean insert(Board board)throws Exception {
     out.writeUTF(dataName);
     out.writeUTF("insert");
@@ -32,15 +30,11 @@ public class BoardDaoProxy {
     return in.readUTF().equals("success");
   }
 
-  public boolean update(Board board) {
-    for (int i = 0; i < list.size(); i++) {
-      Board b = list.get(i);
-      if (b.no == board.no) {
-        list.set(i, board);
-        return true;
-      }
-    }
-    return false;
+  public boolean update(Board board) throws Exception{
+    out.writeUTF(dataName);
+    out.writeUTF("update");
+    out.writeUTF(new Gson().toJson(board));
+    return in.readUTF().equals("success");
   }
 
   public Board findByNo(int boardNo) {
