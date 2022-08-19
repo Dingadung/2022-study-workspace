@@ -54,17 +54,6 @@ public class ServerApp {
             } else {
               out.writeUTF("fail");
             }
-            //          }
-            //          switch(dataName) {
-            //            case "board":  boardServlet.service(in, out); break;
-            //            case "reading": readingServlet.service(in, out); break;
-            //            case "visit": visitServlet.service(in, out); break;
-            //            case "notice": noticeServlet.service(in, out); break;
-            //            case "daily": dailyServlet.service(in, out); break;
-            //            case "member":memberServlet.service(in, out);break;
-            //            default:
-            //              out.writeUTF("fail");
-            //}
           }
 
 

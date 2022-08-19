@@ -37,14 +37,6 @@ public class ClientApp {
       handlers.add(new BoardHandler("notice", in, out));
       handlers.add(new BoardHandler("daily", in, out));
       handlers.add(new MemberHandler("member", in, out));
-      //      Handler[] handlers = new Handler[] { // 파일명을 목적에 맞게 각각 전달
-      //          new BoardHandler("board", in, out), // 게시판
-      //          new BoardHandler("reading", in, out), // 독서록
-      //          new BoardHandler("visit", in, out), // 방명록
-      //          new BoardHandler("notice", in, out), // 공지사항
-      //          new BoardHandler("daily", in, out), // 일기장
-      //          new MemberHandler("member", in, out) // 회원
-      //      };
 
       // "메인" 메뉴의 이름을 스택에 등록한다.
       breadcrumbMenu.push("메인");
