@@ -45,14 +45,11 @@ public class BoardDaoProxy {
     return  new Gson().fromJson( in.readUTF(), Board.class);
   }
 
-  public boolean delete(int boardNo) {
-    for (int i = 0; i < list.size(); i++) {
-      Board board = list.get(i);
-      if (board.no == boardNo) {
-        return list.remove(i) != null;
-      }
-    }
-    return false;
+  public boolean delete(int boardNo) throws Exception{
+    out.writeUTF(dataName);
+    out.writeUTF("delete");
+    out.writeInt(boardNo);
+    return in.readUTF().equals("success");
   }
 
   public Board[] findAll() {
