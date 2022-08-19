@@ -42,17 +42,13 @@ public class BoardHandler extends AbstractHandler {
   }
 
   private void onList() throws Exception{
+    Board[] boards = boardDao.findAll();
 
-    out.writeUTF(dataName);
-    out.writeUTF("findAll");
-
-    if(in.readUTF().equals("fail")) {
+    if(boards ==null) {
       System.out.println("목록을 가져오는데 실패했습니다!");
       return;
     }
 
-    String json = in.readUTF();
-    Board[] boards = new Gson().fromJson(json, Board[].class);
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
     System.out.println("번호\t제목\t조회수\t작성자\t등록일");
@@ -63,7 +59,6 @@ public class BoardHandler extends AbstractHandler {
       System.out.printf("%d\t%s\t%d\t%s\t%s\n",
           board.no, board.title, board.viewCount, board.writer, dateStr);
     }
-
   }
 
   private void onDetail() throws Exception{
