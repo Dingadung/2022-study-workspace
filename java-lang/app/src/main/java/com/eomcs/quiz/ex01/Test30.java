@@ -39,7 +39,7 @@ public class Test30 {
 
   public static void main(String[] args) {
     System.out.println(visitsOnCircularRoad(4, new int[] {1, 3, 2, 3, 1}) == 6);
-    System.out.println(visitsOnCircularRoad(5, new int[] {1, 3, 2, 6, 5}) == 6); // 2+ 1+ 4+ 1
+    System.out.println(visitsOnCircularRoad(6, new int[] {1, 3, 2, 6, 5}) == 6); // 2+ 1+ 4+ 1
   }
 
   static int visitsOnCircularRoad(int N, int[] visitsOrder) {
@@ -48,7 +48,7 @@ public class Test30 {
     int len = visitsOrder.length;
     for(int i=0;i<len-1;i++) {
       int a = Math.abs(visitsOrder[i] - visitsOrder[i  + 1]);
-      int ra =  len+1 -Math.abs(visitsOrder[i] - visitsOrder[i  + 1]);
+      int ra =  N-a;
       T += (a<ra? a:ra);
     }
     return T;
