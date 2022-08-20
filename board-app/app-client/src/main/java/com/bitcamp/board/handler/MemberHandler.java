@@ -3,8 +3,6 @@
  */
 package com.bitcamp.board.handler;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.util.Date;
 import com.bitcamp.board.dao.MemberDaoProxy;
 import com.bitcamp.board.domain.Member;
@@ -15,10 +13,10 @@ public class MemberHandler extends AbstractHandler {
 
   MemberDaoProxy memberDao;
 
-  public MemberHandler(String dataName, DataInputStream in, DataOutputStream out) {
+  public MemberHandler(String dataName, String ip, int port) {
     super(new String[] {"목록", "상세보기", "등록", "삭제", "변경"});
 
-    memberDao = new MemberDaoProxy(dataName, in, out);
+    memberDao = new MemberDaoProxy(dataName, ip, port);
   }
 
   @Override

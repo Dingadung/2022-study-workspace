@@ -1,8 +1,5 @@
 package com.bitcamp.board;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Stack;
 import com.bitcamp.board.handler.BoardHandler;
@@ -18,76 +15,65 @@ public class ClientApp {
   public static void main(String[] args) {
     System.out.println("[게시글 관리 클라이언트]");
 
-    // 네트워크 준비
-    //=> 정상적으로 연결되었으면, Socket 객체를 리턴한다.
-    try (Socket socket = new Socket("127.0.0.1", 8888 ); 
-        DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-        DataInputStream in = new DataInputStream(socket.getInputStream());){// 같은 컴퓨터 내에 서버와 클라이언트가 존재하므로 정확한 IP address 대신, 127.0.0.1(local host)이 가능하다. (접속할 IP address, port num)
+    String ip = "127.0.0.1";
+    int port = 8888;
 
-      System.out.println("연결되었음!");
-
-      welcome();
+    welcome();
 
 
-      // 핸들러를 담을 컬렉션을 준비한다.
-      ArrayList<Handler> handlers = new ArrayList<>();
-      handlers.add(new BoardHandler("board", in, out));
-      handlers.add(new BoardHandler("reading", in, out));
-      handlers.add(new BoardHandler("visit", in, out));
-      handlers.add(new BoardHandler("notice", in, out));
-      handlers.add(new BoardHandler("daily", in, out));
-      handlers.add(new MemberHandler("member", in, out));
+    // 핸들러를 담을 컬렉션을 준비한다.
+    ArrayList<Handler> handlers = new ArrayList<>();
+    handlers.add(new BoardHandler("board", ip, port));
+    handlers.add(new BoardHandler("reading",ip, port));
+    handlers.add(new BoardHandler("visit", ip, port));
+    handlers.add(new BoardHandler("notice", ip, port));
+    handlers.add(new BoardHandler("daily", ip, port));
+    handlers.add(new MemberHandler("member", ip, port));
 
-      // "메인" 메뉴의 이름을 스택에 등록한다.
-      breadcrumbMenu.push("메인");
+    // "메인" 메뉴의 이름을 스택에 등록한다.
+    breadcrumbMenu.push("메인");
 
-      // 메뉴명을 저장할 배열을 준비한다.
-      String[] menus = {"게시판", "독서록", "방명록", "공지사항", "일기장", "회원"};
+    // 메뉴명을 저장할 배열을 준비한다.
+    String[] menus = {"게시판", "독서록", "방명록", "공지사항", "일기장", "회원"};
 
-      loop: 
-        while (true) {
+    loop: 
+      while (true) {
 
-          // 메인 메뉴 출력
-          printTitle();
+        // 메인 메뉴 출력
+        printTitle();
 
-          printMenus(menus);
+        printMenus(menus);
 
-          System.out.println();
+        System.out.println();
 
-          try {
-            int mainMenuNo = Prompt.inputInt(String.format(
-                "메뉴를 선택하세요[1..%d](0: 종료) ", handlers.size()));
+        try {
+          int mainMenuNo = Prompt.inputInt(String.format(
+              "메뉴를 선택하세요[1..%d](0: 종료) ", handlers.size()));
 
-            if (mainMenuNo < 0 || mainMenuNo > menus.length) {
-              System.out.println("메뉴 번호가 옳지 않습니다!");
-              continue; // while 문의 조건 검사로 보낸다.
+          if (mainMenuNo < 0 || mainMenuNo > menus.length) {
+            System.out.println("메뉴 번호가 옳지 않습니다!");
+            continue; // while 문의 조건 검사로 보낸다.
 
-            } else if (mainMenuNo == 0) {
-              out.writeUTF("exit"); // client가 서버와의 연결에서  나가겠다고 하는 순간. // out은 서버로 보내는 것이다.
-              break loop;
-            }
-
-            // 메뉴에 진입할 때 breadcrumb 메뉴바에 그 메뉴를 등록한다.
-            breadcrumbMenu.push(menus[mainMenuNo - 1]);
-
-            // 메뉴 번호로 Handler 레퍼런스에 들어있는 객체를 찾아 실행한다.
-            handlers.get(mainMenuNo-1).execute();
-
-            breadcrumbMenu.pop();
-
-          } catch (Exception ex) {
-            System.out.println("입력 값이 옳지 않습니다.");
+          } else if (mainMenuNo == 0) {
+            break loop;
           }
 
+          // 메뉴에 진입할 때 breadcrumb 메뉴바에 그 메뉴를 등록한다.
+          breadcrumbMenu.push(menus[mainMenuNo - 1]);
 
-        } // while
+          // 메뉴 번호로 Handler 레퍼런스에 들어있는 객체를 찾아 실행한다.
+          handlers.get(mainMenuNo-1).execute();
 
-      Prompt.close();
+          breadcrumbMenu.pop();
 
-      System.out.println("연결을 끊었음!");
-    } catch (Exception e) {
-      e.printStackTrace();
-    }//try-catch()
+        } catch (Exception ex) {
+          System.out.println("입력 값이 옳지 않습니다.");
+        }
+
+
+      } // while
+
+    Prompt.close();
 
     System.out.println("종료!\n");
   }//main()
