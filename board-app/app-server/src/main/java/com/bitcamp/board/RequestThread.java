@@ -10,6 +10,7 @@ import com.bitcamp.servlet.Servlet;
 public class RequestThread extends Thread{
   private Socket socket;
   private Map<String, Servlet> servletMap;
+
   public RequestThread(Socket socket, Map<String, Servlet> servletMap) {
     this.socket = socket;
     this.servletMap = servletMap;
@@ -27,10 +28,6 @@ public class RequestThread extends Thread{
       // 클라이언트와 서버 사이에 정해진 규칙(protocol)에 따라 데이터를 주고 받는다.
       String dataName = in.readUTF();
 
-      if (dataName.equals("exit")) {
-        break;
-      }
-
       Servlet servlet = servletMap.get(dataName);
       if (servlet != null) {
         servlet.service(in, out);
@@ -45,5 +42,6 @@ public class RequestThread extends Thread{
       e.printStackTrace();
     }
     super.run();
-  }
+  }//run()
+
 }
