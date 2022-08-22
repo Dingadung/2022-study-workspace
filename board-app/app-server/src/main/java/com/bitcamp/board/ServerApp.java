@@ -29,10 +29,10 @@ public class ServerApp {
         Socket socket = serverSocket.accept();
 
         // 클라이언트 요청을 처리할 스레드를 만든다.
-        RequestThread t =new RequestThread(socket, servletMap);
+        RequestThread t =new RequestThread(socket, servletMap); //servletMap은 RequestThread로 넘겨서 거기서 처리하도록 맡긴다.
 
         // main 실행 흐름에서 분리하여 별도의 실행 흐름으로 작업을 수행시킨다.
-        t.start();
+        t.start(); // 여러개 실행
       }
     } catch (Exception e) {
       e.printStackTrace();

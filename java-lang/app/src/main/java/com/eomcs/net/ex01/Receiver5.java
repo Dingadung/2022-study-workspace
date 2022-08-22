@@ -13,7 +13,7 @@ import java.net.Socket;
 public class Receiver5 {
 
   public static void main(String[] args) throws Exception {
-    System.out.println("서버 실행 중...");
+    System.out.println("미니쥐 서버 실행 중...");
 
     ServerSocket serverSocket = new ServerSocket(8888);
     Socket socket = serverSocket.accept();
@@ -33,7 +33,7 @@ public class Receiver5 {
     String filename = in.readUTF();
 
     //3) 파일 데이터 읽기
-    File file = new File("temp/ok_" + filename);
+    File file = new File("temp/ok_라" + filename);
     BufferedOutputStream fileOut = new BufferedOutputStream( 
         new FileOutputStream(file));
 

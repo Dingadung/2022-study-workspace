@@ -1,4 +1,4 @@
-// 파일 보내기 + 버퍼
+// 파일 보내기 + 버퍼 ㅆ는 이유> -> 개 빠름
 package com.eomcs.net.ex01;
 
 import java.io.BufferedInputStream;
@@ -12,12 +12,12 @@ import java.util.Scanner;
 public class Sender5 {
 
   public static void main(String[] args) throws Exception {
-    File file = new File("temp/jls11.pdf");
+    File file = new File("temp/cuties.jpeg");
 
     BufferedInputStream fileIn = new BufferedInputStream(new FileInputStream(file));
 
-    System.out.println("서버에 연결 중...");
-    Socket socket = new Socket("192.168.0.76", 8888);
+    System.out.println("미니쥐가 서버에 연결 중...");
+    Socket socket = new Socket("192.168.0.17", 8888);
     System.out.println("서버에 연결 완료!");
 
     DataOutputStream out = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));

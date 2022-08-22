@@ -19,7 +19,8 @@ public class RequestThread extends Thread{
   // 별도의 실행흐름에서 수행할 작업 정의
   @Override
   public void run() {
-    try (Socket socket = this.socket;
+    try (Socket socket = this.socket; // 위에 있는데 또 선언하는 이유: () 하는 곳 안에서만 자동으로 Close 되기 때문.
+        // socekt을 가지고 입출력 stream 얻기
         DataInputStream in = new DataInputStream(socket.getInputStream());
         DataOutputStream out = new DataOutputStream(socket.getOutputStream());) {
 

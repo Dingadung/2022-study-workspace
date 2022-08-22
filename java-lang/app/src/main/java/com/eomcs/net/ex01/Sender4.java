@@ -10,18 +10,18 @@ import java.util.Scanner;
 public class Sender4 {
 
   public static void main(String[] args) throws Exception {
-    File file = new File("temp/jls11.pdf");
+    File file = new File("temp/cuties.jpeg");
 
     FileInputStream fileIn = new FileInputStream(file);
 
-    System.out.println("서버에 연결 중...");
-    Socket socket = new Socket("192.168.0.76", 8888);
-    System.out.println("서버에 연결 완료!");
+    System.out.println("미니쥐가 누군가의 서버에 연결 중...");
+    Socket socket = new Socket("192.168.0.3", 8888);
+    System.out.println("미니쥐가 누군가의 서버에 연결 완료!");
 
     DataOutputStream out = new DataOutputStream(socket.getOutputStream());
     Scanner in = new Scanner(socket.getInputStream());
 
-    System.out.println("서버에 데이터 송신 중...");
+    System.out.println("누군가의 서버에 데이터 송신 중...");
 
     long startTime = System.currentTimeMillis();
 
@@ -39,7 +39,7 @@ public class Sender4 {
 
     long endTime = System.currentTimeMillis();
 
-    System.out.printf("서버에 데이터 송신 완료!(%d밀리초)\n", endTime - startTime);
+    System.out.printf("누군가의 서버에 데이터 송신 완료!(%d밀리초)\n", endTime - startTime);
 
     // 4) 서버의 응답받기
     String response = in.nextLine();

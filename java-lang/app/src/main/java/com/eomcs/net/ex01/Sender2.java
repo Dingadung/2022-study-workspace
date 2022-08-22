@@ -8,11 +8,11 @@ import java.util.Scanner;
 public class Sender2 {
 
   public static void main(String[] args) throws Exception {
-    System.out.println("클라이언트 실행!");
+    System.out.println("미니쥐 클라이언트 실행!");
 
     Scanner keyScan = new Scanner(System.in);
 
-    Socket socket = new Socket("192.168.0.250", 8888);
+    Socket socket = new Socket("192.168.0.3", 8888);
 
     PrintStream out = new PrintStream(socket.getOutputStream());
     Scanner in = new Scanner(socket.getInputStream());
