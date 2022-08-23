@@ -24,8 +24,10 @@ public class CalcServer {
   }
 
   static void processRequest(Socket socket) throws Exception {
-    try (DataInputStream in = new DataInputStream(socket.getInputStream());
-        PrintStream out = new PrintStream(socket.getOutputStream());) {
+    try (
+        Socket s = socket;
+        DataInputStream in = new DataInputStream(s.getInputStream());
+        PrintStream out = new PrintStream(s.getOutputStream());) {
 
       loop: while (true) {
         int a = in.readInt();

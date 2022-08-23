@@ -25,7 +25,7 @@ public class Server0140 {
           System.out.println("클라이언트가 연결되었음!");
 
           InetAddress inetAddr = socket.getInetAddress();
-          System.out.println(inetAddr.getHostAddress()); 
+          System.out.printf("접속자: %s\n\n", inetAddr.getHostAddress()); 
 
           while (true) {
             String name = in.readLine();

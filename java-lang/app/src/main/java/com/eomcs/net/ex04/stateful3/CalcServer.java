@@ -9,7 +9,7 @@ import java.net.Socket;
 
 public class CalcServer {
 
-  // 클라이언트와 통신하는 부분을 별도의 분리하여
+  // 클라이언트와 통신하는 부분을 별도의 스레드(실행흐름) 분리하여
   // 독립적으로 실행하게 한다.
   static class RequestHandler extends Thread {
 
