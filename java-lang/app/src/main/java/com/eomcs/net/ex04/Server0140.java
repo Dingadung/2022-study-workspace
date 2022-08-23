@@ -24,16 +24,21 @@ public class Server0140 {
 
           System.out.println("클라이언트가 연결되었음!");
 
+          InetAddress inetAddr = socket.getInetAddress();
+          System.out.println(inetAddr.getHostAddress()); 
+
           while (true) {
             String name = in.readLine();
             if (name.equalsIgnoreCase("quit")) { // 클라이언트와 연결 끊기
               out.println("Goodbye!");
               out.flush();
               break;
-            } else if (name.equalsIgnoreCase("stop")) { // 서버 종료하기
+            } else if (name.equalsIgnoreCase("stop") && 
+                // localHost에서만 서버를 멈출 수 있다.
+                inetAddr.getHostAddress().equals("127.0.0.1")) { // 서버 종료하기
               // 접속한 클라이언트의IP 주소 알아내기
-              InetAddress inetAddr = socket.getInetAddress();
-              System.out.println(inetAddr.getHostAddress()); 
+
+
               out.println("Goodbye!");
               out.flush();
               break loop;
