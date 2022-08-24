@@ -11,7 +11,7 @@ public class Exam05 {
     // - 자원의 경로
     //      /드라이브명:/디렉토리 또는 파일 경로  (Windows)
     //      /루트디렉토리/디렉토리 또는 파일 경로 (Linux/macOS/Unix)
-    URL url = new URL("file:///c:/Users/user/git/bitcamp-study/Hello.java");
+    URL url = new URL("file:///Users/vivi/git/bitcamp-study/Hello.java");
 
     // URL 분석
     System.out.printf("프로토콜: %s\n", url.getProtocol());
