@@ -47,7 +47,7 @@ public class CalcServer {
       int value = in.readInt();
 
       // 클라이언트를 위한 기존 값 꺼내기
-      Integer obj = resultMap.get(clientId);
+      Integer obj = resultMap.get(clientId); // 0으로 입력이 됐을 경우, 0이라는 ID는 resultMap에 존재하지 않으므로 null 값이 반환되게 된다.
       int result = 0;
 
       if (obj != null) {
