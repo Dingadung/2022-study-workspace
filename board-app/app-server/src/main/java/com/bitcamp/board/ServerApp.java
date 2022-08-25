@@ -12,6 +12,15 @@ import com.bitcamp.servlet.Servlet;
 
 public class ServerApp {
   public static void main(String[] args) {
+    // 클라이언트 요청을 처리할 객체 준비
+    Hashtable<String,Servlet> servletMap = new Hashtable<>();
+    servletMap.put("board", new BoardServlet("board"));
+    servletMap.put("reading", new BoardServlet("reading"));
+    servletMap.put("visit", new BoardServlet("visit"));
+    servletMap.put("notice", new BoardServlet("notice"));
+    servletMap.put("daily", new BoardServlet("daily"));
+    servletMap.put("member", new MemberServlet("member"));
+
     class RequestThread extends Thread{
       private Socket socket;
       private Map<String, Servlet> servletMap;
@@ -57,14 +66,7 @@ public class ServerApp {
 
       System.out.println("서버 소켓 준비 완료!");
 
-      // 클라이언트 요청을 처리할 객체 준비
-      Hashtable<String,Servlet> servletMap = new Hashtable<>();
-      servletMap.put("board", new BoardServlet("board"));
-      servletMap.put("reading", new BoardServlet("reading"));
-      servletMap.put("visit", new BoardServlet("visit"));
-      servletMap.put("notice", new BoardServlet("notice"));
-      servletMap.put("daily", new BoardServlet("daily"));
-      servletMap.put("member", new MemberServlet("member"));
+
 
       while (true) {
         // 클라이언트가 연결되면,
