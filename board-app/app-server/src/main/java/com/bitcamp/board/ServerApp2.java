@@ -9,7 +9,7 @@ import com.bitcamp.board.servlet.BoardServlet;
 import com.bitcamp.board.servlet.MemberServlet;
 import com.bitcamp.servlet.Servlet;
 
-public class ServerApp {
+public class ServerApp2 {
 
   public static void main(String[] args) {
 
