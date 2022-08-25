@@ -29,37 +29,36 @@ public class ServerApp {
       System.out.println("서버 소켓 준비 완료!");
 
       while (true) {
-        // 클라이언트가 연결되면,
-        new Thread(new Runnable (){
-          Socket socket = serverSocket.accept();  // 생성자가 생성될 때 함께 실행된다.,  클라이언트가 들어올때까지 넘어가지 않는다. blocking method
+        // 여러 클라이언트의 요청을 동시에 처리하기 위해서 클라이언트가 연결되면,
+        //람다 문법에서는 인스턴스 필드는 처리할 수 없다. 따라서, 다시 로컬변수로 전환한다.
+        Socket socket = serverSocket.accept();  // 생성자가 생성될 때 함께 실행된다.,  클라이언트가 들어올때까지 넘어가지 않는다. blocking method
 
-          @Override
-          public void run() {
-            try (Socket socket = this.socket; // 위에 있는데 또 선언하는 이유: () 하는 곳 안에서만 자동으로 Close 되기 때문.
-                // socekt을 가지고 입출력 stream 얻기
-                DataInputStream in = new DataInputStream(socket.getInputStream());
-                DataOutputStream out = new DataOutputStream(socket.getOutputStream());) {
+        new Thread( () -> {
+          try (Socket socket2 = socket; // 위에 있는데 또 선언하는 이유: () 하는 곳 안에서만 자동으로 Close 되기 때문.
+              // socekt을 가지고 입출력 stream 얻기
+              DataInputStream in = new DataInputStream(socket.getInputStream());
+              DataOutputStream out = new DataOutputStream(socket.getOutputStream());) {
 
-              System.out.println("클라이언트와 연결 되었음!");
+            System.out.println("클라이언트와 연결 되었음!");
 
-              // 클라이언트와 서버 사이에 정해진 규칙(protocol)에 따라 데이터를 주고 받는다.
-              String dataName = in.readUTF();
+            // 클라이언트와 서버 사이에 정해진 규칙(protocol)에 따라 데이터를 주고 받는다.
+            String dataName = in.readUTF();
 
-              Servlet servlet = servletMap.get(dataName);
-              if (servlet != null) {
-                servlet.service(in, out);
-              } else {
-                out.writeUTF("fail");
-              }
-
-              System.out.println("클라이언트와 연결을 끊었음!");
-            } // 안쪽 try
-            catch(Exception e) {
-              System.out.println("클라이언트 요청 중 오류 발생!");
-              e.printStackTrace();
+            Servlet servlet = servletMap.get(dataName);
+            if (servlet != null) {
+              servlet.service(in, out);
+            } else {
+              out.writeUTF("fail");
             }
-          } 
-        }).start(); 
+
+            System.out.println("클라이언트와 연결을 끊었음!");
+          } // 안쪽 try
+          catch(Exception e) {
+            System.out.println("클라이언트 요청 중 오류 발생!");
+            e.printStackTrace();
+          }
+        } 
+            ).start(); 
       }
     } catch (Exception e) {
       e.printStackTrace();
