@@ -17,7 +17,6 @@ public class Exam0190 {
     for (int i = 0; i < count; i++) {
       System.out.println(">>> " + i);
     }
-
   }// main()
 
 }

@@ -9,10 +9,9 @@ import com.bitcamp.board.servlet.BoardServlet;
 import com.bitcamp.board.servlet.MemberServlet;
 import com.bitcamp.servlet.Servlet;
 
-public class ServerApp2 {
+public class ServerAppPrac {
 
   public static void main(String[] args) {
-
     // 클라이언트 요청을 처리할 객체 준비
     Hashtable<String,Servlet> servletMap = new Hashtable<>();
     servletMap.put("board", new BoardServlet("board"));
@@ -22,6 +21,8 @@ public class ServerApp2 {
     servletMap.put("daily", new BoardServlet("daily"));
     servletMap.put("member", new MemberServlet("member"));
 
+
+
     System.out.println("[게시글 데이터 관리 서버]");
 
     try (ServerSocket serverSocket = new ServerSocket(8888);) {
@@ -29,10 +30,7 @@ public class ServerApp2 {
       System.out.println("서버 소켓 준비 완료!");
 
       while (true) {
-        // 여러 클라이언트의 요청을 동시에 처리하기 위해서 클라이언트가 연결되면,
-        //람다 문법에서는 인스턴스 필드는 처리할 수 없다. 따라서, 다시 로컬변수로 전환한다.
-        Socket socket = serverSocket.accept();  // 생성자가 생성될 때 함께 실행된다.,  클라이언트가 들어올때까지 넘어가지 않는다. blocking method
-
+        Socket socket = serverSocket.accept();
         new Thread( () -> {
           try (Socket socket2 = socket; // 위에 있는데 또 선언하는 이유: () 하는 곳 안에서만 자동으로 Close 되기 때문.
               // socekt을 가지고 입출력 stream 얻기
@@ -50,22 +48,22 @@ public class ServerApp2 {
             } else {
               out.writeUTF("fail");
             }
-
             System.out.println("클라이언트와 연결을 끊었음!");
           } // 안쪽 try
           catch(Exception e) {
             System.out.println("클라이언트 요청 중 오류 발생!");
             e.printStackTrace();
           }
-        } // Runnable인터페이스 (lambda 문법으로 작성) 
-            ).start(); // Thread()
-      }//while()
+        } ).start();
+      }
     } catch (Exception e) {
       e.printStackTrace();
     } // 바깥 쪽 try 
 
     System.out.println("서버 종료!");
   }
+
+
 
 }
 
