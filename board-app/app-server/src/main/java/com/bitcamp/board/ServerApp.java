@@ -22,61 +22,44 @@ public class ServerApp {
     servletMap.put("daily", new BoardServlet("daily"));
     servletMap.put("member", new MemberServlet("member"));
 
-    // 스레드로 만든는 대신에, 스레드가 실행할 수 있는 클래스로 변경한다.
-    class RequestRunnable implements Runnable{
-      private Socket socket;
-
-      public RequestRunnable(Socket socket) {
-        this.socket = socket;
-      }
-
-      // 별도의 실행흐름에서 수행할 작업 정의
-      @Override
-      public void run() {
-        try (Socket socket = this.socket; // 위에 있는데 또 선언하는 이유: () 하는 곳 안에서만 자동으로 Close 되기 때문.
-            // socekt을 가지고 입출력 stream 얻기
-            DataInputStream in = new DataInputStream(socket.getInputStream());
-            DataOutputStream out = new DataOutputStream(socket.getOutputStream());) {
-
-          System.out.println("클라이언트와 연결 되었음!");
-
-          // 클라이언트와 서버 사이에 정해진 규칙(protocol)에 따라 데이터를 주고 받는다.
-          String dataName = in.readUTF();
-
-          Servlet servlet = servletMap.get(dataName);
-          if (servlet != null) {
-            servlet.service(in, out);
-          } else {
-            out.writeUTF("fail");
-          }
-
-          System.out.println("클라이언트와 연결을 끊었음!");
-        } // 안쪽 try
-        catch(Exception e) {
-          System.out.println("클라이언트 요청 중 오류 발생!");
-          e.printStackTrace();
-        }
-        super.run();
-      }//run()
-
-    }
     System.out.println("[게시글 데이터 관리 서버]");
 
     try (ServerSocket serverSocket = new ServerSocket(8888);) {
 
       System.out.println("서버 소켓 준비 완료!");
 
-
-
       while (true) {
         // 클라이언트가 연결되면,
-        Socket socket = serverSocket.accept();
+        new Thread(new Runnable (){
+          Socket socket = serverSocket.accept();  // 생성자가 생성될 때 함께 실행된다.,  클라이언트가 들어올때까지 넘어가지 않는다. blocking method
 
-        // 클라이언트 요청을 처리할 스레드를 만든다.
-        Thread t =new Thread(new RequestRunnable(socket)); //servletMap은 RequestThread로 넘겨서 거기서 처리하도록 맡긴다.
+          @Override
+          public void run() {
+            try (Socket socket = this.socket; // 위에 있는데 또 선언하는 이유: () 하는 곳 안에서만 자동으로 Close 되기 때문.
+                // socekt을 가지고 입출력 stream 얻기
+                DataInputStream in = new DataInputStream(socket.getInputStream());
+                DataOutputStream out = new DataOutputStream(socket.getOutputStream());) {
 
-        // main 실행 흐름에서 분리하여 별도의 실행 흐름으로 작업을 수행시킨다.
-        t.start(); // 여러개 실행
+              System.out.println("클라이언트와 연결 되었음!");
+
+              // 클라이언트와 서버 사이에 정해진 규칙(protocol)에 따라 데이터를 주고 받는다.
+              String dataName = in.readUTF();
+
+              Servlet servlet = servletMap.get(dataName);
+              if (servlet != null) {
+                servlet.service(in, out);
+              } else {
+                out.writeUTF("fail");
+              }
+
+              System.out.println("클라이언트와 연결을 끊었음!");
+            } // 안쪽 try
+            catch(Exception e) {
+              System.out.println("클라이언트 요청 중 오류 발생!");
+              e.printStackTrace();
+            }
+          } 
+        }).start(); 
       }
     } catch (Exception e) {
       e.printStackTrace();
@@ -84,7 +67,6 @@ public class ServerApp {
 
     System.out.println("서버 종료!");
   }
-
 
 }
 
