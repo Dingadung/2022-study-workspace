@@ -41,7 +41,7 @@ public class Exam0310 {
 
     synchronized (counter) {
       System.out.printf("[%s] $$$$$$$$$$$$$$$$$$$$$$\n", threadName);
-      for (int i  = 0; i < 1000; i++) {
+      for (int i  = 0; i < counter.value; i++) {
         System.out.printf("%s ==> %d\n", threadName, i);
       }
     }
@@ -66,9 +66,9 @@ public class Exam0310 {
   public static void main(String[] args) throws Exception {
     Counter counter = new Counter(1000);
 
-    Worker w1 = new Worker("홍길동", counter);
-    Worker w2 = new Worker("%%%%%%%", counter);
-    Worker w3 = new Worker("kim", counter);
+    Worker w1 = new Worker("**홍길동", new Counter(7));
+    Worker w2 = new Worker("임꺽정--->", new Counter(3));
+    Worker w3 = new Worker("^__^유관순^__^", new Counter(10));
 
     w1.start();
     w2.start();
