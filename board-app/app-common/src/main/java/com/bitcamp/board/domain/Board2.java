@@ -24,7 +24,8 @@ public class Board2 implements Serializable{
     this.createdDate = System.currentTimeMillis();
   }
 
-  public void initTitle(String title) {
+  // setter
+  public void setTitle(String title) {
     if(title == null) {
       throw new RuntimeException("제목을 비울 수 없습니다.");
     }
@@ -32,6 +33,10 @@ public class Board2 implements Serializable{
       throw new RuntimeException("제목은 최대 200자까지만 가능합니다.");
     }
     this.title = title;
+  }
+  //getter
+  public String getTitle() {
+    return this.title;
   }
 
   @Override
