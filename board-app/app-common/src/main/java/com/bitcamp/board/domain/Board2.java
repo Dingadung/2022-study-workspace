@@ -24,27 +24,62 @@ public class Board2 implements Serializable{
     this.createdDate = System.currentTimeMillis();
   }
 
-  // setter
-  public void setTitle(String title) {
-    if(title == null) {
-      throw new RuntimeException("제목을 비울 수 없습니다.");
-    }
-    if(title.length() > 200) {
-      throw new RuntimeException("제목은 최대 200자까지만 가능합니다.");
-    }
-    this.title = title;
-  }
-  //getter
-  public String getTitle() {
-    return this.title;
+  public int getNo() {
+    return no;
   }
 
-  @Override
-  public String toString() {
-    return "Board [no=" + no + ", title=" + title + ", content=" + content + ", writer=" + writer
-        + ", password=" + password + ", viewCount=" + viewCount 
-        + ", createdDate=" + new java.sql.Date(createdDate)
-        + "]";
+  public void setNo(int no) {
+    this.no = no;
   }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public String getContent() {
+    return content;
+  }
+
+  public void setContent(String content) {
+    this.content = content;
+  }
+
+  public String getWriter() {
+    return writer;
+  }
+
+  public void setWriter(String writer) {
+    this.writer = writer;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public int getViewCount() {
+    return viewCount;
+  }
+
+  public void setViewCount(int viewCount) {
+    this.viewCount = viewCount;
+  }
+
+  public long getCreatedDate() {
+    return createdDate;
+  }
+
+  public void setCreatedDate(long createdDate) {
+    this.createdDate = createdDate;
+  }
+
+
 
 }
