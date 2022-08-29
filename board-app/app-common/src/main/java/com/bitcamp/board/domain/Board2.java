@@ -5,13 +5,13 @@ import java.io.Serializable;
 public class Board2 implements Serializable{ 
   private static final long serialVersionUID = 1L;
 
-  public int no;
-  public String title;
-  public String content;
-  public String writer;
-  public String password;
-  public int viewCount;
-  public long createdDate;
+  private int no;
+  private String title;
+  private String content;
+  private String writer;
+  private String password;
+  private int viewCount;
+  private long createdDate;
 
   static int count = 0;
 
