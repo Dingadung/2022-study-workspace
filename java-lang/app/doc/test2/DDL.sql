@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS ems_lecture RESTRICT;
 DROP TABLE IF EXISTS ems_teacher RESTRICT;
 
 -- 강의강사
-DROP TABLE IF EXISTS ems_teacber_lecture RESTRICT;
+DROP TABLE IF EXISTS ems_teacher_lecture RESTRICT;
 
 -- 강의실
 DROP TABLE IF EXISTS ems_room RESTRICT;
@@ -44,8 +44,8 @@ DROP TABLE IF EXISTS ems_member RESTRICT;
 CREATE TABLE ems_application (
   apno  INTEGER  NOT NULL COMMENT '수강신청번호', -- 수강신청번호
   lno   INTEGER  NOT NULL COMMENT '강의번호', -- 강의번호
-  cdate DATETIME NOT NULL COMMENT '신청일', -- 신청일
-  mno   INTEGER  NOT NULL COMMENT '회원번호' -- 회원번호
+  mno   INTEGER  NOT NULL COMMENT '회원번호', -- 회원번호
+  cdate DATETIME NOT NULL COMMENT '신청일' -- 신청일
 )
 COMMENT '수강신청';
 
@@ -62,13 +62,13 @@ ALTER TABLE ems_application
 -- 강의
 CREATE TABLE ems_lecture (
   lno   INTEGER      NOT NULL COMMENT '강의번호', -- 강의번호
-  rno   INTEGER      NULL     COMMENT '강의실번호', -- 강의실번호
-  mno   INTEGER      NULL     COMMENT '회원번호', -- 회원번호
   title VARCHAR(255) NOT NULL COMMENT '강의명', -- 강의명
   COL   MEDIUMTEXT   NULL     COMMENT '내용', -- 내용
   sdate DATE         NOT NULL COMMENT '시작일', -- 시작일
   edate DATE         NOT NULL COMMENT '종료일', -- 종료일
-  qty   INTEGER      NOT NULL COMMENT '수용인원' -- 수용인원
+  qty   INTEGER      NOT NULL COMMENT '수용인원', -- 수용인원
+  rno   INTEGER      NULL     COMMENT '강의실번호', -- 강의실번호
+  mno   INTEGER      NULL     COMMENT '회원번호' -- 회원번호
 )
 COMMENT '강의';
 
@@ -86,10 +86,10 @@ ALTER TABLE ems_lecture
 CREATE TABLE ems_teacher (
   mno      INTEGER      NOT NULL COMMENT '회원번호', -- 회원번호
   bno      INTEGER      NOT NULL COMMENT '은행번호', -- 은행번호
-  ano      INTEGER      NOT NULL COMMENT '기본주소번호', -- 기본주소번호
   account  VARCHAR(20)  NOT NULL COMMENT '계좌번호', -- 계좌번호
-  det_addr VARCHAR(255) NOT NULL COMMENT '상세주소', -- 상세주소
-  hour_pay INTEGER      NOT NULL COMMENT '시강료' -- 시강료
+  hour_pay INTEGER      NOT NULL COMMENT '시강료', -- 시강료
+  ano      INTEGER      NOT NULL COMMENT '기본주소번호', -- 기본주소번호
+  det_addr VARCHAR(255) NOT NULL COMMENT '상세주소' -- 상세주소
 )
 COMMENT '강사';
 
@@ -100,31 +100,16 @@ ALTER TABLE ems_teacher
       mno -- 회원번호
     );
 
--- 강사 유니크 인덱스
-CREATE UNIQUE INDEX UIX_ems_teacher
-  ON ems_teacher ( -- 강사
-  );
-
--- 강사 유니크 인덱스2
-CREATE UNIQUE INDEX UIX_ems_teacher2
-  ON ems_teacher ( -- 강사
-  );
-
--- 강사 인덱스
-CREATE INDEX IX_ems_teacher
-  ON ems_teacher( -- 강사
-  );
-
 -- 강의강사
-CREATE TABLE ems_teacber_lecture (
+CREATE TABLE ems_teacher_lecture (
   lno INTEGER NOT NULL COMMENT '강의번호', -- 강의번호
   mno INTEGER NOT NULL COMMENT '회원번호' -- 회원번호
 )
 COMMENT '강의강사';
 
 -- 강의강사
-ALTER TABLE ems_teacber_lecture
-  ADD CONSTRAINT PK_ems_teacber_lecture -- 강의강사 기본키
+ALTER TABLE ems_teacher_lecture
+  ADD CONSTRAINT PK_ems_teacher_lecture -- 강의강사 기본키
     PRIMARY KEY (
       lno, -- 강의번호
       mno  -- 회원번호
@@ -151,10 +136,10 @@ ALTER TABLE ems_room
 -- 매니저
 CREATE TABLE ems_manager (
   mno  INTEGER     NOT NULL COMMENT '회원번호', -- 회원번호
-  dno  INTEGER     NOT NULL COMMENT '부서번호', -- 부서번호
-  pno  INTEGER     NOT NULL COMMENT '직위번호', -- 직위번호
   ctel VARCHAR(30) NULL     COMMENT '회사전화', -- 회사전화
-  cfax VARCHAR(30) NULL     COMMENT '회사팩스' -- 회사팩스
+  cfax VARCHAR(30) NULL     COMMENT '회사팩스', -- 회사팩스
+  dno  INTEGER     NOT NULL COMMENT '부서번호', -- 부서번호
+  pno  INTEGER     NOT NULL COMMENT '직위번호' -- 직위번호
 )
 COMMENT '매니저';
 
@@ -165,29 +150,14 @@ ALTER TABLE ems_manager
       mno -- 회원번호
     );
 
--- 매니저 유니크 인덱스
-CREATE UNIQUE INDEX UIX_ems_manager
-  ON ems_manager ( -- 매니저
-  );
-
--- 매니저 유니크 인덱스2
-CREATE UNIQUE INDEX UIX_ems_manager2
-  ON ems_manager ( -- 매니저
-  );
-
--- 매니저 인덱스
-CREATE INDEX IX_ems_manager
-  ON ems_manager( -- 매니저
-  );
-
 -- 학생
 CREATE TABLE ems_student (
-  mno     INTEGER      NOT NULL COMMENT '회원번호', -- 회원번호
-  bno     INTEGER      NULL     COMMENT '은행번호', -- 은행번호
-  ano     INTEGER      NULL     COMMENT '기본주소번호', -- 기본주소번호
-  account VARCHAR(20)  NULL     COMMENT '계좌번호', -- 계좌번호
-  det_arr VARCHAR(255) NULL     COMMENT '상세주소', -- 상세주소
-  work    BOOLEAN      NOT NULL COMMENT '재직여부' -- 재직여부
+  mno      INTEGER      NOT NULL COMMENT '회원번호', -- 회원번호
+  work     BOOLEAN      NOT NULL COMMENT '재직여부', -- 재직여부
+  ano      INTEGER      NULL     COMMENT '기본주소번호', -- 기본주소번호
+  det_addr VARCHAR(255) NULL     COMMENT '상세주소', -- 상세주소
+  bno      INTEGER      NULL     COMMENT '은행번호', -- 은행번호
+  account  VARCHAR(20)  NULL     COMMENT '계좌번호' -- 계좌번호
 )
 COMMENT '학생';
 
@@ -197,21 +167,6 @@ ALTER TABLE ems_student
     PRIMARY KEY (
       mno -- 회원번호
     );
-
--- 학생 유니크 인덱스
-CREATE UNIQUE INDEX UIX_ems_student
-  ON ems_student ( -- 학생
-  );
-
--- 학생 유니크 인덱스2
-CREATE UNIQUE INDEX UIX_ems_student2
-  ON ems_student ( -- 학생
-  );
-
--- 학생 인덱스
-CREATE INDEX IX_ems_student
-  ON ems_student( -- 학생
-  );
 
 -- 학교
 CREATE TABLE ems_school (
@@ -308,13 +263,13 @@ ALTER TABLE ems_bank
 -- 교육센터
 CREATE TABLE ems_center (
   cno      INTEGER      NOT NULL COMMENT '교육센터번호', -- 교육센터번호
-  ano      INTEGER      NOT NULL COMMENT '기본주소번호', -- 기본주소번호
   title    VARCHAR(50)  NOT NULL COMMENT '센터명', -- 센터명
+  comp_id  VARCHAR(20)  NOT NULL COMMENT '사업자번호', -- 사업자번호
+  ano      INTEGER      NOT NULL COMMENT '기본주소번호', -- 기본주소번호
   det_addr VARCHAR(255) NOT NULL COMMENT '상세주소', -- 상세주소
   tel      VARCHAR(30)  NOT NULL COMMENT '대표전화', -- 대표전화
-  comp_id  VARCHAR(20)  NOT NULL COMMENT '사업자번호', -- 사업자번호
-  homepage VARCHAR(255) NULL     COMMENT '홈페이지', -- 홈페이지
-  fax      VARCHAR(30)  NULL     COMMENT '팩스' -- 팩스
+  fax      VARCHAR(30)  NULL     COMMENT '팩스', -- 팩스
+  homepage VARCHAR(255) NULL     COMMENT '홈페이지' -- 홈페이지
 )
 COMMENT '교육센터';
 
@@ -336,9 +291,9 @@ ALTER TABLE ems_center
 
 -- 기본주소
 CREATE TABLE ems_address (
-  ano       INTEGER      NOT NULL COMMENT '기본주소번호', -- 기본주소번호
-  postno    VARCHAR(6)   NOT NULL COMMENT '우편번호', -- 우편번호
-  base_addr VARCHAR(255) NOT NULL COMMENT '기본주소' -- 기본주소
+  ano      INTEGER      NOT NULL COMMENT '기본주소번호', -- 기본주소번호
+  postno   VARCHAR(6)   NOT NULL COMMENT '우편번호', -- 우편번호
+  bas_addr VARCHAR(255) NOT NULL COMMENT '기본주소' -- 기본주소
 )
 COMMENT '기본주소';
 
@@ -349,16 +304,19 @@ ALTER TABLE ems_address
       ano -- 기본주소번호
     );
 
+ALTER TABLE ems_address
+  MODIFY COLUMN ano INTEGER NOT NULL AUTO_INCREMENT COMMENT '기본주소번호';
+
 -- 회원
 CREATE TABLE ems_member (
   mno      INTEGER      NOT NULL COMMENT '회원번호', -- 회원번호
-  tel      VARCHAR(30)  NOT NULL COMMENT '휴대전화', -- 휴대전화
-  email    VARCHAR(40)  NOT NULL COMMENT '이메일', -- 이메일
-  grade    VARCHAR(50)  NULL     COMMENT '최종학력', -- 최종학력
   name     VARCHAR(50)  NOT NULL COMMENT '이름', -- 이름
-  major    VARCHAR(50)  NULL     COMMENT '전공', -- 전공
+  email    VARCHAR(40)  NOT NULL COMMENT '이메일', -- 이메일
   password VARCHAR(100) NOT NULL COMMENT '암호', -- 암호
-  sno      INTEGER      NULL     COMMENT '학교번호' -- 학교번호
+  tel      VARCHAR(30)  NOT NULL COMMENT '휴대전화', -- 휴대전화
+  grade    VARCHAR(50)  NULL     COMMENT '최종학력', -- 최종학력
+  sno      INTEGER      NULL     COMMENT '학교번호', -- 학교번호
+  major    VARCHAR(50)  NULL     COMMENT '전공' -- 전공
 )
 COMMENT '회원';
 
@@ -461,8 +419,8 @@ ALTER TABLE ems_teacher
     );
 
 -- 강의강사
-ALTER TABLE ems_teacber_lecture
-  ADD CONSTRAINT FK_ems_lecture_TO_ems_teacber_lecture -- 강의 -> 강의강사
+ALTER TABLE ems_teacher_lecture
+  ADD CONSTRAINT FK_ems_lecture_TO_ems_teacher_lecture -- 강의 -> 강의강사
     FOREIGN KEY (
       lno -- 강의번호
     )
@@ -471,8 +429,8 @@ ALTER TABLE ems_teacber_lecture
     );
 
 -- 강의강사
-ALTER TABLE ems_teacber_lecture
-  ADD CONSTRAINT FK_ems_teacher_TO_ems_teacber_lecture -- 강사 -> 강의강사
+ALTER TABLE ems_teacher_lecture
+  ADD CONSTRAINT FK_ems_teacher_TO_ems_teacher_lecture -- 강사 -> 강의강사
     FOREIGN KEY (
       mno -- 회원번호
     )
