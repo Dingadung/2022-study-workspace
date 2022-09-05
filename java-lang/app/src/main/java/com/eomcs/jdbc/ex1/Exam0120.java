@@ -17,7 +17,9 @@ public class Exam0120 {
       // 1) Driver 구현체의 인스턴스 생성
       // => Driver 구현체가 로딩될 때 인스턴스가 생성되기 때문에
       //    굳이 다음과 같이 인스턴스를 생성할 필요가 없다.
-      new org.mariadb.jdbc.Driver();
+      new org.mariadb.jdbc.Driver(); 
+      // Driver class는 이 Driver class가 로딩될 때 자동으로 Driver를 생성해서 registerDriver를 수행한다.  
+      // 즉, 밑에 getDriver를 호출하려고 할때 Driver클래스를 호출하므로 생성자가 자동으로 register돼서 위의 인스턴스 생성이 필요가 없다.
 
       // 2) DriverManager에 등록 안함!
 
