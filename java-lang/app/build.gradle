@@ -103,7 +103,7 @@ dependencies {
   implementation 'com.oracle.database.jdbc:ojdbc11-production:21.7.0.0'
     
   // MSSQL JDBC Driver
- // implementation 'com.microsoft.sqlserver:mssql-jdbc:10.2.0.jre11'
+   implementation 'com.microsoft.sqlserver:mssql-jdbc:11.2.0.jre17'
   
   // Google JSON 라이브러리
   //implementation 'com.google.code.gson:gson:2.8.9'
