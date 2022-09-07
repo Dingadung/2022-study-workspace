@@ -60,7 +60,7 @@ public class MariaDBMemberDao {
       member.createdDate = rs.getDate("cdt");
       return member;
     }// try() {}
-  } // findByNo()
+  }
 
 
   public int delete(int no) throws Exception{
@@ -98,7 +98,6 @@ public class MariaDBMemberDao {
       return list;
     }// try() {}
   }
-
 
 }
 
