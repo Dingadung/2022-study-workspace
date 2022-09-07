@@ -14,30 +14,15 @@ public class MariaDBBoardDao {
     try(
         Connection con = DriverManager.getConnection(
             "jdbc:mariadb://localhost:3306/studydb", "study", "1111");
-        ){
-      if(board.memberNo >0) { // 회원인 경우
-        try(
-            PreparedStatement pstmt = con.prepareStatement( // 회원
-                "insert into app_board(title, content, mno) values(?, ?, ?)");
-            )
-        {
-          pstmt.setString(1, board.title); 
-          pstmt.setString(2, board.content);
-          pstmt.setInt(3, board.memberNo);
-          return pstmt.executeUpdate();
-        }
-      }/*if*/else { // 비회원인 경우
-        try(PreparedStatement pstmt = con.prepareStatement( // 비회원
-            "insert into app_board(title, content, pwd) values(?, ?, sha2(?, 256)");
-            )
-        {
-          pstmt.setString(1, board.title); 
-          pstmt.setString(2, board.content);
-          pstmt.setString(3, board.password);
-          return pstmt.executeUpdate();
-        }
-      } // else
-    } // 제일 바깥 try() {}
+        PreparedStatement pstmt = con.prepareStatement( 
+            "insert into app_board(title, content, mno) values(?, ?, ?)");
+        )
+    {
+      pstmt.setString(1, board.title); 
+      pstmt.setString(2, board.content);
+      pstmt.setInt(3, board.memberNo);
+      return pstmt.executeUpdate();
+    } //  try() {}
   }
 
   public int update(Board board) throws Exception{
@@ -83,16 +68,11 @@ public class MariaDBBoardDao {
     try(
         Connection con = DriverManager.getConnection( // 얘네가 네트워크 통신을 대신 처리해서 우리가 socket 처리를 일일히 할 필요가 없다.
             "jdbc:mariadb://localhost:3306/studydb", "study", "1111");
-        PreparedStatement pstmt1 = con.prepareStatement( "delete from app_ where mno = ?"); // 자식 데이터 지우기
-        PreparedStatement pstmt2 = con.prepareStatement( "delete from app_board where mno = ?") // 부모 데이터 지우기
+        PreparedStatement pstmt = con.prepareStatement( "delete from app_board where bno = ?")
         ) //try ()
     {
-      // 자식 데이터 지우기 - 회원이 작성한 게시글 삭제
-      pstmt1.setInt(1, no); 
-      pstmt1.executeUpdate();
-      // 부모 데이터 지우기 - 회원 데이터 삭제
-      pstmt2.setInt(1, no); 
-      return pstmt2.executeUpdate();
+      pstmt.setInt(1, no); 
+      return pstmt.executeUpdate();
     } // try() {}
   }
 
