@@ -27,10 +27,10 @@ public class MariaDBMemberDao {
 
   public int update(Member member) throws Exception{
     try(
-        Connection con = DriverManager.getConnection( // 얘네가 네트워크 통신을 대신 처리해서 우리가 socket 처리를 일일히 할 필요가 없다.
+        Connection con = DriverManager.getConnection( 
             "jdbc:mariadb://localhost:3306/studydb", "study", "1111");
         PreparedStatement pstmt = con.prepareStatement(
-            "update app_member set name = ?, email=?, pwd=sha2(?, 256) where mno = ?") // 값을 넣어야 할 자리를 ?로 표시한다. (in-parameter)
+            "update app_member set name = ?, email=?, pwd=sha2(?, 256) where mno = ?")
         ){
       pstmt.setString(1, member.name);
       pstmt.setString(2, member.email);
@@ -43,10 +43,10 @@ public class MariaDBMemberDao {
 
   public Member findByNo(int no)  throws Exception{
     try(
-        Connection con = DriverManager.getConnection( // 얘네가 네트워크 통신을 대신 처리해서 우리가 socket 처리를 일일히 할 필요가 없다.
+        Connection con = DriverManager.getConnection( 
             "jdbc:mariadb://localhost:3306/studydb", "study", "1111");
         PreparedStatement pstmt = con.prepareStatement(
-            "select mno, name, email, cdt from app_member where mno=" + no); // 값을 넣어야 할 자리를 ?로 표시한다. (in-parameter)
+            "select mno, name, email, cdt from app_member where mno=" + no);
         // no 자체가 int 타입이라 이런식으로 가능,String은 공격 위험 있어서 불가.
         // pstmt.setInt(1, no); // 변수 선언만 try  () 안에 들어갈 수 있다.
         ResultSet rs = pstmt.executeQuery() // select 문
@@ -65,7 +65,7 @@ public class MariaDBMemberDao {
 
   public int delete(int no) throws Exception{
     try(
-        Connection con = DriverManager.getConnection( // 얘네가 네트워크 통신을 대신 처리해서 우리가 socket 처리를 일일히 할 필요가 없다.
+        Connection con = DriverManager.getConnection( 
             "jdbc:mariadb://localhost:3306/studydb", "study", "1111");
         PreparedStatement pstmt1 = con.prepareStatement( "delete from app_board where mno = ?"); // 자식 데이터 지우기
         PreparedStatement pstmt2 = con.prepareStatement( "delete from app_member where mno = ?") // 부모 데이터 지우기
