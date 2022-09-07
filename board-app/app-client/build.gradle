@@ -12,6 +12,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     implementation 'com.google.guava:guava:30.1.1-jre'
     implementation project(':app-common') // 폴더 이름
+    implementation 'org.mariadb.jdbc:mariadb-java-client:3.0.7'
 }
 
 application {
