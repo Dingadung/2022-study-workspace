@@ -98,6 +98,7 @@ public class MemberHandler extends AbstractHandler {
 
     member.name = Prompt.inputString("이름?(" + member.name + ") ");
     member.email = Prompt.inputString("이메일?(" + member.email + ") ");
+    member.password = Prompt.inputString("암호? ");
 
     String input = Prompt.inputString("변경하시겠습니까?(y/n) ");
     if (input.equals("y")) {
