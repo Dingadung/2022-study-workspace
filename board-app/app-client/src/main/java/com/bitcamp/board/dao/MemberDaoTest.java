@@ -3,7 +3,7 @@ package com.bitcamp.board.dao;
 import java.util.List;
 import com.bitcamp.board.domain.Member;
 
-public class Test {
+public class MemberDaoTest {
 
   public static void main(String[] args) throws Exception{
     // TODO Auto-generated method stub
