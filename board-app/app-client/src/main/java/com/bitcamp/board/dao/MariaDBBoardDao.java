@@ -79,16 +79,18 @@ public class MariaDBBoardDao {
   public List<Board> findAll() throws Exception{
     try(
         Connection con = DriverManager.getConnection( "jdbc:mariadb://localhost:3306/studydb", "study", "1111");
-        PreparedStatement pstmt = con.prepareStatement( "select mno, name, email from app_board");
+        PreparedStatement pstmt = con.prepareStatement( "select bno, title, mno, cdt, vw_cnt from app_board");
         ResultSet rs = pstmt.executeQuery()
         ) // try()
     {
       ArrayList<Board> list = new ArrayList<>();
       while(rs.next()) {
         Board board = new Board();
-        board.no = rs.getInt("mno");
-        board.name = rs.getString("name");
-        board.email = rs.getString("email");
+        board.no = rs.getInt("bno");
+        board.title = rs.getString("title");
+        board.memberNo = rs.getInt("mno");
+        board.createdDate = rs.getDate("cdt");
+        board.viewCount = rs.getInt("vw_cnt");
         list.add(board); 
       }
       return list;
