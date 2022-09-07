@@ -46,11 +46,19 @@ public class MariaDBMemberDao {
             "select mno, name, email, cdt from app_member where mno=?") // 값을 넣어야 할 자리를 ?로 표시한다. (in-parameter)
         ){
       pstmt.setInt(1, no); // 인덱스는 1부터 시작한다.
-
-      ResultSet rs = pstmt.executeQuery(); // select 문
-      if(!rs.next())return null; // 결과가 존재하지 않는 경우, 일치하는 번호가 없는 것이다.
-    }
-    Member member = new Member();
+      try(
+          ResultSet rs = pstmt.executeQuery() // select 문
+          )
+      {
+        if(!rs.next())return null; // 결과가 존재하지 않는 경우, 일치하는 번호가 없는 것이다.
+        Member member = new Member();
+        member.no = rs.getInt("mno");
+        member.name = rs.getString("name");
+        member.email = rs.getString("email");
+        member.createdDate = rs.getDate("cdt");
+        return member;
+      }// 안 try()끝
+    } // 밖 try() 끝
   }
 
   public boolean delete(String email) throws Exception{
