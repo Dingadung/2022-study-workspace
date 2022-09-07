@@ -65,33 +65,27 @@ public class MariaDBMemberDao {
   } // findByNo()
 
 
-  public boolean delete(String email) throws Exception{
-    try(Socket socket =  new Socket(ip, port);
-        DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-        DataInputStream in = new DataInputStream(socket.getInputStream())
-        ){
-      out.writeUTF(dataName);
-      out.writeUTF("delete");
-      out.writeUTF(email);
-      return in.readUTF().equals("success");
-    }
+  public int delete(int no) throws Exception{
+    try(
+        Connection con = DriverManager.getConnection( // 얘네가 네트워크 통신을 대신 처리해서 우리가 socket 처리를 일일히 할 필요가 없다.
+            "jdbc:mariadb://localhost:3306/studydb", "study", "1111");
+        PreparedStatement pstmt1 = con.prepareStatement( "delete from app_board where mno = ?"); // 자식 데이터 지우기
+        PreparedStatement pstmt2 = con.prepareStatement( "delete from app_board where mno = ?") // 부모 데이터 지우기
+        ) //try ()
+    {
+      // 자식 데이터 지우기 - 회원이 작성한 게시글 삭제
+      pstmt1.setInt(1, no); 
+      pstmt1.executeUpdate();
+      // 부모 데이터 지우기 - 회원 데이터 삭제
+      pstmt2.setInt(1, no); 
+      return pstmt2.executeUpdate();
+    } // try() {}
   }
 
   public Member[] findAll() throws Exception{
-    try(Socket socket =  new Socket(ip, port);
-        DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-        DataInputStream in = new DataInputStream(socket.getInputStream())
-        ){
-      out.writeUTF(dataName);
-      out.writeUTF("findAll");
 
-      if(in.readUTF().equals("fail")) {
-        return null;
-      }
-
-      return new Gson().fromJson( in.readUTF(), Member[].class);
-    }
   }
+}
 
 
 
