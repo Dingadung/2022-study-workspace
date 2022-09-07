@@ -19,13 +19,13 @@ public class Exam0310 {
 
       // Statement 객체 사용법:
       //
-      // 1) INSERT/UPDATE/DELETE 등 DML 관련 SQL문 전송
-      // => executeUpdate()
-      // => 리턴값: 변경(insert/update/delete)된 데이터의 개수
-      //
-      // 2) SELECT 등 DQL 관련 SQL문 전송
-      // => executeQuery()
-      // => 리턴값: 서버에서 데이터를 가져오는 일을 할 객체
+      //       1) INSERT/UPDATE/DELETE 등 DML 관련 SQL문 전송
+      //       => executeUpdate()
+      //       => 리턴값: 변경(insert/update/delete)된 데이터의 개수
+      //      
+      //       2) SELECT 등 DQL 관련 SQL문 전송
+      //       => executeQuery()
+      //       => 리턴값: 서버에서 데이터를 가져오는 일을 할 객체
       //
       // 용어정리
       // "DML(Data Manipulation Language)"

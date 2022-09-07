@@ -27,9 +27,9 @@ public class Exam0111 {
     try (Connection con = DriverManager.getConnection( 
         "jdbc:mariadb://localhost:3306/studydb?user=study&password=1111");
 
-        // 입력 후 PK 값을 리턴 받고 싶다면,
-        // PreparedStatement 객체를 얻을 때 다음과 같은 옵션을 지정하라!
-        // => prepareStatement(sql, 자동생성된 PK 값 리턴 여부)
+        //         입력 후 PK 값을 리턴 받고 싶다면,
+        //         PreparedStatement 객체를 얻을 때 다음과 같은 옵션을 지정하라!
+        //         => prepareStatement(sql, 자동생성된 PK 값 리턴 여부)
         //
         PreparedStatement stmt = con.prepareStatement( 
             "insert into x_board(title,contents) values(?,?)", 

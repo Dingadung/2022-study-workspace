@@ -28,9 +28,9 @@ public class Exam0120 {
         "jdbc:mariadb://localhost:3306/studydb?user=study&password=1111");
         Statement stmt = con.createStatement()) {
 
-      // SQL 삽입 공격
-      // => 입력 문자열에 SQL 명령을 삽입하여 프로그램의 의도와 다르게 데이터를 조작하는 행위.
-      // => 사용자가 입력한 값을 가지고 SQL 문장을 만들 때 이런 문제가 발생한다.
+      //       SQL 삽입 공격
+      //       => 입력 문자열에 SQL 명령을 삽입하여 프로그램의 의도와 다르게 데이터를 조작하는 행위.
+      //       => 사용자가 입력한 값을 가지고 SQL 문장을 만들 때 이런 문제가 발생한다.
       // => 예를 들어 이 예제를 실행할 때 다음과 같이 입력해 보라!
       // 번호? 1
       // 제목? okok
