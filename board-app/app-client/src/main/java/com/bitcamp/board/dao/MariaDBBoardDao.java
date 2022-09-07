@@ -1,4 +1,4 @@
-package com.bitcamp..dao;
+package com.bitcamp.board.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,17 +12,32 @@ public class MariaDBBoardDao {
 
   public int insert(Board board)throws Exception {
     try(
-        Connection con = DriverManager.getConnection( // 얘네가 네트워크 통신을 대신 처리해서 우리가 socket 처리를 일일히 할 필요가 없다.
+        Connection con = DriverManager.getConnection(
             "jdbc:mariadb://localhost:3306/studydb", "study", "1111");
-        PreparedStatement pstmt = con.prepareStatement(
-            "insert into app_board(name, email, pwd) values(?, ?, sha2(?,  256))") // 값을 넣어야 할 자리를 ?로 표시한다. (in-parameter)
         ){
-      pstmt.setString(1, board.name); // 인덱스는 1부터 시작한다.
-      pstmt.setString(2, board.email);
-      pstmt.setString(3, board.password);
-
-      return pstmt.executeUpdate();
-    }
+      if(board.memberNo >0) { // 회원인 경우
+        try(
+            PreparedStatement pstmt = con.prepareStatement( // 회원
+                "insert into app_board(title, content, mno) values(?, ?, ?, ?)");
+            )
+        {
+          pstmt.setString(1, board.title); 
+          pstmt.setString(2, board.content);
+          pstmt.setInt(3, board.memberNo);
+          return pstmt.executeUpdate();
+        }
+      }/*if*/else { // 비회원인 경우
+        try(PreparedStatement pstmt = con.prepareStatement( // 비회원
+            "insert into app_board(title, content, pwd) values(?, ?, ?, ?)");
+            )
+        {
+          pstmt.setString(1, board.title); 
+          pstmt.setString(2, board.content);
+          pstmt.setString(3, board.password);
+          return pstmt.executeUpdate();
+        }
+      } // else
+    } // 제일 바깥 try() {}
   }
 
   public int update(Board board) throws Exception{
