@@ -45,12 +45,11 @@ public class MariaDBBoardDao {
         Connection con = DriverManager.getConnection( // 얘네가 네트워크 통신을 대신 처리해서 우리가 socket 처리를 일일히 할 필요가 없다.
             "jdbc:mariadb://localhost:3306/studydb", "study", "1111");
         PreparedStatement pstmt = con.prepareStatement(
-            "update app_board set name = ?, email=?, pwd=sha2(?, 256) where mno = ?") // 값을 넣어야 할 자리를 ?로 표시한다. (in-parameter)
+            "update app_board set title=?, content = ? where bno = ?") // 값을 넣어야 할 자리를 ?로 표시한다. (in-parameter)
         ){
-      pstmt.setString(1, board.name);
-      pstmt.setString(2, board.email);
-      pstmt.setString(3, board.password);
-      pstmt.setInt(4, board.no);
+      pstmt.setString(1, board.title);
+      pstmt.setString(2, board.content);
+      pstmt.setInt(3, board.no);
 
       return pstmt.executeUpdate();
     }
