@@ -1,14 +1,12 @@
 package com.bitcamp.board.dao;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.net.Socket;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import com.bitcamp.board.domain.Member;
-import com.google.gson.Gson;
 
 public class MariaDBMemberDao {
 
@@ -82,11 +80,24 @@ public class MariaDBMemberDao {
     } // try() {}
   }
 
-  public Member[] findAll() throws Exception{
-
+  public List<Member> findAll() throws Exception{
+    try(
+        Connection con = DriverManager.getConnection( "jdbc:mariadb://localhost:3306/studydb", "study", "1111");
+        PreparedStatement pstmt = con.prepareStatement( "select mno, name, email from app_member");
+        ResultSet rs = pstmt.executeQuery()
+        ) // try()
+    {
+      ArrayList<Member> list = new ArrayList<>();
+      while(rs.next()) {
+        Member member = new Member();
+        member.no = rs.getInt("mno");
+        member.name = rs.getString("name");
+        member.email = rs.getString("email");
+        list.add(member); 
+      }
+      return list;
+    }// try() {}
   }
-}
-
 
 
 }
