@@ -58,10 +58,10 @@ public class MariaDBBoardDao {
 
   public Board findByNo(int no)  throws Exception{
     try(
-        Connection con = DriverManager.getConnection( // 얘네가 네트워크 통신을 대신 처리해서 우리가 socket 처리를 일일히 할 필요가 없다.
+        Connection con = DriverManager.getConnection(
             "jdbc:mariadb://localhost:3306/studydb", "study", "1111");
         PreparedStatement pstmt = con.prepareStatement(
-            "select mno, name, email, cdt from app_board where mno=" + no); // 값을 넣어야 할 자리를 ?로 표시한다. (in-parameter)
+            "select bno, title, content, mno, cdt, vw_cnt from app_board where bno =" + no); // 값을 넣어야 할 자리를 ?로 표시한다. (in-parameter)
         // no 자체가 int 타입이라 이런식으로 가능,String은 공격 위험 있어서 불가.
         // pstmt.setInt(1, no); // 변수 선언만 try  () 안에 들어갈 수 있다.
         ResultSet rs = pstmt.executeQuery() // select 문
@@ -69,10 +69,12 @@ public class MariaDBBoardDao {
     {
       if(!rs.next()) return null; // 결과가 존재하지 않는 경우, 일치하는 번호가 없는 것이다.
       Board board = new Board();
-      board.no = rs.getInt("mno");
-      board.name = rs.getString("name");
-      board.email = rs.getString("email");
+      board.no = rs.getInt("bno");
+      board.title = rs.getString("title");
+      board.content = rs.getString("content");
+      board.memberNo = rs.getInt("mno");
       board.createdDate = rs.getDate("cdt");
+      board.viewCount = rs.getInt("vw_cnt");
       return board;
     }// try() {}
   }
