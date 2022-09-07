@@ -15,6 +15,34 @@ public class Test {
       System.out.println(m);
     }
 
+    //    Member member = new Member();
+    //    member.name = "Park";
+    //    member.email = "jimin@test.com";
+    //    member.password = "1111";
+    //    dao.insert(member);
+
+
+    System.out.println("-------------------------------------------------------------");
+    //    list = dao.findAll();
+    //    for(Member m : list) {
+    //      System.out.println(m);
+    //    }
+    System.out.println("-------------------------------------------------------------");
+
+
+    //    Member member = new Member();
+    //    member.no = 1;
+    //    member.name = "xxx";
+    //    member.email = "xxx@test.com";
+    //    member.password = "2222";
+    //    dao.update(member);
+    dao.delete(6);
+    Member member2= dao.findByNo(6);
+    System.out.println(member2);
+
+
+
   }
+
 
 }

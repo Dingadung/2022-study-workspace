@@ -68,7 +68,7 @@ public class MariaDBMemberDao {
         Connection con = DriverManager.getConnection( // 얘네가 네트워크 통신을 대신 처리해서 우리가 socket 처리를 일일히 할 필요가 없다.
             "jdbc:mariadb://localhost:3306/studydb", "study", "1111");
         PreparedStatement pstmt1 = con.prepareStatement( "delete from app_board where mno = ?"); // 자식 데이터 지우기
-        PreparedStatement pstmt2 = con.prepareStatement( "delete from app_board where mno = ?") // 부모 데이터 지우기
+        PreparedStatement pstmt2 = con.prepareStatement( "delete from app_member where mno = ?") // 부모 데이터 지우기
         ) //try ()
     {
       // 자식 데이터 지우기 - 회원이 작성한 게시글 삭제
