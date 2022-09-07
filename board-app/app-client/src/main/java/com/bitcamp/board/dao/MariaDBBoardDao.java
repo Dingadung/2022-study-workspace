@@ -18,7 +18,7 @@ public class MariaDBBoardDao {
       if(board.memberNo >0) { // 회원인 경우
         try(
             PreparedStatement pstmt = con.prepareStatement( // 회원
-                "insert into app_board(title, content, mno) values(?, ?, ?, ?)");
+                "insert into app_board(title, content, mno) values(?, ?, ?)");
             )
         {
           pstmt.setString(1, board.title); 
@@ -28,7 +28,7 @@ public class MariaDBBoardDao {
         }
       }/*if*/else { // 비회원인 경우
         try(PreparedStatement pstmt = con.prepareStatement( // 비회원
-            "insert into app_board(title, content, pwd) values(?, ?, ?, ?)");
+            "insert into app_board(title, content, pwd) values(?, ?, sha2(?, 256)");
             )
         {
           pstmt.setString(1, board.title); 
