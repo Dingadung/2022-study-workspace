@@ -3,20 +3,26 @@ package com.bitcamp.board.dao;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import com.bitcamp.board.domain.Member;
 import com.google.gson.Gson;
 
 public class MariaDBMemberDao {
 
-  public boolean insert(Member email)throws Exception {
+  public int insert(Member member)throws Exception {
     try(
-
+        Connection con = DriverManager.getConnection(
+            "jdbc:mariadb://localhost:3306/studydb", "study", "1111");
+        PreparedStatement pstmt = con.prepareStatement(
+            "insert into app_member(name, email, pwd) values(?, ?, sha2(?,  256))") // 값을 넣어야 할 자리를 ?로 표시한다. (in-parameter)
         ){
-      out.writeUTF(dataName);
-      out.writeUTF("insert");
-      out.writeUTF(new Gson().toJson(email)); // json을 서버로 보내기
-      // 서버로부터 요청했던 데이터 읽어오기
-      return in.readUTF().equals("success");
+      pstmt.setString(1, member.name); // 인덱스는 1부터 시작한다.
+      pstmt.setString(2, member.email);
+      pstmt.setString(3, member.password);
+
+      return pstmt.executeUpdate();
     }
   }
 
