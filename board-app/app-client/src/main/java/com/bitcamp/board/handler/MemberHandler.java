@@ -9,11 +9,11 @@ import com.bitcamp.board.domain.Member;
 import com.bitcamp.handler.AbstractHandler;
 import com.bitcamp.util.Prompt;
 
-public class MemberHandler extends AbstractHandler {
+public class MemberHandler extends AbstractHandler{
 
   MariaDBMemberDao memberDao;
 
-  public MemberHandler() {
+  public MemberHandler() throws Exception{
     super(new String[] {"목록", "상세보기", "등록", "삭제", "변경"});
 
     memberDao = new MariaDBMemberDao();
