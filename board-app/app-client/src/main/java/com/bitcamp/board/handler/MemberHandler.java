@@ -3,6 +3,7 @@
  */
 package com.bitcamp.board.handler;
 
+import java.sql.Connection;
 import java.util.List;
 import com.bitcamp.board.dao.MariaDBMemberDao;
 import com.bitcamp.board.domain.Member;
@@ -13,10 +14,10 @@ public class MemberHandler extends AbstractHandler{
 
   MariaDBMemberDao memberDao;
 
-  public MemberHandler() throws Exception{
+  public MemberHandler(Connection con) throws Exception{
     super(new String[] {"목록", "상세보기", "등록", "삭제", "변경"});
 
-    memberDao = new MariaDBMemberDao();
+    memberDao = new MariaDBMemberDao(con);
   }
 
   @Override
