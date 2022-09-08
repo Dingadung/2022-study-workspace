@@ -69,16 +69,32 @@ public class MariaDBMemberDao implements MemberDao{
   public int delete(int no) throws Exception{
     try(
         PreparedStatement pstmt1 = con.prepareStatement( "delete from app_board where mno = ?"); // 자식 데이터 지우기
-        PreparedStatement pstmt2 = con.prepareStatement( "delete from app_member where mno = ?") // 부모 데이터 지우기
+        PreparedStatement pstmt2 = con.prepareStatement( "delete from app_member2 where mno = ?") // 부모 데이터 지우기
         ) //try ()
     {
+      // 커넥션 객체를 수동 커밋 상태로 설정한다.
+      con.setAutoCommit(false);
       // 자식 데이터 지우기 - 회원이 작성한 게시글 삭제
       pstmt1.setInt(1, no); 
       pstmt1.executeUpdate();
       // 부모 데이터 지우기 - 회원 데이터 삭제
       pstmt2.setInt(1, no); 
-      return pstmt2.executeUpdate();
-    } // try() {}
+      int count =  pstmt2.executeUpdate();
+
+      // 현재까지 작업한 데이터 변경 결과를 실제 테이블에 적용해 달라고 요청한다.
+      con.commit();
+      return count;
+    } /*try() {}*/catch(Exception e) {
+      // 예외가 발생하면 마지막 커밋 상태로 돌린다.
+      // => 임시 데이터베이스에 보관된 이전 작업 결과를 모두 취소한다.
+      con.rollback();
+
+      // 예외 발생 사실을 호출자에게 전달한다.
+      throw e;
+    }finally {
+      // 삭제 작업 후 자동 커밋 상태로 전환한다.
+      con.setAutoCommit(true);
+    }
   }
 
   @Override
