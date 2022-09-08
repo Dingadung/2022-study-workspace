@@ -3,7 +3,6 @@
  */
 package com.bitcamp.board.handler;
 
-import java.sql.Connection;
 import java.util.List;
 import com.bitcamp.board.dao.MariaDBBoardDao;
 import com.bitcamp.board.domain.Board;
@@ -16,11 +15,11 @@ public class BoardHandler extends AbstractHandler {
 
   private MariaDBBoardDao boardDao; // client는 통신에 대하여 몰라도 된다!
 
-  public BoardHandler(Connection con) throws Exception{
+  public BoardHandler(MariaDBBoardDao boardDao) throws Exception{
     // 수퍼 클래스의 생성자를 호출할 때 메뉴 목록을 전달한다.
     super(new String[] {"목록", "상세보기", "등록", "삭제", "변경"});
 
-    boardDao = new MariaDBBoardDao(con);
+    this.boardDao = boardDao;
   }
 
   @Override
