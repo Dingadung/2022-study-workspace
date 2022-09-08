@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.bitcamp.board.domain.Board;
 
-public class MariaDBBoardDao {
+public class MariaDBBoardDao implements MemberDao {
   Connection con;
   // DAO가 사용할 의존 객체 Connection을 생성자의 파라미터로 받는다. 의존객체: 이 객체가 작업하는데 사용하는 것.
   public MariaDBBoardDao(Connection con) throws Exception {
@@ -40,6 +40,7 @@ public class MariaDBBoardDao {
     }
   }
 
+  @Override
   public Board findByNo(int no)  throws Exception{
     try(
         PreparedStatement pstmt = con.prepareStatement(
@@ -62,6 +63,7 @@ public class MariaDBBoardDao {
   }
 
 
+  @Override
   public int delete(int no) throws Exception{
     try(
         PreparedStatement pstmt = con.prepareStatement( "delete from app_board where bno = ?")
@@ -72,6 +74,7 @@ public class MariaDBBoardDao {
     } // try() {}
   }
 
+  @Override
   public List<Board> findAll() throws Exception{
     try(
         PreparedStatement pstmt = con.prepareStatement( "select bno, title, mno, cdt, vw_cnt from app_board");

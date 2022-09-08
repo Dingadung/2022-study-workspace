@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.bitcamp.board.domain.Member;
 
-public class MariaDBMemberDao {
+public class MariaDBMemberDao implements MemberDao{
   Connection con;
 
   // DAO가 사용할 의존 객체 Connection을 생성자의 파라미터로 받는다. 의존객체: 이 객체가 작업하는데 사용하는 것.
@@ -15,6 +15,7 @@ public class MariaDBMemberDao {
     this.con = con;
   }
 
+  @Override
   public int insert(Member member)throws Exception {
     try(
         PreparedStatement pstmt = con.prepareStatement(
@@ -28,6 +29,7 @@ public class MariaDBMemberDao {
     }
   }
 
+  @Override
   public int update(Member member) throws Exception{
     try(
         PreparedStatement pstmt = con.prepareStatement(
@@ -42,6 +44,7 @@ public class MariaDBMemberDao {
     }
   }
 
+  @Override
   public Member findByNo(int no)  throws Exception{
     try(
         PreparedStatement pstmt = con.prepareStatement(
@@ -62,6 +65,7 @@ public class MariaDBMemberDao {
   }
 
 
+  @Override
   public int delete(int no) throws Exception{
     try(
         PreparedStatement pstmt1 = con.prepareStatement( "delete from app_board where mno = ?"); // 자식 데이터 지우기
@@ -77,6 +81,7 @@ public class MariaDBMemberDao {
     } // try() {}
   }
 
+  @Override
   public List<Member> findAll() throws Exception{
     try(
         PreparedStatement pstmt = con.prepareStatement( "select mno, name, email from app_member");

@@ -4,16 +4,16 @@
 package com.bitcamp.board.handler;
 
 import java.util.List;
-import com.bitcamp.board.dao.MariaDBMemberDao;
+import com.bitcamp.board.dao.MemberDao;
 import com.bitcamp.board.domain.Member;
 import com.bitcamp.handler.AbstractHandler;
 import com.bitcamp.util.Prompt;
 
 public class MemberHandler extends AbstractHandler{
 
-  MariaDBMemberDao memberDao;
+  private MemberDao memberDao; // DBMS에 상관없이 MemberDao 규칙을 따르는 DAO을 사용하겠다!
 
-  public MemberHandler(MariaDBMemberDao memberDao) throws Exception{
+  public MemberHandler(MemberDao memberDao) throws Exception{
     super(new String[] {"목록", "상세보기", "등록", "삭제", "변경"});
 
     this.memberDao = memberDao;
