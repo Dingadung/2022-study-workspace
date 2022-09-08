@@ -7,13 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 import com.bitcamp.board.domain.Board;
 
-public class MariaDBBoardDao implements MemberDao {
+public class MariaDBBoardDao implements BoardDao {
   Connection con;
   // DAO가 사용할 의존 객체 Connection을 생성자의 파라미터로 받는다. 의존객체: 이 객체가 작업하는데 사용하는 것.
   public MariaDBBoardDao(Connection con) throws Exception {
     this.con = con;
   }
 
+  @Override
   public int insert(Board board)throws Exception {
     try(
         PreparedStatement pstmt = con.prepareStatement( 
@@ -27,6 +28,7 @@ public class MariaDBBoardDao implements MemberDao {
     } //  try() {}
   }
 
+  @Override
   public int update(Board board) throws Exception{
     try(
         PreparedStatement pstmt = con.prepareStatement(
