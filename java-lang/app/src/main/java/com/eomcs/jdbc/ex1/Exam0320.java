@@ -15,9 +15,9 @@ public class Exam0320 {
         // => DBMS 서버에 select 문을 보낸다.
         // => 리턴 값: java.sql.ResultSet 구현 객체
         //
-        // ResultSet?
-        // => 결과가 아니다! 서버에서 결과를 가져오는 일을 할 객체이다.
-        // => 즉 서버의 select 실행 결과를 가져올 때 사용하는 도구이다.
+        //         ResultSet?
+        //         => 결과가 아니다! 서버에서 결과를 가져오는 일을 할 객체이다.
+        //         => 즉 서버의 select 실행 결과를 가져올 때 사용하는 도구이다.
         //
         java.sql.ResultSet rs = stmt.executeQuery(
             "select * from x_board order by board_id desc");

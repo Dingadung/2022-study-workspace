@@ -34,7 +34,7 @@ public class BoardDao {
 
       ArrayList<Board> list = new ArrayList<>();
       while (rs.next()) {
-        Board board = new Board();
+        Board board = new Board(); // 항상 새로운 보드 객체를 만들어주어야 한다. 밖에 빼면값이 덮어씌워진다. 주소값을 list에 넣는 것이기 때문이다.
         board.setNo(rs.getInt("board_id"));
         board.setTitle(rs.getString("title"));
         board.setContent(rs.getString("contents"));

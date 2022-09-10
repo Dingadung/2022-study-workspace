@@ -10,7 +10,7 @@ public class Exam0131 {
   public static void main(String[] args) {
     try {
       Properties props = new Properties();
-      props.load(new FileReader("./jdbc-driver.properties"));
+      props.load(new FileReader("./jdbc-driver.properties")); // 나중에 DBMS가 바뀌었을 때 코딩 변경을 안하기 위한 코드 / 소스 코드가 아닌, jdbc-driver.properties 파일만 변경하면 된다!
       System.out.println(props.getProperty("jdbc.driverClassName"));
       System.out.println(props.getProperty("jdbc.url"));
 
