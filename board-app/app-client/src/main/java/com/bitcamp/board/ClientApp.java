@@ -11,7 +11,7 @@ public class ClientApp {
     System.out.println("[게시글 관리 클라이언트]");
     try(
         Socket socket = new Socket("localhost", 8888);
-        DataInputStream in = new DataInputStream(socket.getInputStream());
+        DataInputStream in = new DataInputStream(socket.getInputStream()); // Decorator pattern을 사용하면 기능 변경이 쉽다.
         DataOutputStream out = new DataOutputStream(socket.getOutputStream())
         ){
 
