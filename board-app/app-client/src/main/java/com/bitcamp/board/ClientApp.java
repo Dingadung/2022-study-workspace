@@ -1,12 +1,8 @@
 package com.bitcamp.board;
 
-import java.util.Stack;
 import com.bitcamp.util.Prompt;
 
 public class ClientApp {
-
-  //breadcrumb 메뉴를 저장할 스택을 준비
-  public static Stack<String> breadcrumbMenu = new Stack<>();
 
   public static void main(String[] args) {
     System.out.println("[게시글 관리 클라이언트]");
