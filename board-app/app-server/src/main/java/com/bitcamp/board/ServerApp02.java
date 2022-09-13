@@ -8,9 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Stack;
 
-// 여러 클라이언트를 순차적으로 접속 처리
-
-public class ServerApp {
+public class ServerApp02 {
 
   //breadcrumb 메뉴를 저장할 스택을 준비
   public static Stack<String> breadcrumbMenu = new Stack<>();
@@ -19,34 +17,31 @@ public class ServerApp {
     try(ServerSocket serverSocket = new ServerSocket(8888)){
       System.out.println("서버 실행중 ...");
 
-      while(true) {
-        try(Socket socket = serverSocket.accept();
-            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-            DataInputStream in = new DataInputStream(socket.getInputStream())
-            ){
-          System.out.println("클라이언트 접속!");
+      try(Socket socket = serverSocket.accept();
+          DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+          DataInputStream in = new DataInputStream(socket.getInputStream())
+          ){
+        System.out.println("클라이언트 접속!");
 
-          StringWriter strOut = new StringWriter();
-          PrintWriter tempOut = new PrintWriter(strOut);
-          welcome(tempOut);
+        StringWriter strOut = new StringWriter();
+        PrintWriter tempOut = new PrintWriter(strOut);
+        welcome(tempOut);
 
-          // 실제 client에게 출력하기
-          out.writeUTF(strOut.toString()); // StringWriter의 buffer에 들어있는 것을 문자열로 출력
+        // 실제 client에게 출력하기
+        out.writeUTF(strOut.toString()); // StringWriter의 buffer에 들어있는 것을 문자열로 출력
 
-          System.out.println("클라이언트에게 응답 완료!");
-        } catch (Exception e) {
-          System.out.println("클라이언트와 통신하는 중 오류 발생!");
-          e.printStackTrace();
-        } // Socket.accept() try(){}
-      } // while()
+        System.out.println("클라이언트에게 응답 완료!");
+      } catch (Exception e) {
+        System.out.println("클라이언트와 통신하는 중 오류 발생!");
+        e.printStackTrace();
+      } // Socket.accept() try(){}
 
-      //      System.out.println("서버 종료!");
+      System.out.println("서버 종료!");
 
     }catch (Exception e) {
       System.out.println("서버 실행 중 오류 발생!");
       e.printStackTrace();
     } // ServerSocket try(){}
-
   } // main()
 
   /*public static void main2(String[] args) {
