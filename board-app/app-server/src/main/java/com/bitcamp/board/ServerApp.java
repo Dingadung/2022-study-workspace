@@ -14,6 +14,8 @@ import com.bitcamp.handler.Handler;
 
 // ServerApp class - 메인 메뉴 선택에 따라 핸들러를 실행하여 클라이언트에게 하위 메뉴를 출력한다.
 //      - Handler Interface 변경
+//      - AbstractHandler 추상 클래스의 execute() 변경
+// 하위 메뉴를 처리한다.
 
 public class ServerApp {
 
@@ -42,47 +44,46 @@ public class ServerApp {
               ){
             System.out.println("클라이언트 접속!");
 
-            // 접속 후 환영 메시지와 메인 메뉴를 출력한다.
-            try(
-                StringWriter strOut = new StringWriter(); // 여기에 buffer로 다 쌓여있다가 밑에 toString()으로 다 쏟아낸다.
-                PrintWriter tempOut = new PrintWriter(strOut)
-                ) // try()
-            {
-              welcome(tempOut);
-              printMainMenus(tempOut); // main menu 출력
-              out.writeUTF(strOut.toString());  // client로 전송
-            } //try(){}
+            boolean first = true;
+            String errorMessage = null;
 
             while(true) {
+              // 접속 후 환영 메시지와 메인 메뉴를 출력한다.
+              try(
+                  StringWriter strOut = new StringWriter(); // 여기에 buffer로 다 쌓여있다가 밑에 toString()으로 다 쏟아낸다.
+                  PrintWriter tempOut = new PrintWriter(strOut)
+                  ) // try()
+              {
+                if(first) { // 최초 접속이면 환영 메시지도 출력한다.
+                  welcome(tempOut);
+                  first = false;                
+                }
+
+                if(errorMessage != null) {
+                  tempOut.println(errorMessage);
+                  errorMessage = null;
+                }
+
+                printMainMenus(tempOut); // main menu 출력 (게시판, 회원)
+                out.writeUTF(strOut.toString());  // client로 전송
+              } //try(){}
+
               // 클라이언트가 보낸 요청을 읽는다.
               String request = in.readUTF();
               if(request.equals("quit")) break;
 
-              // 클라이언트에게 응답한다.
-              try( // 응답 내용을 출력할 임시 출력 스트림 준비 
-                  StringWriter strOut = new StringWriter();
-                  PrintWriter tempOut = new PrintWriter(strOut)
-                  ) // try()
-              {
-                try {
-                  int mainMenuNo = Integer.parseInt(request);
-                  if (mainMenuNo >= 1 && mainMenuNo <= menus.length) { // 메뉴 번호가 유효한 경우
-                    // 메뉴 번호로 Handler  객체를 찾아 실행한다.
-                    handlers.get(mainMenuNo-1).execute();
-
-                  }else {
-                    tempOut.println("해당 번호의 메뉴가 없습니다!");
-                  }
-                }catch(Exception e) {
-                  tempOut.println("입력값이 옳지 않습니다. \n알맞은 숫자값을 입력해주십시오.");
-                } // try{}catch{}
-
-                // 클라이언트에게 전송
-                tempOut.println();
-                printMainMenus(tempOut);
-                out.writeUTF(strOut.toString());
-              }
-            }
+              try {
+                int mainMenuNo = Integer.parseInt(request);
+                if (mainMenuNo >= 1 && mainMenuNo <= menus.length) { // 메뉴 번호가 유효한 경우
+                  // 메뉴 번호로 Handler  객체를 찾아 실행한다.
+                  handlers.get(mainMenuNo-1).execute(in, out); // client로 전송할 정보들을 tempOut으로 담으라고 파라미터로 전달해준다.
+                }else {
+                  throw new Exception("해당 번호의 메뉴가 없습니다!");
+                }
+              }catch(Exception e) {
+                errorMessage = String.format("실행 오류: %s\n", e.getMessage());
+              } // try{} - catch{}
+            } // while()
 
             System.out.println("클라이언트와 접속 종료!");
           } catch (Exception e) {

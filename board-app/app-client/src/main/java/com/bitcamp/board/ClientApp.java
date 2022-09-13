@@ -26,6 +26,8 @@ public class ClientApp {
         String input = Prompt.inputString("> ");
         out.writeUTF(input);
 
+
+
         if(input.equals("quit")) break;
       }//while()
     } /*try(){}*/ catch(Exception e){

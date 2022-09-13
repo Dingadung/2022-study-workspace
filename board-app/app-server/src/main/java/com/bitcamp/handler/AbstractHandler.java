@@ -1,7 +1,10 @@
 package com.bitcamp.handler;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import com.bitcamp.board.ServerApp;
-import com.bitcamp.util.Prompt;
 
 // Handler 규격에 맞춰 서브 클래스에게 물려줄 공통 필드나 메서드를 구현한다.
 // 
@@ -18,21 +21,23 @@ public abstract class AbstractHandler implements Handler {
     this.menus = menus;
   }
 
-  protected void printMenus() {
+  protected void printMenus(PrintWriter out) {
     for (int i = 0; i < menus.length; i++) {
-      System.out.printf("  %d: %s\n", i + 1, menus[i]);
+      out.printf("  %d: %s\n", i + 1, menus[i]);
     }
+
+    out.printf("메뉴를 선택하세요[1..%d](0: 이전) ", menus.length);
   }
 
-  protected static void printHeadline() {
-    System.out.println("=========================================");
+  protected static void printHeadline(PrintWriter out) {
+    out.println("=========================================");
   }
 
-  protected static void printBlankLine() {
-    System.out.println(); // 메뉴를 처리한 후 빈 줄 출력
+  protected static void printBlankLine(PrintWriter out) {
+    out.println(); // 메뉴를 처리한 후 빈 줄 출력
   }
 
-  protected static void printTitle() {
+  protected static void printTitle(PrintWriter out) {
     StringBuilder builder = new StringBuilder();
     for(String title: ServerApp.breadcrumbMenu) {
       if(!builder.isEmpty()) {
@@ -40,22 +45,47 @@ public abstract class AbstractHandler implements Handler {
       }
       builder.append(title);
     }
-    System.out.printf("%s:\n", builder.toString());
+    out.printf("%s:\n", builder.toString());
   }
 
   @Override
-  public void execute() {
-    while (true) {
-      printTitle();
-      printMenus();
-      printBlankLine();
+  public void execute(DataInputStream in, DataOutputStream out) throws Exception {
 
+    // 게시글 메뉴를 클라이언트에게 보낸다.
+    try(StringWriter strOut = new StringWriter();
+        PrintWriter tempOut = new PrintWriter(strOut);
+        ){
+      //      printTitle(out);
+      printMenus(tempOut);
+      out.writeUTF(strOut.toString());
+    }
+
+    while (true) {
+      // 클라이언트가 보낸 요청을 읽는다.
+      String request = in.readUTF();
+      if(request.equals("0")) break;
+
+      // 클라이언트에게 출력
+      try(StringWriter strOut = new StringWriter();
+          PrintWriter tempOut = new PrintWriter(strOut);
+          ){
+        tempOut.println("해당 메뉴를 준비 중 입니다.");
+
+        printBlankLine(tempOut);
+        printMenus(tempOut);
+        out.writeUTF(strOut.toString());
+      }
+
+
+
+
+
+      /*
       try {
-        int menuNo = Prompt.inputInt(String.format(
-            "메뉴를 선택하세요[1..%d](0: 이전) ", menus.length));
+
 
         if (menuNo < 0 || menuNo > menus.length) {
-          System.out.println("메뉴 번호가 옳지 않습니다!");
+          out.println("메뉴 번호가 옳지 않습니다!");
           continue; // while 문의 조건 검사로 보낸다.
 
         } else if (menuNo == 0) {
@@ -65,22 +95,22 @@ public abstract class AbstractHandler implements Handler {
         // 메뉴에 진입할 때 breadcrumb 메뉴바에 그 메뉴를 등록한다.
         ServerApp.breadcrumbMenu.push(menus[menuNo - 1]);
 
-        printHeadline();
+        printHeadline(out);
 
         // 서브 메뉴의 제목을 출력한다.
-        printTitle();
+        printTitle(out);
 
         // 사용자가 입력한 메뉴 번호에 대해 작업을 수행한다.
         service(menuNo);
 
-        printBlankLine();
+        printBlankLine(out);
 
         ServerApp.breadcrumbMenu.pop();
 
       } catch (Exception ex) {
-        System.out.printf("예외 발생: %s\n", ex.getMessage());
+        out.printf("예외 발생: %s\n", ex.getMessage());
         ex.printStackTrace();
-      }
+      }*/
     } // while
 
   }
