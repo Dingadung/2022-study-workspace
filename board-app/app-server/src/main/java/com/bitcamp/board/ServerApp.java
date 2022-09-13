@@ -8,7 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Stack;
 
-// ServerApp 클라이언트가 전송한 요청값을 받아서 그대로 돌려준다.
+// ServerApp 요청/응답을 무한 반복한다.
 
 public class ServerApp {
 
@@ -32,16 +32,17 @@ public class ServerApp {
 
             StringWriter strOut = new StringWriter();
             PrintWriter tempOut = new PrintWriter(strOut);
-            welcome(tempOut);
 
-            // 실제 client에게 출력하기
+            welcome(tempOut);
             out.writeUTF(strOut.toString()); // StringWriter의 buffer에 들어있는 것을 문자열로 출력
 
-            // 클라이언트가 보낸 값을 그대로 돌려준다.
-            String request = in.readUTF();
-            out.writeUTF(request);
+            while(true) {
+              // 클라이언트가 보낸 값을 그대로 돌려준다.
+              String request = in.readUTF();
+              out.writeUTF(request);
+            }
 
-            System.out.println("클라이언트에게 응답 완료!");
+            //System.out.println("클라이언트에게 응답 완료!");
           } catch (Exception e) {
             System.out.println("클라이언트와 통신하는 중 오류 발생!");
             e.printStackTrace();

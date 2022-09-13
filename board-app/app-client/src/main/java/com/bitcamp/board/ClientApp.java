@@ -5,7 +5,7 @@ import java.io.DataOutputStream;
 import java.net.Socket;
 import com.bitcamp.util.Prompt;
 
-// Client App - 사용자 입력을 서버에 전송
+// Client App - 요청/응답을 무한 반복한다.
 
 public class ClientApp {
 
@@ -16,23 +16,20 @@ public class ClientApp {
         DataInputStream in = new DataInputStream(socket.getInputStream()); // Decorator pattern을 사용하면 기능 변경이 쉽다.
         DataOutputStream out = new DataOutputStream(socket.getOutputStream())
         ){
+      String response = null;
 
-      String line = null;
+      while(true) {
+        response = in.readUTF();
+        System.out.println(response);
 
-
-      // 서버로부터 가져온 환영 메시지 출력
-      line = in.readUTF();
-      System.out.println(line);
-      // 사용자의 입력값 서버에 전송
-      String input = Prompt.inputString("> ");
-      out.writeUTF(input);
-      // 서버의 응답을 읽어 화면에 출력
-      line = in.readUTF();
-      System.out.println(line);
-
+        // 사용자의 입력값 서버에 전송
+        String input = Prompt.inputString("> ");
+        out.writeUTF(input);
+      }//while()
     } /*try(){}*/ catch(Exception e){
       System.out.println("서버와 통신 중 오류 발생");
     }
+
 
     //    loop: 
     //      while (true) {
