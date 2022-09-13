@@ -30,18 +30,26 @@ public class ServerApp {
               ){
             System.out.println("클라이언트 접속!");
 
-            StringWriter strOut = new StringWriter();
-            PrintWriter tempOut = new PrintWriter(strOut);
-
-            welcome(tempOut);
-            out.writeUTF(strOut.toString()); // StringWriter의 buffer에 들어있는 것을 문자열로 출력
+            boolean first = true;
 
             while(true) {
+              StringWriter strOut = new StringWriter();
+              PrintWriter tempOut = new PrintWriter(strOut);
+
+              if(first) {
+                welcome(tempOut);
+                first = false;                
+              }
+
+              // 클라이언트로 응답한 후에 빈 새  출력 스트림으로 교체한다.
               printMainMenus(tempOut);
+              out.writeUTF(strOut.toString());  // client로 전송
 
               // 클라이언트가 보낸 값을 그대로 돌려준다.
               String request = in.readUTF();
+
               if(request.equals("quit"))break;
+
               out.writeUTF(request);
             }
 
