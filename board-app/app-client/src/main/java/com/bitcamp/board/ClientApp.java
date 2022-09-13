@@ -5,7 +5,7 @@ import java.io.DataOutputStream;
 import java.net.Socket;
 import com.bitcamp.util.Prompt;
 
-// Client App - 요청/응답을 무한 반복한다.
+// Client App class - qiut 명령을 보내면 연결 끊기
 
 public class ClientApp {
 
@@ -25,6 +25,8 @@ public class ClientApp {
         // 사용자의 입력값 서버에 전송
         String input = Prompt.inputString("> ");
         out.writeUTF(input);
+
+        if(input.equals("quit")) break;
       }//while()
     } /*try(){}*/ catch(Exception e){
       System.out.println("서버와 통신 중 오류 발생");

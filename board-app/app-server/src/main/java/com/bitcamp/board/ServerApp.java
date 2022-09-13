@@ -8,7 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Stack;
 
-// ServerApp 요청/응답을 무한 반복한다.
+// ServerApp class  qiut 명령을 보내면 연결 끊기 
 
 public class ServerApp {
 
@@ -39,10 +39,11 @@ public class ServerApp {
             while(true) {
               // 클라이언트가 보낸 값을 그대로 돌려준다.
               String request = in.readUTF();
+              if(request.equals("quit"))break;
               out.writeUTF(request);
             }
 
-            //System.out.println("클라이언트에게 응답 완료!");
+            System.out.println("클라이언트와 접속 종료!");
           } catch (Exception e) {
             System.out.println("클라이언트와 통신하는 중 오류 발생!");
             e.printStackTrace();
