@@ -37,6 +37,8 @@ public class ServerApp {
             out.writeUTF(strOut.toString()); // StringWriter의 buffer에 들어있는 것을 문자열로 출력
 
             while(true) {
+              printMainMenus(tempOut);
+
               // 클라이언트가 보낸 값을 그대로 돌려준다.
               String request = in.readUTF();
               if(request.equals("quit"))break;
@@ -101,8 +103,7 @@ public class ServerApp {
             System.out.println();
 
             try {
-              int mainMenuNo = Prompt.inputInt(String.format(
-                  "메뉴를 선택하세요[1..%d](0: 종료) ", handlers.size()));
+
 
               if (mainMenuNo < 0 || mainMenuNo > menus.length) {
                 System.out.println("메뉴 번호가 옳지 않습니다!");
@@ -145,10 +146,16 @@ public class ServerApp {
   }
 
   static void printMainMenus(PrintWriter out) {
+    // 메인 메뉴 목록 준비
     String[] menus = {"게시판","회원"};
+
+    // 메뉴 목록 출력
     for (int i = 0; i < menus.length; i++) {
       out.printf("  %d: %s\n", i + 1, menus[i]);
     }
+
+    // 메뉴 번호 입력을 요구하는 문장 출력
+    out.printf("메뉴를 선택하세요[1..%d](0: 종료) ", menus.length);
   }
 
   protected static void printTitle() {
