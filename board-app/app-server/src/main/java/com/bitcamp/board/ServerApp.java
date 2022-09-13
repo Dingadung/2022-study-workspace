@@ -6,18 +6,29 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Stack;
+import com.bitcamp.board.handler.BoardHandler;
+import com.bitcamp.board.handler.MemberHandler;
+import com.bitcamp.handler.Handler;
 
-// ServerApp class - 환영 메시지 이후, 메인 메뉴를 응답한다.
+// ServerApp class - 사용자가 선택한 메뉴에 따라 하위메뉴를 출력한다.
 
 public class ServerApp {
 
   //breadcrumb 메뉴를 저장할 스택을 준비
   public static Stack<String> breadcrumbMenu = new Stack<>();
+  //메인 메뉴 목록 준비
+  static String[] menus = {"게시판","회원"};
 
   public static void main(String[] args) {
     try(ServerSocket serverSocket = new ServerSocket(8888)){
       System.out.println("서버 실행중 ...");
+
+      // 핸들러를 담을 컬렉션을 준비한다.
+      ArrayList<Handler> handlers = new ArrayList<>();
+      handlers.add(new BoardHandler(null));
+      handlers.add(new MemberHandler(null));
 
       while(true) {
         Socket socket = serverSocket.accept();
@@ -25,32 +36,46 @@ public class ServerApp {
         new Thread(() -> { // Runnable interface 익명 클래스
           // 스레드를 시작하는 순간 별도의 실행 흐름에서 병행으로 실행된다.
           try(
-              DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+              DataOutputStream out = new DataOutputStream(socket.getOutputStream()); // 실제 client에게 출력하기 위해서는 이 out을 이용해야한다.
               DataInputStream in = new DataInputStream(socket.getInputStream())
               ){
             System.out.println("클라이언트 접속!");
 
-            boolean first = true;
+            // 접속 후 환영 메시지와 메인 메뉴를 출력한다.
+            try(
+                StringWriter strOut = new StringWriter(); // 여기에 buffer로 다 쌓여있다가 밑에 toString()으로 다 쏟아낸다.
+                PrintWriter tempOut = new PrintWriter(strOut)
+                ) // try()
+            {
+              welcome(tempOut);
+              printMainMenus(tempOut); // main menu 출력
+              out.writeUTF(strOut.toString());  // client로 전송
+            } //try(){}
 
             while(true) {
-              StringWriter strOut = new StringWriter();
-              PrintWriter tempOut = new PrintWriter(strOut);
-
-              if(first) {
-                welcome(tempOut);
-                first = false;                
-              }
-
-              // 클라이언트로 응답한 후에 빈 새  출력 스트림으로 교체한다.
-              printMainMenus(tempOut);
-              out.writeUTF(strOut.toString());  // client로 전송
-
-              // 클라이언트가 보낸 값을 그대로 돌려준다.
+              // 클라이언트가 보낸 요청을 읽는다.
               String request = in.readUTF();
+              if(request.equals("quit")) break;
 
-              if(request.equals("quit"))break;
+              // 클라이언트에게 응답한다.
+              try( // 응답 내용을 출력할 임시 출력 스트림 준비 
+                  StringWriter strOut = new StringWriter();
+                  PrintWriter tempOut = new PrintWriter(strOut)
+                  ) // try()
+              {
+                int mainMenuNo = Integer.parseInt(request);
 
-              out.writeUTF(request);
+                if (mainMenuNo < 1 || mainMenuNo > menus.length) {
+                  tempOut.println("메뉴 번호가 옳지 않습니다!");
+                  printMainMenus(tempOut);
+                  continue;
+                }
+
+                tempOut.println("해당 기능을 준비 중입니다.");
+                printMainMenus(tempOut);
+
+                out.writeUTF(strOut.toString());
+              }
             }
 
             System.out.println("클라이언트와 접속 종료!");
@@ -90,10 +115,7 @@ public class ServerApp {
         MariaDBMemberDao memberDao = new MariaDBMemberDao(con);
         MariaDBBoardDao boardDao = new MariaDBBoardDao(con);
 
-        // 핸들러를 담을 컬렉션을 준비한다.
-        ArrayList<Handler> handlers = new ArrayList<>();
-        handlers.add(new BoardHandler(boardDao));
-        handlers.add(new MemberHandler(memberDao));
+
 
         // "메인" 메뉴의 이름을 스택에 등록한다.
         breadcrumbMenu.push("메인");
@@ -113,13 +135,7 @@ public class ServerApp {
             try {
 
 
-              if (mainMenuNo < 0 || mainMenuNo > menus.length) {
-                System.out.println("메뉴 번호가 옳지 않습니다!");
-                continue; // while 문의 조건 검사로 보낸다.
 
-              } else if (mainMenuNo == 0) {
-                break loop;
-              }
 
               // 메뉴에 진입할 때 breadcrumb 메뉴바에 그 메뉴를 등록한다.
               breadcrumbMenu.push(menus[mainMenuNo - 1]);
@@ -154,9 +170,6 @@ public class ServerApp {
   }
 
   static void printMainMenus(PrintWriter out) {
-    // 메인 메뉴 목록 준비
-    String[] menus = {"게시판","회원"};
-
     // 메뉴 목록 출력
     for (int i = 0; i < menus.length; i++) {
       out.printf("  %d: %s\n", i + 1, menus[i]);
