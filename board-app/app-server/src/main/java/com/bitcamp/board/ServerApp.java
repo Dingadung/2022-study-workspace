@@ -8,7 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Stack;
 
-// 여러 클라이언트를 동시 접속 처리
+// 스레드를 이용하여 여러 클라이언트를 동시 접속 처리
 
 public class ServerApp {
 
