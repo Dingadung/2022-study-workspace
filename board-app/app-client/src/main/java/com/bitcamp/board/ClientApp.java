@@ -1,11 +1,28 @@
 package com.bitcamp.board;
 
+import java.io.PrintStream;
+import java.net.Socket;
+import java.util.Scanner;
 import com.bitcamp.util.Prompt;
 
 public class ClientApp {
 
   public static void main(String[] args) {
     System.out.println("[게시글 관리 클라이언트]");
+    try(
+        Socket socket = new Socket("localhost", 8888);
+        Scanner in = new Scanner(socket.getInputStream());
+        PrintStream out = new PrintStream(socket.getOutputStream())
+        ){
+
+      String line = null;
+
+      line = in.nextLine();
+      System.out.println(line);
+
+    } /*try(){}*/ catch(Exception e){
+      System.out.println("서버와 통신 중 오류 발생");
+    }
 
     //    loop: 
     //      while (true) {
