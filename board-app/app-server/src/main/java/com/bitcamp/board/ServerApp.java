@@ -1,8 +1,12 @@
 package com.bitcamp.board;
 
+import java.io.PrintStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.Stack;
 import com.bitcamp.board.dao.MariaDBBoardDao;
 import com.bitcamp.board.dao.MariaDBMemberDao;
@@ -17,6 +21,27 @@ public class ServerApp {
   public static Stack<String> breadcrumbMenu = new Stack<>();
 
   public static void main(String[] args) {
+    try(ServerSocket serverSocket = new ServerSocket(8888)){
+
+      try(Socket socket = serverSocket.accept();
+          PrintStream out = new PrintStream(socket.getOutputStream());
+          Scanner in = new Scanner(socket.getInputStream())
+          ){
+
+
+
+      } catch (Exception e) {
+        System.out.println("클라이언트와 통신하는 중 오류 발생!");
+        e.printStackTrace();
+      } // socekt try(){}
+
+    }catch (Exception e) {
+      System.out.println("서버 실행 중 오류 발생!");
+      e.printStackTrace();
+    } // ServerSocket try(){}
+  }
+
+  public static void main2(String[] args) {
     try (
         // DAO가 사용할 커넥션 객체 준비
         Connection con = DriverManager.getConnection(
@@ -89,11 +114,12 @@ public class ServerApp {
   }//main()
 
 
-  static void welcome() {
-    System.out.println("[게시판 애플리케이션]");
-    System.out.println();
-    System.out.println("환영합니다!");
-    System.out.println();
+  static void welcome(PrintStream out) { // console 창이 아니라 client에게로 전송해야하므로
+    out.println("[게시판 애플리케이션]");
+    out.println();
+    out.println("환영합니다!");
+    out.println(); // 응답의 끝은 항상 빈 문자열이어야 한다.
+
   }
 
   static void printMenus(String[] menus) {
