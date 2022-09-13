@@ -63,19 +63,21 @@ public class ServerApp {
                   PrintWriter tempOut = new PrintWriter(strOut)
                   ) // try()
               {
-                int mainMenuNo = Integer.parseInt(request);
+                try {
+                  int mainMenuNo = Integer.parseInt(request);
+                  if (mainMenuNo >= 1 && mainMenuNo <= menus.length) {
+                    tempOut.println("해당 기능을 준비 중입니다.");
 
-                if (mainMenuNo >= 1 || mainMenuNo <= menus.length) {
-                  tempOut.println("해당 기능을 준비 중입니다.");
-                  //printMainMenus(tempOut);
-                  //continue;
-                }else {
-                  tempOut.println("메뉴 번호가 옳지 않습니다!");
-                }
-
-                printMainMenus(tempOut);
+                  }else {
+                    tempOut.println("해당 번호의 메뉴가 없습니다!");
+                  }
+                }catch(Exception e) {
+                  tempOut.println("입력값이 옳지 않습니다. \n알맞은 숫자값을 입력해주십시오.");
+                } // try{}catch{}
 
                 // 클라이언트에게 전송
+                tempOut.println();
+                printMainMenus(tempOut);
                 out.writeUTF(strOut.toString());
               }
             }
@@ -178,7 +180,7 @@ public class ServerApp {
     }
 
     // 메뉴 번호 입력을 요구하는 문장 출력
-    out.printf("메뉴를 선택하세요[1..%d](0: 종료) ", menus.length);
+    out.printf("메뉴를 선택하세요[1..%d](quit: 종료) ", menus.length);
   }
 
   protected static void printTitle() {
