@@ -12,7 +12,7 @@ import com.bitcamp.board.handler.BoardHandler;
 import com.bitcamp.board.handler.MemberHandler;
 import com.bitcamp.handler.Handler;
 
-// ServerApp class - 사용자가 선택한 메뉴에 따라 하위메뉴를 출력한다.
+// ServerApp class - 사용자가 선택한 메뉴의 유효성을 검증한다.
 
 public class ServerApp {
 
@@ -65,15 +65,17 @@ public class ServerApp {
               {
                 int mainMenuNo = Integer.parseInt(request);
 
-                if (mainMenuNo < 1 || mainMenuNo > menus.length) {
+                if (mainMenuNo >= 1 || mainMenuNo <= menus.length) {
+                  tempOut.println("해당 기능을 준비 중입니다.");
+                  //printMainMenus(tempOut);
+                  //continue;
+                }else {
                   tempOut.println("메뉴 번호가 옳지 않습니다!");
-                  printMainMenus(tempOut);
-                  continue;
                 }
 
-                tempOut.println("해당 기능을 준비 중입니다.");
                 printMainMenus(tempOut);
 
+                // 클라이언트에게 전송
                 out.writeUTF(strOut.toString());
               }
             }
