@@ -10,14 +10,12 @@ import java.util.ArrayList;
 import com.bitcamp.board.handler.BoardHandler;
 import com.bitcamp.board.handler.MemberHandler;
 import com.bitcamp.handler.Handler;
+import com.bitcamp.util.BreadCrumb;
 
 // Edit ServerApp class - BreadCrumb 기능을 객체로 분리
 //  - BreadCrumb class 정의
 
 public class ServerApp {
-
-
-
   //메인 메뉴 목록 준비
   static String[] menus = {"게시판","회원"};
 
@@ -38,8 +36,14 @@ public class ServerApp {
           try(
               DataOutputStream out = new DataOutputStream(socket.getOutputStream()); // 실제 client에게 출력하기 위해서는 이 out을 이용해야한다.
               DataInputStream in = new DataInputStream(socket.getInputStream())
-              ){
+              )
+          {
             System.out.println("클라이언트 접속!");
+
+            // client가 접속한 순간, 접속한 클라이언트의 이동 경로를 보관할 breadcrumb 객체 준비 -> 스레드마다 각각 생성해야한다.
+            BreadCrumb breadcrumb =new BreadCrumb(); // 현재 스레드 보관소에 저장된다.
+            breadcrumb.put("메인");
+
 
             boolean first = true;
             String errorMessage = null;
@@ -61,7 +65,10 @@ public class ServerApp {
                   errorMessage = null;
                 }
 
-                printMainMenus(tempOut); // main menu 출력 (게시판, 회원)
+                // breadcrumb 메뉴출력
+                tempOut.println(breadcrumb.toString());
+                // main menu 출력 (게시판, 회원)
+                printMainMenus(tempOut);
                 out.writeUTF(strOut.toString());  // client로 전송
               } //try(){}
 
@@ -72,8 +79,13 @@ public class ServerApp {
               try {
                 int mainMenuNo = Integer.parseInt(request);
                 if (mainMenuNo >= 1 && mainMenuNo <= menus.length) { // 메뉴 번호가 유효한 경우
+                  // 핸들러에 들어가기 전에 breadcrumb 메뉴에 하위 메뉴 이름을 추가한다.
+                  breadcrumb.put(menus[mainMenuNo-1]);
                   // 메뉴 번호로 Handler  객체를 찾아 실행한다.
                   handlers.get(mainMenuNo-1).execute(in, out); // client로 전송할 정보들을 tempOut으로 담으라고 파라미터로 전달해준다.
+
+                  // 다시 메인 메뉴로 돌아 왔다면, breadcrumb 메뉴에서 한 단계 위로 올라간다.
+                  breadcrumb.pickUp();
                 }else {
                   throw new Exception("해당 번호의 메뉴가 없습니다!");
                 }
@@ -182,14 +194,4 @@ public class ServerApp {
     out.printf("메뉴를 선택하세요[1..%d](quit: 종료) ", menus.length);
   }
 
-  protected static void printTitle() {
-    StringBuilder builder = new StringBuilder();
-    for(String title: breadcrumbMenu) {
-      if(!builder.isEmpty()) {
-        builder.append(" > ");
-      }
-      builder.append(title);
-    }
-    System.out.printf("%s:\n", builder.toString());
-  }
 }
