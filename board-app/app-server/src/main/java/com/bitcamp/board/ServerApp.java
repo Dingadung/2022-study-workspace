@@ -12,7 +12,8 @@ import com.bitcamp.board.handler.BoardHandler;
 import com.bitcamp.board.handler.MemberHandler;
 import com.bitcamp.handler.Handler;
 
-// ServerApp class - 사용자가 선택한 메뉴의 유효성을 검증한다.
+// ServerApp class - 메인 메뉴 선택에 따라 핸들러를 실행하여 클라이언트에게 하위 메뉴를 출력한다.
+//      - Handler Interface 변경
 
 public class ServerApp {
 
@@ -65,8 +66,9 @@ public class ServerApp {
               {
                 try {
                   int mainMenuNo = Integer.parseInt(request);
-                  if (mainMenuNo >= 1 && mainMenuNo <= menus.length) {
-                    tempOut.println("해당 기능을 준비 중입니다.");
+                  if (mainMenuNo >= 1 && mainMenuNo <= menus.length) { // 메뉴 번호가 유효한 경우
+                    // 메뉴 번호로 Handler  객체를 찾아 실행한다.
+                    handlers.get(mainMenuNo-1).execute();
 
                   }else {
                     tempOut.println("해당 번호의 메뉴가 없습니다!");
@@ -144,8 +146,7 @@ public class ServerApp {
               // 메뉴에 진입할 때 breadcrumb 메뉴바에 그 메뉴를 등록한다.
               breadcrumbMenu.push(menus[mainMenuNo - 1]);
 
-              // 메뉴 번호로 Handler 레퍼런스에 들어있는 객체를 찾아 실행한다.
-              handlers.get(mainMenuNo-1).execute();
+
 
               breadcrumbMenu.pop();
 
