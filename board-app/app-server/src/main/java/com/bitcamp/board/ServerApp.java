@@ -8,7 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Stack;
 
-// 여러 클라이언트를 순차적으로 접속 처리
+// 여러 클라이언트를 동시 접속 처리
 
 public class ServerApp {
 
@@ -20,24 +20,29 @@ public class ServerApp {
       System.out.println("서버 실행중 ...");
 
       while(true) {
-        try(Socket socket = serverSocket.accept();
-            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-            DataInputStream in = new DataInputStream(socket.getInputStream())
-            ){
-          System.out.println("클라이언트 접속!");
+        Socket socket = serverSocket.accept();
 
-          StringWriter strOut = new StringWriter();
-          PrintWriter tempOut = new PrintWriter(strOut);
-          welcome(tempOut);
+        new Thread(() -> { // Runnable interface 익명 클래스
+          // 스레드를 시작하는 순간 별도의 실행 흐름에서 병행으로 실행된다.
+          try(
+              DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+              DataInputStream in = new DataInputStream(socket.getInputStream())
+              ){
+            System.out.println("클라이언트 접속!");
 
-          // 실제 client에게 출력하기
-          out.writeUTF(strOut.toString()); // StringWriter의 buffer에 들어있는 것을 문자열로 출력
+            StringWriter strOut = new StringWriter();
+            PrintWriter tempOut = new PrintWriter(strOut);
+            welcome(tempOut);
 
-          System.out.println("클라이언트에게 응답 완료!");
-        } catch (Exception e) {
-          System.out.println("클라이언트와 통신하는 중 오류 발생!");
-          e.printStackTrace();
-        } // Socket.accept() try(){}
+            // 실제 client에게 출력하기
+            out.writeUTF(strOut.toString()); // StringWriter의 buffer에 들어있는 것을 문자열로 출력
+
+            System.out.println("클라이언트에게 응답 완료!");
+          } catch (Exception e) {
+            System.out.println("클라이언트와 통신하는 중 오류 발생!");
+            e.printStackTrace();
+          } // Socket.accept() try(){}
+        }).start(); // Thread()
       } // while()
 
       //      System.out.println("서버 종료!");
