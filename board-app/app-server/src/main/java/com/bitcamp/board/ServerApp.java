@@ -7,20 +7,17 @@ import java.io.StringWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Stack;
 import com.bitcamp.board.handler.BoardHandler;
 import com.bitcamp.board.handler.MemberHandler;
 import com.bitcamp.handler.Handler;
 
-// ServerApp class - 메인 메뉴 선택에 따라 핸들러를 실행하여 클라이언트에게 하위 메뉴를 출력한다.
-//      - Handler Interface 변경
-//      - AbstractHandler 추상 클래스의 execute() 변경
-// 하위 메뉴를 처리한다.
+// Edit ServerApp class - BreadCrumb 기능을 객체로 분리
+//  - BreadCrumb class 정의
 
 public class ServerApp {
 
-  //breadcrumb 메뉴를 저장할 스택을 준비
-  public static Stack<String> breadcrumbMenu = new Stack<>();
+
+
   //메인 메뉴 목록 준비
   static String[] menus = {"게시판","회원"};
 
