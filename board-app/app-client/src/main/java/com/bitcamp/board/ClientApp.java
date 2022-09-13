@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.net.Socket;
 import com.bitcamp.util.Prompt;
 
+// Client App - 사용자 입력을 서버에 전송
+
 public class ClientApp {
 
   public static void main(String[] args) {
@@ -17,6 +19,14 @@ public class ClientApp {
 
       String line = null;
 
+
+      // 서버로부터 가져온 환영 메시지 출력
+      line = in.readUTF();
+      System.out.println(line);
+      // 사용자의 입력값 서버에 전송
+      String input = Prompt.inputString("> ");
+      out.writeUTF(input);
+      // 서버의 응답을 읽어 화면에 출력
       line = in.readUTF();
       System.out.println(line);
 
