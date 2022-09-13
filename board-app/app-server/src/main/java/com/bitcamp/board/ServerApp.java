@@ -15,11 +15,14 @@ public class ServerApp {
 
   public static void main(String[] args) {
     try(ServerSocket serverSocket = new ServerSocket(8888)){
+      System.out.println("서버 실행중 ...");
 
       try(Socket socket = serverSocket.accept();
           DataOutputStream out = new DataOutputStream(socket.getOutputStream());
           DataInputStream in = new DataInputStream(socket.getInputStream())
           ){
+        System.out.println("클라이언트 접속!");
+
         StringWriter strOut = new StringWriter();
         PrintWriter tempOut = new PrintWriter(strOut);
         welcome(tempOut);
@@ -27,11 +30,13 @@ public class ServerApp {
         // 실제 client에게 출력하기
         out.writeUTF(strOut.toString()); // StringWriter의 buffer에 들어있는 것을 문자열로 출력
 
-
+        System.out.println("클라이언트에게 응답 완료!");
       } catch (Exception e) {
         System.out.println("클라이언트와 통신하는 중 오류 발생!");
         e.printStackTrace();
       } // Socket.accept() try(){}
+
+      System.out.println("서버 종료!");
 
     }catch (Exception e) {
       System.out.println("서버 실행 중 오류 발생!");
