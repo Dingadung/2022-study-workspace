@@ -8,7 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Stack;
 
-// ServerApp class  qiut 명령을 보내면 연결 끊기 
+// ServerApp class - 환영 메시지 이후, 메인 메뉴를 응답한다.
 
 public class ServerApp {
 
@@ -88,8 +88,7 @@ public class ServerApp {
         // "메인" 메뉴의 이름을 스택에 등록한다.
         breadcrumbMenu.push("메인");
 
-        // 메뉴명을 저장할 배열을 준비한다.
-        String[] menus = {"게시판","회원"};
+
 
         loop: 
           while (true) {
@@ -145,9 +144,10 @@ public class ServerApp {
     out.println();
   }
 
-  static void printMenus(String[] menus) {
+  static void printMainMenus(PrintWriter out) {
+    String[] menus = {"게시판","회원"};
     for (int i = 0; i < menus.length; i++) {
-      System.out.printf("  %d: %s\n", i + 1, menus[i]);
+      out.printf("  %d: %s\n", i + 1, menus[i]);
     }
   }
 
