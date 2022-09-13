@@ -8,7 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Stack;
 
-// 스레드를 이용하여 여러 클라이언트를 동시 접속 처리
+// ServerApp 클라이언트가 전송한 요청값을 받아서 그대로 돌려준다.
 
 public class ServerApp {
 
@@ -37,6 +37,10 @@ public class ServerApp {
             // 실제 client에게 출력하기
             out.writeUTF(strOut.toString()); // StringWriter의 buffer에 들어있는 것을 문자열로 출력
 
+            // 클라이언트가 보낸 값을 그대로 돌려준다.
+            String request = in.readUTF();
+            out.writeUTF(request);
+
             System.out.println("클라이언트에게 응답 완료!");
           } catch (Exception e) {
             System.out.println("클라이언트와 통신하는 중 오류 발생!");
@@ -53,6 +57,11 @@ public class ServerApp {
     } // ServerSocket try(){}
 
   } // main()
+
+
+
+
+
 
   /*public static void main2(String[] args) {
       try (
