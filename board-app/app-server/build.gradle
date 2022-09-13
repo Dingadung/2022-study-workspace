@@ -11,11 +11,12 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.9.1'
     testImplementation 'junit:junit:4.13.2'
     implementation 'com.google.guava:guava:30.1.1-jre'
-    implementation project(':app-common')
+    implementation project(':app-common') // 폴더 이름
+    implementation 'org.mariadb.jdbc:mariadb-java-client:3.0.7'
 }
 
 application {
-    mainClass = 'com.bitcamp.board.App'
+    mainClass = 'com.bitcamp.board.App.ServerApp'
 }
 
 // CLI 환경(명령창, 콘솔창)에서 자바 소스를 컴파일 할 때 적용할 옵션
