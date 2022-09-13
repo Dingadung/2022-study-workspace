@@ -1,8 +1,8 @@
 package com.bitcamp.board;
 
-import java.io.PrintStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.net.Socket;
-import java.util.Scanner;
 import com.bitcamp.util.Prompt;
 
 public class ClientApp {
@@ -11,13 +11,13 @@ public class ClientApp {
     System.out.println("[게시글 관리 클라이언트]");
     try(
         Socket socket = new Socket("localhost", 8888);
-        Scanner in = new Scanner(socket.getInputStream());
-        PrintStream out = new PrintStream(socket.getOutputStream())
+        DataInputStream in = new DataInputStream(socket.getInputStream());
+        DataOutputStream out = new DataOutputStream(socket.getOutputStream())
         ){
 
       String line = null;
 
-      line = in.nextLine();
+      line = in.readUTF();
       System.out.println(line);
 
     } /*try(){}*/ catch(Exception e){
