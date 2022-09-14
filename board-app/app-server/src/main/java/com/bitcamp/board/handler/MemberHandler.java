@@ -13,7 +13,7 @@ public class MemberHandler extends AbstractHandler{
 
   private MemberDao memberDao; // DBMS에 상관없이 MemberDao 규칙을 따르는 DAO을 사용하겠다!
 
-  public MemberHandler(MemberDao memberDao) throws Exception{
+  public MemberHandler(MemberDao memberDao) {
     super(new String[] {"목록", "상세보기", "등록", "삭제", "변경"});
 
     this.memberDao = memberDao;
