@@ -42,31 +42,40 @@ public abstract class AbstractHandler implements Handler {
     // 현재 스레드를 위해 보관된 BreadCrumb 객체를 꺼낸다.
     BreadCrumb breadCrumb = BreadCrumb.getBreadCrumbOfCurrentThread();
 
-    // 핸들러의 메뉴를 클라이언트에게 보낸다.
-    try(StringWriter strOut = new StringWriter();
-        PrintWriter tempOut = new PrintWriter(strOut);
-        ){
-      tempOut.println(breadCrumb.toString());
-      printMenus(tempOut);
-      out.writeUTF(strOut.toString());
-    }
-
+    String message = null;
     while (true) {
-      // 클라이언트가 보낸 요청을 읽는다.
-      String request = in.readUTF();
-      if(request.equals("0")) break;
-
-      // 클라이언트에게 출력
+      // 핸들러의 메뉴를 클라이언트에게 보낸다.
       try(StringWriter strOut = new StringWriter();
-          PrintWriter tempOut = new PrintWriter(strOut);
+          PrintWriter tempOut = new PrintWriter(strOut)
           ){
-        tempOut.println("해당 메뉴를 준비 중 입니다.");
 
-        printBlankLine(tempOut);
+        if(message != null) {
+          tempOut.println(message);
+          message = null;
+        }
+        tempOut.println();
         tempOut.println(breadCrumb.toString());
         printMenus(tempOut);
         out.writeUTF(strOut.toString());
       }
+
+      // 클라이언트가 보낸 요청을 읽는다.
+      String request = in.readUTF();
+      if(request.equals("0")) break;
+
+      // 클라이언트가 선택한 메뉴를 처리한다.
+      int menuNo =Integer.parseInt(request);
+
+      if (menuNo < 0 || menuNo > menus.length) {
+        message = "메뉴 번호가 옳지 않습니다!";
+        continue; // while 문의 조건 검사로 보낸다.
+      } 
+
+
+      message = "해당 메뉴를 준비 중 입니다.";
+
+
+
 
 
 
@@ -76,13 +85,7 @@ public abstract class AbstractHandler implements Handler {
       try {
 
 
-        if (menuNo < 0 || menuNo > menus.length) {
-          out.println("메뉴 번호가 옳지 않습니다!");
-          continue; // while 문의 조건 검사로 보낸다.
 
-        } else if (menuNo == 0) {
-          return; // 메인 메뉴로 돌아간다.
-        }
 
         // 메뉴에 진입할 때 breadcrumb 메뉴바에 그 메뉴를 등록한다.
         ServerApp.breadcrumbMenu.push(menus[menuNo - 1]);
