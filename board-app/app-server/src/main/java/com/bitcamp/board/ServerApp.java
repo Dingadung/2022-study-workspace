@@ -6,7 +6,13 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.ArrayList;
+import com.bitcamp.board.dao.BoardDao;
+import com.bitcamp.board.dao.MariaDBBoardDao;
+import com.bitcamp.board.dao.MariaDBMemberDao;
+import com.bitcamp.board.dao.MemberDao;
 import com.bitcamp.board.handler.BoardHandler;
 import com.bitcamp.board.handler.MemberHandler;
 import com.bitcamp.handler.Handler;
@@ -27,7 +33,8 @@ import com.bitcamp.util.BreadCrumb;
 //    - BreadCrumb 클래스를 정의한다.
 // 11) 코드 리팩토링
 //    - execute() 메서드 정의: main() 메서드의 코드를 옮긴다.
-// 
+// 12) DB 연동
+//  
 public class ServerApp {
 
   // 메인 메뉴 목록 준비
@@ -36,15 +43,28 @@ public class ServerApp {
   ArrayList<Handler> handlers = new ArrayList<>();
 
   public static void main(String[] args) {
-    ServerApp app = new ServerApp(8888);
-    app.execute();
+    try {
+      ServerApp app = new ServerApp(8888);
+      app.execute();
+
+    } catch (Exception e) {
+      System.out.println("서버 실행 오류!");
+    }
   }
 
-  public ServerApp(int port) {
+  public ServerApp(int port) throws Exception {
     this.port = port;
 
-    handlers.add(new BoardHandler(null));
-    handlers.add(new MemberHandler(null));
+    // DAO 가 사용할 커넥션 객체 준비
+    Connection con = DriverManager.getConnection(
+        "jdbc:mariadb://localhost:3306/studydb","study","1111");
+
+    // DAO 객체를 준비한다.
+    BoardDao boardDao = new MariaDBBoardDao(con);
+    MemberDao memberDao = new MariaDBMemberDao(con);
+
+    handlers.add(new BoardHandler(boardDao));
+    handlers.add(new MemberHandler(memberDao));
   }
 
   public void execute() {
@@ -62,61 +82,6 @@ public class ServerApp {
     }
   }
 
-  /*
-  public static void main2(String[] args) {
-    try (// DAO 가 사용할 커넥션 객체 준비
-        Connection con = DriverManager.getConnection(
-            "jdbc:mariadb://localhost:3306/studydb","study","1111");
-        ) {
-      System.out.println("[게시글 관리 클라이언트]");
-
-      welcome();
-
-      // DAO 객체를 준비한다.
-      MariaDBMemberDao memberDao = new MariaDBMemberDao(con);
-      MariaDBBoardDao boardDao = new MariaDBBoardDao(con);
-
-
-
-      // "메인" 메뉴의 이름을 스택에 등록한다.
-      breadcrumbMenu.push("메인");
-
-
-
-      loop: while (true) {
-
-        printTitle();
-        printMenus(menus);
-        System.out.println();
-
-        try {
-
-
-
-
-          // 메뉴에 진입할 때 breadcrumb 메뉴바에 그 메뉴를 등록한다.
-          breadcrumbMenu.push(menus[mainMenuNo - 1]);
-
-
-
-          breadcrumbMenu.pop();
-
-        } catch (Exception ex) {
-          System.out.println("입력 값이 옳지 않습니다.");
-        }
-
-
-      } // while
-      Prompt.close();
-
-      System.out.println("종료!");
-
-    } catch (Exception e) {
-      System.out.println("시스템 오류 발생!");
-      e.printStackTrace();
-    }
-  }
-   */
   static void welcome(DataOutputStream out) throws Exception {
     try (StringWriter strOut = new StringWriter();
         PrintWriter tempOut = new PrintWriter(strOut)) {
@@ -165,6 +130,10 @@ public class ServerApp {
       handlers.get(menuNo - 1).execute(in, out);
 
       breadcrumb.pickUp();
+
+      // 하위 메뉴에서 빠져 나오면 현재의 메뉴 경로를 출력한다.
+      out.writeUTF(breadcrumb.toString());
+
 
     } catch (Exception e) {
       error(out, e);
@@ -217,4 +186,3 @@ public class ServerApp {
   }
 
 }
-
