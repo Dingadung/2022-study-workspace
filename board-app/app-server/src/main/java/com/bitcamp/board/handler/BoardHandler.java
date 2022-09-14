@@ -3,6 +3,8 @@
  */
 package com.bitcamp.board.handler;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.util.List;
 import com.bitcamp.board.dao.BoardDao;
 import com.bitcamp.board.domain.Board;
@@ -23,7 +25,7 @@ public class BoardHandler extends AbstractHandler {
   }
 
   @Override
-  public void service(int menuNo) { 
+  public void service(int menuNo, DataInputStream in, DataOutputStream out) { 
     try {
       switch (menuNo) {
         case 1: this.onList(); break;
