@@ -103,7 +103,7 @@ public class BoardHandler   {
       out.println("</table>");
       out.println("<p>");
       out.println("<button type='submit'>변경</button>");
-      out.println("<a href='delete?no=%d'>삭제</a>");
+      out.printf("<a href='delete?no=%d'>삭제</a>", board.no);
       out.println("</p>");
       out.println("</form>");
     }
@@ -134,7 +134,7 @@ public class BoardHandler   {
     out.println("<meta http-equiv='Refresh' content ='3; url=list'>");
     out.println("</head>");
     out.println("<body>");
-    out.println("<h1>지민이의 게시글 변경하기!</h1>");
+    out.println("<h1>지민이의 게시글 삭제하기!</h1>");
 
     int no = Integer.parseInt(paramMap.get("no"));
 
