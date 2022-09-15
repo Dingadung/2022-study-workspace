@@ -7,6 +7,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.List;
 import com.bitcamp.board.dao.BoardDao;
 import com.bitcamp.board.domain.Board;
 import com.bitcamp.util.Prompt;
@@ -20,7 +21,6 @@ public class BoardHandler   {
   }
 
   public void list(PrintWriter out) throws Exception {
-    // List<Board> boards = boardDao.findAll();
 
     out.println("<!DOCTYPE html>");
     out.println("<html>");
@@ -30,7 +30,7 @@ public class BoardHandler   {
     out.println("</head>");
     out.println("<body>");
     out.println("<h1>지민이의 게시글!</h1>");
-    out.println("<h2>지민이테이블.</h2>");
+    out.println("<h2>지민이테이블><</h2>");
     out.println("<table border = '1'>");
     out.println("   <tr>");
     out.println("       <th>번호</th>");
@@ -39,16 +39,21 @@ public class BoardHandler   {
     out.println("       <th>작성자</th>");
     out.println("       <th>등록일</th>");
     out.println("   </tr>");
+
+    List<Board> boards = boardDao.findAll();
+
+    for (Board board : boards) {
+      out.printf(" <tr>");
+      out.printf("    <td>%d</td>", board.no);
+      out.printf("    <td><a href='detail'>%s</a></td>", board.title); // 같은 서버, 같은 포트 버ㅓㄴ호 면 링크 다 써줄 필요 없다.
+      out.printf("    <td>%d</td>", board.viewCount);
+      out.printf("    <td>%d</td>", board.memberNo);
+      out.printf("    <td>%s</td>", board.createdDate);
+      out.printf("</tr>");
+    }
     out.println("</table>");
     out.println("</body>");
     out.println("</html>");
-
-
-    //  out.println("번호 제목 조회수 작성자 등록일");
-    //  for (Board board : boards) {
-    //    out.printf("%d\t%s\t%d\t%d\t%s\n",
-    //        board.no, board.title, board.viewCount, board.memberNo, board.createdDate);
-    //  }
   }
 
   private void onDetail(DataInputStream in, DataOutputStream out) throws Exception {
