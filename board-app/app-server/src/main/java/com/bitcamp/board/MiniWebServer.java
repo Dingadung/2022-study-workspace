@@ -13,7 +13,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
-// MiniWebServer class - 요청 자원의 경로를 구분하여 처리하기
+// MiniWebServer class - 요청 자원을 처리하는 객체의 사용 규칙을 통일한다.
 
 public class MiniWebServer {
 
