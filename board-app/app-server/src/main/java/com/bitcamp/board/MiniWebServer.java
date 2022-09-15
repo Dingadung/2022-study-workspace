@@ -1,10 +1,14 @@
 package com.bitcamp.board;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+
+// MiniWebServer class - 한글 콘텐트 응답하기
 
 public class MiniWebServer {
 
@@ -13,20 +17,30 @@ public class MiniWebServer {
 
       @Override
       public void handle(HttpExchange exchange) throws IOException {
+        System.out.println("클라이언트가 call함");
 
+        String response = "ABCabc가각간";
+        byte[] bytes = response.getBytes("UTF-8");
+
+        // 보내는 콘텐트의 MIME 타입이 무엇인지 응답 헤더를 추가로 설정한다.
+        Headers responseHeaders = exchange.getResponseHeaders();
+        responseHeaders.add("Content-Type", "text/plain; charset=UTF-8");
+
+        exchange.sendResponseHeaders(200, bytes.length);
+
+        OutputStream out = exchange.getResponseBody();
+        out.write(response.getBytes());
+
+        out.close();
       }
 
     }
 
-    HttpServer server = HttpServer.create(new InetSocketAddress(8888), 0);
+    HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
     server.createContext("/",  new MyHttpHandler());
-    server.setExecutor(null); //  HttpServer에 기본으로 설정되어 있는 Executor 사용
-    // Executor란? 멀티 스레딩을 수행하는 객체이다.
-    // Runnable 객체를 실행 한다. -> thread를 다룬다. 
-    server.start(); // HttpServer를 시작시킨 후 즉시 리턴한다.
+    server.setExecutor(null); 
+    server.start(); 
     System.out.println("서버 시작!");
-    // main() 메서드 호출이 끝났다 하더라도, 
-    // 내부에서 생성한 스레드(HttpServer)가 종료되지 않으면, JVM도 종료되지 않는다.
   }
 
 }
