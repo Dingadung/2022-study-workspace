@@ -8,7 +8,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
-// MiniWebServer class - 한글 콘텐트 응답하기
+// MiniWebServer class - HTML content 출력하기  
 
 public class MiniWebServer {
 
@@ -19,17 +19,29 @@ public class MiniWebServer {
       public void handle(HttpExchange exchange) throws IOException {
         System.out.println("클라이언트가 call함");
 
-        String response = "ABCabc가각간";
-        byte[] bytes = response.getBytes("UTF-8");
+        StringBuilder strBuilder = new StringBuilder();
+        strBuilder.append("<!DOCTYPE html>");
+        strBuilder.append("<html>");
+        strBuilder.append("<head>");
+        strBuilder.append("<meta charset=\"UTF-8\">");
+        strBuilder.append("<title>JWS</title>");
+        strBuilder.append("</head>");
+        strBuilder.append("<body>");
+        strBuilder.append("<h1>지민이의 웹 서비스!</h1>");
+        strBuilder.append("<p>비트 캠프 게시판 관리 시스템 프로젝트 입니다.</p>");
+        strBuilder.append("</body>");
+        strBuilder.append("</html>");
+
+        byte[] bytes = strBuilder.toString().getBytes("UTF-8");
 
         // 보내는 콘텐트의 MIME 타입이 무엇인지 응답 헤더를 추가로 설정한다.
         Headers responseHeaders = exchange.getResponseHeaders();
-        responseHeaders.add("Content-Type", "text/plain; charset=UTF-8");
+        responseHeaders.add("Content-Type", "text/html; charset=UTF-8");
 
         exchange.sendResponseHeaders(200, bytes.length);
 
         OutputStream out = exchange.getResponseBody();
-        out.write(response.getBytes());
+        out.write(bytes);
 
         out.close();
       }
