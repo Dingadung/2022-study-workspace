@@ -70,6 +70,9 @@ public class MiniWebServer {
           else if(path.equals("/board/detail")) {
             boardHandler.detail(paramMap, printWriter);
           }
+          else if(path.equals("/board/update")) {
+            boardHandler.update(paramMap, printWriter);
+          }
           else {
             errorHandler.error(paramMap, printWriter);
           }
