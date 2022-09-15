@@ -8,6 +8,8 @@ import java.net.InetSocketAddress;
 import java.net.URI;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.HashMap;
+import java.util.Map;
 import com.bitcamp.board.dao.BoardDao;
 import com.bitcamp.board.dao.MariaDBBoardDao;
 import com.bitcamp.board.dao.MariaDBMemberDao;
@@ -36,23 +38,41 @@ public class MiniWebServer {
 
     class MyHttpHandler implements HttpHandler{
       @Override
-      public void handle(HttpExchange exchange) throws IOException { // client가 요청할 때 실행되는 method
+      public void handle(HttpExchange exchange) throws IOException { // client가 요청할 때 마다 실행되는 method
         System.out.println("클라이언트가 call함");
 
         URI requestUri = exchange.getRequestURI();
 
         String path = requestUri.getPath();
-
+        String query = requestUri.getQuery();
         byte[] bytes = null;
 
         try(StringWriter strWriter = new StringWriter();
             PrintWriter printWriter = new PrintWriter(strWriter)) // try()
         {
-          if(path.equals("/")) welcomeHandler.service(printWriter);
-          else if(path.equals("/board/list")) {
-            boardHandler.list(printWriter);
+
+          Map<String, String> paramMap = new HashMap<>();
+          if(query != null && query.length() > 0) {  // 예)no =1 & title=aaaa&content=bbb
+            String[] entries = query.split("&");
+            for(String entry:entries) { // 예) no=1
+              String[] kv = entry.split("=");
+              paramMap.put(kv[0], kv[1]);
+            }
           }
-          else errorHandler.error(printWriter);
+          System.out.println(paramMap);
+
+          if(path.equals("/")) {
+            welcomeHandler.service(paramMap, printWriter);
+          }
+          else if(path.equals("/board/list")) {
+            boardHandler.list(paramMap, printWriter);
+          }
+          else if(path.equals("/board/detail")) {
+            boardHandler.detail(paramMap, printWriter);
+          }
+          else {
+            errorHandler.error(paramMap, printWriter);
+          }
 
           bytes  = strWriter.toString().getBytes("UTF-8");
         } catch(Exception e) {

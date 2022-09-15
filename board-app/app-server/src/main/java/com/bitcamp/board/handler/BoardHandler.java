@@ -6,8 +6,8 @@ package com.bitcamp.board.handler;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.List;
+import java.util.Map;
 import com.bitcamp.board.dao.BoardDao;
 import com.bitcamp.board.domain.Board;
 import com.bitcamp.util.Prompt;
@@ -20,7 +20,7 @@ public class BoardHandler   {
     this.boardDao = boardDao;
   }
 
-  public void list(PrintWriter out) throws Exception {
+  public void list(Map<String, String> paramMap, PrintWriter out) throws Exception {
 
     out.println("<!DOCTYPE html>");
     out.println("<html>");
@@ -29,7 +29,7 @@ public class BoardHandler   {
     out.println("<title>JWS</title>");
     out.println("</head>");
     out.println("<body>");
-    out.println("<h1>지민이의 게시글!</h1>");
+    out.println("<h1>지민이의 게시글 상세정보!</h1>");
     out.println("<h2>지민이테이블><</h2>");
     out.println("<table border = '1'>");
     out.println("   <tr>");
@@ -45,7 +45,7 @@ public class BoardHandler   {
     for (Board board : boards) {
       out.printf(" <tr>");
       out.printf("    <td>%d</td>", board.no);
-      out.printf("    <td><a href='detail'>%s</a></td>", board.title); // 같은 서버, 같은 포트 버ㅓㄴ호 면 링크 다 써줄 필요 없다.
+      out.printf("    <td><a href='detail?no=%d'>%s</a></td>", board.no, board.title); // 같은 서버, 같은 포트 번호 면 링크 다 써줄 필요 없다.
       out.printf("    <td>%d</td>", board.viewCount);
       out.printf("    <td>%d</td>", board.memberNo);
       out.printf("    <td>%s</td>", board.createdDate);
@@ -56,40 +56,60 @@ public class BoardHandler   {
     out.println("</html>");
   }
 
-  private void onDetail(DataInputStream in, DataOutputStream out) throws Exception {
+  public void detail(Map<String, String> paramMap, PrintWriter out) throws Exception {
+    out.println("<!DOCTYPE html>");
+    out.println("<html>");
+    out.println("<head>");
+    out.println("<meta charset=\"UTF-8\">");
+    out.println("<title>JWS</title>");
+    out.println("</head>");
+    out.println("<body>");
+    out.println("<h1>지민이의 게시글 상세정보!</h1>");
 
-    Prompt prompt = new Prompt(in, out);
-
-    int boardNo = 0;
-    while (true) {
-      try {
-        boardNo = prompt.inputInt("조회할 게시글 번호? ");
-        break;
-      } catch (Exception ex) {
-        out.writeUTF("입력 값이 옳지 않습니다!");
-      }
-    }
-
+    int boardNo = Integer.parseInt(paramMap.get("no"));
+    System.out.println(boardNo);
     Board board = boardDao.findByNo(boardNo);
 
-    try (StringWriter strOut = new StringWriter();
-        PrintWriter tempOut = new PrintWriter(strOut)) {
-
-      if (board == null) {
-        tempOut.println("해당 번호의 게시글이 없습니다!");
-        out.writeUTF(strOut.toString());
-        return;
-      }
-
-      tempOut.printf("번호: %d\n", board.no);
-      tempOut.printf("제목: %s\n", board.title);
-      tempOut.printf("내용: %s\n", board.content);
-      tempOut.printf("조회수: %d\n", board.viewCount);
-      tempOut.printf("작성자: %d\n", board.memberNo);
-      tempOut.printf("등록일: %s\n", board.createdDate);
-
-      out.writeUTF(strOut.toString());
+    if(board == null) {
+      out.println("<p>해당 번호의 게시글이 없습니다!.</p>");
+    }else {
+      out.println("<form action='update'>");
+      out.println("<h2>지민이게시글 상세보기>o<</h2>");
+      out.println("<table border = '1'>");
+      out.println("   <tr>");
+      out.println("       <th>번호</th>");
+      out.printf("       <td>%d</td>", board.no);
+      out.println("   </tr>");
+      out.println("   <tr>");
+      out.println("       <th>제목</th>");
+      out.printf("       <td><input type='text' value='%s'></td>", board.title);
+      out.println("   </tr>");
+      out.println("   <tr>");
+      out.println("       <th>내용</th>");
+      out.printf("       <td><textarea rows='10' cols='60'>%s</textarea></td>", board.content);
+      out.println("   </tr>");
+      out.println("   <tr>");
+      out.println("       <th>조회수</th>");
+      out.printf("       <td>%d</td>", board.viewCount);
+      out.println("   </tr>");
+      out.println("   <tr>");
+      out.println("       <th>작성자</th>");
+      out.printf("       <td>%s</td>", board.memberNo);
+      out.println("   </tr>");
+      out.println("   <tr>");
+      out.println("       <th>등록일</th>");
+      out.printf("       <td>%s</td>", board.createdDate);
+      out.println("   </tr>");
+      out.println("</table>");
+      out.println("<p>");
+      out.println("<button type='submit'>변경</button>");
+      out.println("<a href='delete?no=%d'>삭제</a>");
+      out.println("</p>");
+      out.println("</form>");
     }
+    out.println("</body>");
+    out.println("</html>");
+
   }
 
   private void onInput(DataInputStream in, DataOutputStream out) throws Exception {
