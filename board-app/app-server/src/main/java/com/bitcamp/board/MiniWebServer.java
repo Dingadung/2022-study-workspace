@@ -69,8 +69,6 @@ public class MiniWebServer {
     MemberListHandler memberListHandler = new MemberListHandler(memberDao);
     MemberUpdateHandler memberUpdateHandler = new MemberUpdateHandler(memberDao);
 
-    //MemberHandler memberHandler = new MemberHandler(memberDao);
-
     class MyHttpHandler implements HttpHandler {
       @Override
       public void handle(HttpExchange exchange) throws IOException {
@@ -100,43 +98,44 @@ public class MiniWebServer {
             welcomeHandler.service(paramMap, printWriter);
 
           } else if (path.equals("/board/list")) {
-            boardListHandler.list(paramMap, printWriter);
+            boardListHandler.service(paramMap, printWriter);
 
           } else if (path.equals("/board/detail")) {
-            boardDetailHandler.detail(paramMap, printWriter);
+            boardDetailHandler.service(paramMap, printWriter);
 
           } else if (path.equals("/board/update")) {
-            boardUpdateHandler.update(paramMap, printWriter);
+            boardUpdateHandler.service(paramMap, printWriter);
 
           } else if (path.equals("/board/delete")) {
-            boardDeleteHandler.delete(paramMap, printWriter);
+            boardDeleteHandler.service(paramMap, printWriter);
 
           } else if (path.equals("/board/form")) {
-            boardFormHandler.form(paramMap, printWriter);
+            boardFormHandler.service(paramMap, printWriter);
 
           } else if (path.equals("/board/add")) {
-            boardAddHandler.add(paramMap, printWriter);
+            boardAddHandler.service(paramMap, printWriter);
 
-          } else if (path.equals("/member/list")) {
-            memberListHandler.list(paramMap, printWriter);
+          }  // board
+          else if (path.equals("/member/list")) {
+            memberListHandler.service(paramMap, printWriter);
 
           } else if (path.equals("/member/detail")) {
-            memberDetailHandler.detail(paramMap, printWriter);
+            memberDetailHandler.service(paramMap, printWriter);
 
           } else if (path.equals("/member/update")) {
-            memberUpdateHandler.update(paramMap, printWriter);
+            memberUpdateHandler.service(paramMap, printWriter);
 
           } else if (path.equals("/member/delete")) {
-            memberDeleteHandler.delete(paramMap, printWriter);
+            memberDeleteHandler.service(paramMap, printWriter);
 
           } else if (path.equals("/member/form")) {
-            memberFormHandler.form(paramMap, printWriter);
+            memberFormHandler.service(paramMap, printWriter);
 
           } else if (path.equals("/member/add")) {
-            memberAddHandler.add(paramMap, printWriter);
+            memberAddHandler.service(paramMap, printWriter);
 
           } else {
-            errorHandler.error(paramMap, printWriter);
+            errorHandler.service(paramMap, printWriter);
           }
 
           bytes = stringWriter.toString().getBytes("UTF-8");

@@ -7,15 +7,17 @@ package com.bitcamp.board.handler;
 import java.io.PrintWriter;
 import java.util.Map;
 import com.bitcamp.board.dao.MemberDao;
+import com.bitcamp.servlet.Servlet;
 
-public class MemberDeleteHandler {
+public class MemberDeleteHandler implements Servlet{
 
   private MemberDao memberDao;
 
   public MemberDeleteHandler(MemberDao memberDao) {
     this.memberDao = memberDao;
   }
-  public void delete(Map<String,String> paramMap, PrintWriter out) throws Exception {
+  @Override
+  public void service(Map<String,String> paramMap, PrintWriter out) throws Exception {
 
     out.println("<!DOCTYPE html>");
     out.println("<html>");
@@ -31,14 +33,11 @@ public class MemberDeleteHandler {
 
     if (memberDao.delete(no) == 0) {
       out.println("<p>해당 번호의 회원이 없습니다.</p>");
-
     } else {
       out.println("<p>해당 회원을 삭제했습니다.</p>");
     }
-
     out.println("</body>");
     out.println("</html>");
-
   }
 
 }
