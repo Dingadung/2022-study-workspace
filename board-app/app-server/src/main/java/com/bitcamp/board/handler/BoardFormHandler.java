@@ -5,15 +5,8 @@ package com.bitcamp.board.handler;
 
 import java.io.PrintWriter;
 import java.util.Map;
-import com.bitcamp.board.dao.BoardDao;
 
 public class BoardFormHandler   {
-
-  private BoardDao boardDao;
-
-  public BoardFormHandler(BoardDao boardDao) {
-    this.boardDao = boardDao;
-  }
 
   public void form(Map<String, String> paramMap, PrintWriter out) {
     out.println("<!DOCTYPE html>");
