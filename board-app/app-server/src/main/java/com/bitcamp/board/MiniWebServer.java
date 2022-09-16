@@ -49,8 +49,8 @@ public class MiniWebServer {
         String query = requestUri.getQuery();
         byte[] bytes = null;
 
-        try(StringWriter strWriter = new StringWriter();
-            PrintWriter printWriter = new PrintWriter(strWriter)) // try()
+        try(StringWriter stringWriter = new StringWriter();
+            PrintWriter printWriter = new PrintWriter(stringWriter)) // try()
         {
 
           Map<String, String> paramMap = new HashMap<>();
@@ -78,11 +78,17 @@ public class MiniWebServer {
           else if(path.equals("/board/delete")) {
             boardHandler.delete(paramMap, printWriter);
           }
+          else if(path.equals("/board/form")) {
+            boardHandler.form(paramMap, printWriter);
+          }
+          else if(path.equals("/board/add")) {
+            boardHandler.add(paramMap, printWriter);
+          }
           else {
             errorHandler.error(paramMap, printWriter);
           }
 
-          bytes  = strWriter.toString().getBytes("UTF-8");
+          bytes  = stringWriter.toString().getBytes("UTF-8");
         } catch(Exception e) {
           bytes = "요청 처리 중 오류 발생!".getBytes("UTF-8");
           e.printStackTrace(); // 서버 콘솔창에 오류에 대한 자세한 내용을 출력한다. -> 클라이언트에게 전송
