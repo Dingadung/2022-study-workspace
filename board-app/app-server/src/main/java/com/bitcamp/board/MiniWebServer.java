@@ -100,40 +100,40 @@ public class MiniWebServer {
             welcomeHandler.service(paramMap, printWriter);
 
           } else if (path.equals("/board/list")) {
-            boardHandler.list(paramMap, printWriter);
+            boardListHandler.list(paramMap, printWriter);
 
           } else if (path.equals("/board/detail")) {
-            boardHandler.detail(paramMap, printWriter);
+            boardDetailHandler.detail(paramMap, printWriter);
 
           } else if (path.equals("/board/update")) {
-            boardHandler.update(paramMap, printWriter);
+            boardUpdateHandler.update(paramMap, printWriter);
 
           } else if (path.equals("/board/delete")) {
-            boardHandler.delete(paramMap, printWriter);
+            boardDeleteHandler.delete(paramMap, printWriter);
 
           } else if (path.equals("/board/form")) {
-            boardHandler.form(paramMap, printWriter);
+            boardFormHandler.form(paramMap, printWriter);
 
           } else if (path.equals("/board/add")) {
-            boardHandler.add(paramMap, printWriter);
+            boardAddHandler.add(paramMap, printWriter);
 
           } else if (path.equals("/member/list")) {
-            memberHandler.list(paramMap, printWriter);
+            memberListHandler.list(paramMap, printWriter);
 
           } else if (path.equals("/member/detail")) {
-            memberHandler.detail(paramMap, printWriter);
+            memberDetailHandler.detail(paramMap, printWriter);
 
           } else if (path.equals("/member/update")) {
-            memberHandler.update(paramMap, printWriter);
+            memberUpdateHandler.update(paramMap, printWriter);
 
           } else if (path.equals("/member/delete")) {
-            memberHandler.delete(paramMap, printWriter);
+            memberDeleteHandler.delete(paramMap, printWriter);
 
           } else if (path.equals("/member/form")) {
-            memberHandler.form(paramMap, printWriter);
+            memberFormHandler.form(paramMap, printWriter);
 
           } else if (path.equals("/member/add")) {
-            memberHandler.add(paramMap, printWriter);
+            memberAddHandler.add(paramMap, printWriter);
 
           } else {
             errorHandler.error(paramMap, printWriter);
