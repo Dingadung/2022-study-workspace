@@ -26,7 +26,7 @@ public class BoardHandler   {
     out.println("<title>JWS</title>");
     out.println("</head>");
     out.println("<body>");
-    out.println("<h1>지민이의 게시글 상세정보!</h1>");
+    out.println("<h1>지민이의 게시글 목록보기!</h1>");
     out.println("<a href='form'>새 글</a>");
 
     out.println("<h2>지민이테이블><</h2>");
@@ -66,7 +66,7 @@ public class BoardHandler   {
     out.println("<h1>지민이의 게시글 상세정보!</h1>");
 
     int boardNo = Integer.parseInt(paramMap.get("no"));
-    System.out.println(boardNo);
+    //System.out.println(boardNo);
     Board board = boardDao.findByNo(boardNo);
 
     if(board == null) {
@@ -222,7 +222,7 @@ public class BoardHandler   {
     }
     out.println("</body>");
     out.println("</html>");
-  } // delete()
+  }
 }
 
 
