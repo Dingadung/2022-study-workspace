@@ -6,7 +6,8 @@ package com.bitcamp.board.handler;
 import java.io.PrintWriter;
 import java.util.Map;
 import com.bitcamp.servlet.Servlet;
-
+import com.bitcamp.servlet.annotation.WebServlet;
+@WebServlet(value="/board/form")
 public class BoardFormHandler  implements Servlet {
 
   @Override
