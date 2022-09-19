@@ -1,6 +1,8 @@
 plugins {
     id 'application'
-    id 'eclipse'
+    // id 'eclipse' <-- eclipse-wtp plugin을 추가하면, eclipse-wtp plugin이 자동으로 추가된다.
+    id 'eclipse-wtp'
+    id 'war'
 }
 
 repositories {
