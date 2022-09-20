@@ -16,6 +16,9 @@ public class WelcomeServlet implements Servlet{
   public void service(ServletRequest req, ServletResponse res)
       throws ServletException, IOException {
 
+    // 콘텐트를 출력하는 출력 스트림을 준비하기 전에 어떤 인코딩으로 출력할 것인지 먼저 설정해야 한다.
+    res.setContentType("text/html; charset=UTF-8");
+
     PrintWriter out = res.getWriter();
 
     out.println("<!DOCTYPE html>");
@@ -26,7 +29,7 @@ public class WelcomeServlet implements Servlet{
     out.println("</head>");
     out.println("<body>");
     out.println("<h1>지민이의 웹 서비스!</h1>");
-    out.println("<p>지민이의 게시판 관리 시스템 프로젝트 입니다.</p>");
+    out.println("<p>지민이의 게시판 관리 시스템 프로젝트 입니다. Servlet이용했답니당~</p>");
     out.println("<ul>");
     out.println("  <li><a href='/board/list'>게시글</a></li>");
     out.println("  <li><a href='/member/list'>회원</a></li>");
