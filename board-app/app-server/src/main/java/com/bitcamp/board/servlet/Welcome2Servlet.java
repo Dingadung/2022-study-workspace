@@ -2,17 +2,21 @@ package com.bitcamp.board.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.Servlet;
-import javax.servlet.ServletConfig;
+import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 
-@WebServlet(value="/welcome")
-public class WelcomeServlet implements Servlet{
+@WebServlet(value="/welcome2")
+public class Welcome2Servlet extends GenericServlet{
 
-  ServletConfig config;
+  // 서버에 예기치 않은 오류가 발생했을 때,
+  // 서버를 중단하기에 앞서 다음의 작업을 수행할 수 있다.
+  // 1) 서블릿 객체의 상태를 다른 서버로 이전
+  // 2) 또는 현재 생성된 서블릿 객체의 상태를 파일에 보관
+  // 즉 객체를 직렬화 할 때 버전을 지정해야 한다.
+  private static final long serialVersionUID = 1L;
 
   @Override
   public void service(ServletRequest req, ServletResponse res)
@@ -30,7 +34,7 @@ public class WelcomeServlet implements Servlet{
     out.println("<title>JWS</title>");
     out.println("</head>");
     out.println("<body>");
-    out.println("<h1>지민이의 웹 서비스! 1번</h1>");
+    out.println("<h1>지민이의 웹 서비스! 2번</h1>");
     out.println("<p>지민이의 게시판 관리 시스템 프로젝트 입니다. Servlet이용했답니당~</p>");
     out.println("<ul>");
     out.println("  <li><a href='/board/list'>게시글</a></li>");
@@ -39,31 +43,4 @@ public class WelcomeServlet implements Servlet{
     out.println("</body>");
     out.println("</html>");
   }
-
-  @Override
-  public void init(ServletConfig config) throws ServletException {
-    // TODO Auto-generated method stub
-    System.out.println("WelcomeServlet.init()");
-    this.config = config;
-  }
-
-  @Override
-  public void destroy() {
-    // TODO Auto-generated method stub
-    System.out.println("WelcomeServlet.destroy()");
-  }
-
-  @Override
-  public String getServletInfo() {
-    // TODO Auto-generated method stub
-    System.out.println("WelcomeServlet.getServletInfo()");
-    return "환영 인사를 하는 서블릿";
-  }
-
-  @Override
-  public ServletConfig getServletConfig() {
-    System.out.println("WelcomeServlet.getServletConfig()");
-    return this.config;
-  }
-
 }
