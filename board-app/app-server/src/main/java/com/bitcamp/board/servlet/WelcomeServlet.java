@@ -2,26 +2,27 @@ package com.bitcamp.board.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(value="/welcome")
-public class WelcomeServlet implements Servlet{
+@WebServlet(value="/welcome") // 얘는 tomcat server가 보는 애라 app/을 안붙여줘도 된다. -> context root (web application root)
+public class WelcomeServlet extends HttpServlet{
 
+  private static final long serialVersionUID = 1L;
   ServletConfig config;
 
   @Override
-  public void service(ServletRequest req, ServletResponse res)
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
 
     // 콘텐트를 출력하는 출력 스트림을 준비하기 전에 어떤 인코딩으로 출력할 것인지 먼저 설정해야 한다.
-    res.setContentType("text/html; charset=UTF-8");
+    resp.setContentType("text/html; charset=UTF-8");
 
-    PrintWriter out = res.getWriter();
+    PrintWriter out = resp.getWriter();
 
     out.println("<!DOCTYPE html>");
     out.println("<html>");
@@ -33,8 +34,8 @@ public class WelcomeServlet implements Servlet{
     out.println("<h1>지민이의 웹 서비스! 1번</h1>");
     out.println("<p>지민이의 게시판 관리 시스템 프로젝트 입니다. Servlet이용했답니당~</p>");
     out.println("<ul>");
-    out.println("  <li><a href='/board/list'>게시글</a></li>");
-    out.println("  <li><a href='/member/list'>회원</a></li>");
+    out.println("  <li><a href='board/list'>게시글</a></li>"); // 얘는 웹브라우저가 보는 링크라 정확히 서버 루트까지 써줘야 한다. /app/board/list -> server root
+    out.println("  <li><a href='member/list'>회원</a></li>");
     out.println("</ul>");
     out.println("</body>");
     out.println("</html>");

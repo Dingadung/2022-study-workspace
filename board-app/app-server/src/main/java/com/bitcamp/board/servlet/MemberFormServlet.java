@@ -2,17 +2,26 @@
  /*
  * 회원 메뉴 처리 클래스
  */
-package com.bitcamp.board.handler;
+package com.bitcamp.board.servlet;
 
+import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Map;
-import com.bitcamp.servlet.Servlet;
-import com.bitcamp.servlet.annotation.WebServlet;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 @WebServlet(value="/member/form")
-public class MemberFormHandler implements Servlet{
+public class MemberFormServlet extends HttpServlet{
+
+  private static final long serialVersionUID = 1L;
 
   @Override
-  public void service(Map<String, String> paramMap, PrintWriter out) {
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+      throws ServletException, IOException {
+
+    resp.setContentType("text/html;charset=UTF-8");
+    PrintWriter out = resp.getWriter(); 
 
     out.println("<!DOCTYPE html>");
     out.println("<html>");
