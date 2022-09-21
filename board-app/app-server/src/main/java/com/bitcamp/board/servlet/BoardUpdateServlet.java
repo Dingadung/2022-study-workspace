@@ -5,27 +5,16 @@ package com.bitcamp.board.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.bitcamp.board.dao.BoardDao;
-import com.bitcamp.board.dao.MariaDBBoardDao;
 import com.bitcamp.board.domain.Board;
 @javax.servlet.annotation.WebServlet(value="/board/update")
 public class BoardUpdateServlet  extends HttpServlet {
 
   private static final long serialVersionUID = 1L;
-  private BoardDao boardDao;
 
-  public BoardUpdateServlet()  throws Exception{
-    Class.forName("org.mariadb.jdbc.Driver");
-    Connection con = DriverManager.getConnection(
-        "jdbc:mariadb://localhost:3306/studydb","study","1111");
-    boardDao = new MariaDBBoardDao(con);
-  }
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -50,7 +39,7 @@ public class BoardUpdateServlet  extends HttpServlet {
     board.content = req.getParameter("content");
 
     try {
-      if(boardDao.update(board) == 0) {
+      if(AppinitServlet.boardDao.update(board) == 0) {
         out.println("<p>해당 번호의 게시글이 없습니다!.</p>");
       }else {
         out.println("<p>해당 게시물을 변경했습니다.</p>");

@@ -31,10 +31,10 @@ public class WelcomeServlet extends HttpServlet{
     out.println("<title>JWS</title>");
     out.println("</head>");
     out.println("<body>");
-    out.println("<h1>지민이의 웹 서비스! 1번</h1>");
+    out.println("<h1>지민이의 웹 서비스! </h1>");
     out.println("<p>지민이의 게시판 관리 시스템 프로젝트 입니다. Servlet이용했답니당~</p>");
     out.println("<ul>");
-    out.println("  <li><a href='board/list'>게시글</a></li>"); // 얘는 웹브라우저가 보는 링크라 정확히 서버 루트까지 써줘야 한다. /app/board/list -> server root
+    out.println("  <li><a href='board/list'>게시글</a></li>"); // 얘는 웹브라우저가 보는 링크라 정확히 서버 루트까지 써줘야 한다. /app/board/list -> server root welcome, / 안붙이면, 위의 리스트가 앞에 추가됨
     out.println("  <li><a href='member/list'>회원</a></li>");
     out.println("</ul>");
     out.println("</body>");
