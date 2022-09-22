@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.bitcamp.board.dao.MemberDao;
 import com.bitcamp.board.domain.Member;
 
 @WebServlet(value="/member/list")
@@ -19,6 +20,12 @@ public class MemberListServlet extends HttpServlet{
 
   private static final long serialVersionUID = 1L;
 
+  MemberDao memberDao;
+
+  @Override
+  public void init() throws ServletException {
+    memberDao = (MemberDao)this.getServletContext().getAttribute("MemberDao");
+  }
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -50,7 +57,7 @@ public class MemberListServlet extends HttpServlet{
     out.println("  </tr>");
 
     try {
-      List<Member> members = AppinitServlet.memberDao.findAll();
+      List<Member> members = memberDao.findAll();
       for (Member member : members) {
         out.println("<tr>");
         out.printf("  <td>%d</td>", member.no);

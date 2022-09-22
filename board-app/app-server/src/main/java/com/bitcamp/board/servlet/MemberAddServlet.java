@@ -11,11 +11,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.bitcamp.board.dao.MemberDao;
 import com.bitcamp.board.domain.Member;
 @WebServlet(value="/member/add")
 public class MemberAddServlet extends HttpServlet {
 
   private static final long serialVersionUID = 1L;
+
+  MemberDao memberDao;
+
+  @Override
+  public void init() throws ServletException {
+    memberDao = (MemberDao)this.getServletContext().getAttribute("MemberDao");
+  }
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -39,7 +47,7 @@ public class MemberAddServlet extends HttpServlet {
     member.password = req.getParameter("password");
 
     try {
-      if (AppinitServlet.memberDao.insert(member) == 0) {
+      if (memberDao.insert(member) == 0) {
         out.println("<p>회원을 등록할 수 없습니다!</p>");
 
       } else {
