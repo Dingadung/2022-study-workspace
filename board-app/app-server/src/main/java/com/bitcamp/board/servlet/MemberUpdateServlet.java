@@ -22,7 +22,7 @@ public class MemberUpdateServlet extends HttpServlet{
 
   @Override
   public void init() throws ServletException {
-    memberDao = (MemberDao)this.getServletContext().getAttribute("MemberDao");
+    memberDao = (MemberDao)this.getServletContext().getAttribute("memberDao");
   }
 
   @Override
