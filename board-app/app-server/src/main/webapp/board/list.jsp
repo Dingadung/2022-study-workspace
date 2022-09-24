@@ -8,7 +8,9 @@
 <%! 
 BoardDao boardDao;
 
-  public void init() throws ServletException {
+// init(ServletConfig) 메서드에 코드를 넣고 싶으면
+// 다음과 같이 JspPafe.jspInit() 메서드를 오버라이딩하라!
+  public void jspInit() {
     boardDao = (BoardDao)this.getServletContext().getAttribute("boardDao");
   }
 %>
@@ -19,7 +21,7 @@ BoardDao boardDao;
 <head>
   <meta charset="UTF-8">
     <title>bitcamp</title>
-  <style>
+  <style> 
     tr:hover {
       background-color: navy;
       color: white;

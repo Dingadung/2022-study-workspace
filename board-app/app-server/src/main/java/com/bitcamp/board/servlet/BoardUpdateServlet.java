@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.bitcamp.board.dao.BoardDao;
 import com.bitcamp.board.domain.Board;
-@javax.servlet.annotation.WebServlet(value="/board/update")
 public class BoardUpdateServlet  extends HttpServlet {
 
   private static final long serialVersionUID = 1L;
