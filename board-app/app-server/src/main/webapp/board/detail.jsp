@@ -1,5 +1,4 @@
 <%@page import="com.bitcamp.board.domain.Board"%>
-<%@page import="com.bitcamp.board.dao.BoardDao"%>
 <%@ page language="java" 
 contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -10,20 +9,10 @@ contentType="text/html; charset=UTF-8"
     <title>JWS</title>
     </head>
     <body>
-    <h1>지민이의 게시글 상세정보!</h1>
-
-<%
-    int boardNo = Integer.parseInt(request.getParameter("no"));
-
-    try {
-      Board board = boardDao.findByNo(boardNo);
-
-      if(board == null) {
-%>
-        <p>해당 번호의 게시글이 없습니다!.</p>
-<% 
-      }else {
-%>
+    <h1>지민이의 게시글 상세정보!JSP+Servlet</h1>
+    <%
+    Board board = (Board)request.getAttribute("board");
+    %>
         <form action='update'>
         <h2>지민이게시글 상세보기>o</h2>
 
@@ -65,23 +54,5 @@ contentType="text/html; charset=UTF-8"
         <a href='delete?no=<%= board.no%>'>삭제</a>
         </p>
         </form>
-<%
-      }
-    } catch(Exception e) {
-      %>
-      <p>실행 중 오류 발생!</p>
-<%
-    }
-%>
     </body>
     </html>
-    
-<%!
-BoardDao boardDao;
-
-//init(ServletConfig) 메서드에 코드를 넣고 싶으면 
-//다음과 같이 JspPage.jspInit() 메서드를 오버라이딩 하라!
-public void jspInit() {
-  boardDao = (BoardDao) this.getServletContext().getAttribute("boardDao");
-}
-%>
