@@ -8,7 +8,7 @@ contentType="text/html; charset=UTF-8"
     <title>JWS</title>
     </head>
     <body>
-    <h1>지민이의 게시글 상세정보!JSP+Servlet</h1>
+    <h1>지민이의 게시글 상세정보!JSP+Servlet+EL</h1>
   
         <form action='update'>
         <h2>지민이게시글 상세보기>o</h2>
