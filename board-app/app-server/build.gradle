@@ -21,6 +21,8 @@ dependencies {
     // - 단, 개발할 때만 사용한다.
     // - 배포할 필요는 없다. 왜? 톰캣 서버에 이미 존재한다
     providedCompile 'javax.servlet:javax.servlet-api:4.0.1'
+    
+    implementation 'javax.servlet:jstl:1.2'
 }
 
 application {
