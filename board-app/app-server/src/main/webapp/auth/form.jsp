@@ -16,7 +16,7 @@ contentType="text/html; charset=UTF-8"
     <table border = '1'>
 
        <tr>
-           <th>이메일</th><td><input name='email' type='email'  size='30'></td>
+           <th>이메일</th><td><input name='email' type='email'  size='30' value="${cookie.email.value}"></td>
        </tr>
 
        <tr>
@@ -24,6 +24,7 @@ contentType="text/html; charset=UTF-8"
        </tr>
 
     </table>
+  <input type="checkbox" name="saveEmail">이메일 저장<br>
     <p>
     <button type='submit'>로그인</button>
     <a href='../'>취소</a>
