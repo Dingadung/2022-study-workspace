@@ -11,8 +11,7 @@ contentType="text/html; charset=UTF-8"
     <h1>지민이의 게시글 입력! - JSP</h1>
 
     <form action='add'>
-    <h2>지민이게시글 입력하기>o!</h2>
-
+    
     <table border = '1'>
 
        <tr>
@@ -21,10 +20,6 @@ contentType="text/html; charset=UTF-8"
 
        <tr>
      <th>내용</th><td><textarea name='content' rows='10' cols='60'></textarea></td>
-       </tr>
-
-       <tr>
-           <th>작성자</th><td><input name='writerNo' type='number'  size='5'></td>
        </tr>
 
     </table>
