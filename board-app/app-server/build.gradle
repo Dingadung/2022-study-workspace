@@ -1,6 +1,8 @@
 plugins {
     id 'application'
-    id 'eclipse'
+    // id 'eclipse' <-- eclipse-wtp plugin을 추가하면, eclipse-wtp plugin이 자동으로 추가된다.
+    id 'eclipse-wtp'
+    id 'war'
 }
 
 repositories {
@@ -8,14 +10,23 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.google.code.gson:gson:2.9.1'
     testImplementation 'junit:junit:4.13.2'
     implementation 'com.google.guava:guava:30.1.1-jre'
-    implementation project(':app-common')
+    implementation 'com.google.code.gson:gson:2.9.1'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:3.0.7'
+    implementation 'org.reflections:reflections:0.10.2'
+    //implementation project(':app-common')
+    
+    // 웹 어플리케이션에서 사용하는 자바 표준 웹 라이브러리
+    // - 단, 개발할 때만 사용한다.
+    // - 배포할 필요는 없다. 왜? 톰캣 서버에 이미 존재한다
+    providedCompile 'javax.servlet:javax.servlet-api:4.0.1'
+    
+    implementation 'javax.servlet:jstl:1.2'
 }
 
 application {
-    mainClass = 'com.bitcamp.board.App'
+    mainClass = 'com.bitcamp.board.MiniWebServer'
 }
 
 // CLI 환경(명령창, 콘솔창)에서 자바 소스를 컴파일 할 때 적용할 옵션
@@ -31,6 +42,12 @@ tasks.withType(JavaCompile) {
     targetCompatibility = '11'
 }
 
+// 웹 애플리케이션 배포 파일(.war)을 만들 때 사용할 기본 파일 이름을 설정한다.
+// 이 이름은 웹 애플리케이션 context root 경로로도 사용된다.
+war {
+    archiveBaseName = "app"
+}
+
 // Eclipse IDE에서 사용할 프로젝트 정보 설정하기
 eclipse {
     project {
@@ -42,5 +59,23 @@ eclipse {
       sourceCompatibility = 11
       targetCompatibility = 11
       javaRuntimeName = "JavaSE-11"
+    }
+    
+    // 이클립스IDE 웹 개발 도구에서 사용할 값을 설정한다.
+    wtp {
+        facet { // Web Application의 환경 정보 설정
+            // Web Application을 실행할 때 필요한 최소의 자바 버전 설정
+            facet name: 'jst.java', version: '11'
+           
+           // Web Application에서 사용할 Servlet 버전 설정 
+            facet name: 'jst.web', version: '4.0' 
+        }
+        component {
+            //you can configure the context path:
+            //contextPath = '/web'
+
+            //you can configure the deployName:
+            //deployName = 'web'
+        }
     }
 }
