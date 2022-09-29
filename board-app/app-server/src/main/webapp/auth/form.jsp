@@ -9,20 +9,14 @@ contentType="text/html; charset=UTF-8"
     </head>
     <body>
     <h1>지민이의 로그인!</h1>
-
-    <form action='login'>
-    <h2>지민이 로그인하기>o!</h2>
-
+    <form action='login' method="post">
     <table border = '1'>
-
        <tr>
            <th>이메일</th><td><input name='email' type='email'  size='30' value="${cookie.email.value}"></td>
        </tr>
-
        <tr>
            <th>암호</th><td><input name='password' type='password'  size='20'></td>
        </tr>
-
     </table>
   <input type="checkbox" name="saveEmail">이메일 저장<br>
     <p>
@@ -30,6 +24,5 @@ contentType="text/html; charset=UTF-8"
     <a href='../'>취소</a>
     </p>
     </form>
-
     </body>
     </html>
