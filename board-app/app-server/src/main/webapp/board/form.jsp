@@ -10,7 +10,7 @@ contentType="text/html; charset=UTF-8"
     <body>
     <h1>지민이의 게시글 입력! - JSP</h1>
 
-    <form action='add'>
+    <form action='add' method="post">
     
     <table border = '1'>
 

@@ -22,7 +22,7 @@ public class BoardUpdateController extends HttpServlet {
   }
 
   @Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+  protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     try {
       Board board = new Board();
@@ -39,9 +39,7 @@ public class BoardUpdateController extends HttpServlet {
         throw new Exception("게시글 변경 실패!");
       }
 
-      response.setHeader("Refresh", "1;url=list"); // 응답 헤더에 refresh를 삽입한다.
-      response.setContentType("text/html;charset=UTF-8");
-      request.getRequestDispatcher("/board/update.jsp").include(request, response); 
+      response.sendRedirect("list");
 
     } catch (Exception e) {
       request.setAttribute("exception", e);
