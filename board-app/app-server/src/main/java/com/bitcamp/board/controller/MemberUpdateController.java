@@ -36,11 +36,7 @@ public class MemberUpdateController extends HttpServlet{
         throw new Exception("멤버 변경 실패"); 
       }
 
-      // Refresh
-      response.setHeader("Refresh", "1;url=list");
-      response.setContentType("text/html;charset=UTF-8"); 
-      request.getRequestDispatcher("/board/update.jsp").include(request, response); 
-
+      response.sendRedirect("list");
     } catch(Exception e) {
       request.setAttribute("exception", e);
       request.getRequestDispatcher("/error.jsp").forward(request, response);

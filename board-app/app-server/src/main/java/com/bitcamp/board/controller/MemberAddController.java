@@ -35,10 +35,7 @@ public class MemberAddController extends HttpServlet{
         throw new Exception("멤버 등록 실패"); 
       }
 
-      // Refresh
-      response.setContentType("text/html;charset=UTF-8"); 
-      request.getRequestDispatcher("/member/add.jsp").include(request, response); 
-
+      response.sendRedirect("list");
     } catch(Exception e) {
       request.setAttribute("exception", e);
       request.getRequestDispatcher("/error.jsp").forward(request, response);
