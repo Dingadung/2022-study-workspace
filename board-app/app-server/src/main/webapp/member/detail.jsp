@@ -14,7 +14,7 @@
 <%
 Member member = (Member)request.getAttribute("member");
 %>
-    <form action='update'>
+    <form action='update' method="post">
     <h2>지민이 회원 상세보기>o</h2>
     <table border='1'>
       <tr>

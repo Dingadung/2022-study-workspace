@@ -25,6 +25,8 @@ public class BoardUpdateController extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     try {
+      request.setCharacterEncoding("UTF-8");
+
       Board board = new Board();
       board.setNo(Integer.parseInt(request.getParameter("no")));
       board.setTitle( request.getParameter("title"));
