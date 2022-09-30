@@ -2,6 +2,7 @@ package com.bitcamp.board.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import com.bitcamp.board.dao.BoardDao;
+import com.bitcamp.board.domain.AttachedFile;
 import com.bitcamp.board.domain.Board;
 import com.bitcamp.board.domain.Member;
 
@@ -53,6 +55,9 @@ public class BoardAddController extends HttpServlet{
       // 클라이언트가 멀티파트로 보낸 데이터를 저장할 도메인 객체를 준비한다.
       Board board = new Board();
 
+      // 첨부파일명을 저장할 컬렉션 객체 준비
+      List<AttachedFile> attachedFiles = new ArrayList<>();
+
       // 각 파트의 데이터를 꺼내 Board 객체에 담는다.
       for(FileItem item: items) {
         if(item.isFormField()) { // 일반 입력 값이라면
@@ -68,6 +73,10 @@ public class BoardAddController extends HttpServlet{
           // 다른 클라이언트가 보낸 파일명과 중복되지 않도록 임의의 새 파일명을 생성한다.
           String filename = UUID.randomUUID().toString();
 
+          // 파일 이름을 DB에 저장할 수 있도록 이름 컬렉션에 저장한다.
+          // DB에 저장할 수 있도록 컬렉션에 저장한다.
+          attachedFiles.add(new AttachedFile(filename));
+
           // 임시 폴더에 저장된 파일을 옮길 폴더 경로 알아내기
           String dirPath = this.getServletContext().getRealPath("/board/files");
 
@@ -76,10 +85,10 @@ public class BoardAddController extends HttpServlet{
           // 이때 파일명은 원래의 이름 대신 UUID로 생성한 이름이다.
           item.write(new File(dirPath + "/" + filename));
 
-          // 
         }
       }
-
+      // Board 객체에서 파일명 목록을 담고 있는 컬렉션 객체를 저장한다.
+      board.setAttachedFiles(attachedFiles);
 
       Member loginMember = (Member)request.getSession().getAttribute("loginMember");
       board.setWriter(loginMember);
