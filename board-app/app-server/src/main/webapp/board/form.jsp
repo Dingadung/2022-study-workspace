@@ -10,7 +10,7 @@ contentType="text/html; charset=UTF-8"
     <body>
     <h1>지민이의 게시글 입력! - JSP</h1>
 
-    <form action='add' method="post">
+    <form action='add' method="post" enctype="multipart/form-data">
     
     <table border = '1'>
 
@@ -23,7 +23,7 @@ contentType="text/html; charset=UTF-8"
        </tr>
        
        <tr>
-           <th>첨부파일<th><td><input name='files' type='text'  size='60'></td>
+           <th>첨부파일</th><td><input name='files' type='file' multiple></td>
        </tr>
 
     </table>
