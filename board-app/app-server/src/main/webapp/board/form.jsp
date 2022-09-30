@@ -21,6 +21,10 @@ contentType="text/html; charset=UTF-8"
        <tr>
      <th>내용</th><td><textarea name='content' rows='10' cols='60'></textarea></td>
        </tr>
+       
+       <tr>
+           <th>첨부파일<th><td><input name='files' type='text'  size='60'></td>
+       </tr>
 
     </table>
     <p>
