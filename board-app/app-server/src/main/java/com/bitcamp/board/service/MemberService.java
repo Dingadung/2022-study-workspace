@@ -2,41 +2,22 @@ package com.bitcamp.board.service;
 
 import java.util.List;
 
-import com.bitcamp.board.dao.MemberDao;
 import com.bitcamp.board.domain.Member;
 
-// 비즈니스 로직을 수행하는 객체
+// 비즈니스 로직을 수행하는 객체의 사용규칙(호출규칙)
 // - 메서드의 이름은 업무와 관련된 이름을 사용한다.
 // 
-public class MemberService {
-    MemberDao memberDao;
+public interface MemberService {
+    void add(Member member) throws Exception;
 
-    public MemberService(MemberDao memberDao) {
-        this.memberDao = memberDao;
-    }
+    boolean update(Member member) throws Exception;
 
-    public void add(Member member) throws Exception {
-        memberDao.insert(member);
-    } // add()
+    Member get(int no) throws Exception ;
 
-    public boolean update(Member member) throws Exception{
-        return memberDao.update(member) >0 ;
-    } // update()
+    Member get(String email, String pwd) throws Exception ;
 
-    public Member get(int no) throws Exception {
-        return memberDao.findByNo(no);
-    }
+    boolean delete(int no) throws Exception;
 
-    public Member get(String email, String pwd) throws Exception {
-        return memberDao.findByEmailPassword(email, pwd);
-    }
-
-    public boolean delete(int no) throws Exception {
-        return memberDao.delete(no) > 0 ;
-    }
-
-    public List<Member> list() throws Exception {
-        return memberDao.findAll();
-    }
+    List<Member> list() throws Exception ;
 
 }

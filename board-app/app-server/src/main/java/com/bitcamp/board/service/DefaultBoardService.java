@@ -9,13 +9,14 @@ import com.bitcamp.board.domain.Board;
 // 비즈니스 로직을 수행하는 객체
 // - 메서드 이름은 업무와 관련된 이름을 사용한다.
 //
-public class DefaultBoardService {
+public class DefaultBoardService implements BoardService{
     BoardDao boardDao;
 
     public DefaultBoardService(BoardDao boardDao) {
         this.boardDao = boardDao;
     }
 
+    @Override
     public void add(Board board) throws Exception {
         // 1) 게시글 등록
         if (boardDao.insert(board) == 0) {
@@ -26,6 +27,7 @@ public class DefaultBoardService {
         boardDao.insertFiles(board);
     }
 
+    @Override
     public boolean update(Board board) throws Exception {
         // 1) 게시글 변경
         if (boardDao.update(board) == 0) {
@@ -37,6 +39,7 @@ public class DefaultBoardService {
         return true;
     }
 
+    @Override
     public Board get(int no) throws Exception {
         // 이 메서드의 경우 하는 일이 없다.
         // 그럼에도 불구하고 이렇게 하는 이유는 일관성을 위해서다.
@@ -46,6 +49,7 @@ public class DefaultBoardService {
         return boardDao.findByNo(no);
     }
 
+    @Override
     public boolean delete(int no) throws Exception {
         // 1) 첨부파일 삭제
         boardDao.deleteFiles(no);
@@ -54,14 +58,17 @@ public class DefaultBoardService {
         return boardDao.delete(no) > 0;
     }
 
+    @Override
     public List<Board> list() throws Exception {
         return boardDao.findAll();
     }
 
+    @Override
     public AttachedFile getAttachedFile(int fileNo) throws Exception {
         return boardDao.findFileByNo(fileNo);
     }
 
+    @Override
     public boolean deleteAttachedFile(int fileNo) throws Exception {
         return boardDao.deleteFile(fileNo) > 0;
     }
