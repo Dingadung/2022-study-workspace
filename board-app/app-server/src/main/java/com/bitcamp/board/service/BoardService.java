@@ -7,8 +7,8 @@ import com.bitcamp.board.domain.AttachedFile;
 import com.bitcamp.board.domain.Board;
 
 // 비즈니스 로직을 수행하는 객체
-// - 메서드의 이름은 업무와 관련된 이름을 사용한다.
-// 
+// - 메서드 이름은 업무와 관련된 이름을 사용한다.
+//
 public class BoardService {
     BoardDao boardDao;
 
@@ -24,33 +24,34 @@ public class BoardService {
 
         // 2) 첨부파일 등록
         boardDao.insertFiles(board);
-    } // add()
+    }
 
-    public boolean update(Board board) throws Exception{
+    public boolean update(Board board) throws Exception {
         // 1) 게시글 변경
         if (boardDao.update(board) == 0) {
             return false;
         }
-
-        // 2)  첨부 파일 추가
+        // 2) 첨부파일 추가
         boardDao.insertFiles(board);
 
         return true;
-    } // update()
+    }
 
     public Board get(int no) throws Exception {
         // 이 메서드의 경우 하는 일이 없다.
-        // 그럼에도 불구하고 이렇게 하는 이유는 일관성을 위해서이다.
-        // 즉 Controller는 Service 객체를 사용하고 Service 객체는 DAO를 사용하는 형식을 지키기 위함이다.
+        // 그럼에도 불구하고 이렇게 하는 이유는 일관성을 위해서다.
+        // 즉 Controller는 Service 객체를 사용하고 Service 객체는 DAO를 사용하는 형식을 
+        // 지키기 위함이다.
         // 사용 규칙이 동일하면 프로그래밍을 이해하기 쉬워진다.
         return boardDao.findByNo(no);
     }
 
     public boolean delete(int no) throws Exception {
-        // 첨부파일을 삭제한다.
-        boardDao.deleteFile(no);
-        // 게시글 삭제
-        return boardDao.deleteFile(no) > 0 ;
+        // 1) 첨부파일 삭제
+        boardDao.deleteFiles(no);
+
+        // 2) 게시글 삭제
+        return boardDao.delete(no) > 0;
     }
 
     public List<Board> list() throws Exception {
@@ -66,3 +67,11 @@ public class BoardService {
     }
 
 }
+
+
+
+
+
+
+
+

@@ -13,6 +13,7 @@ import com.bitcamp.board.dao.MariaDBBoardDao;
 import com.bitcamp.board.dao.MariaDBMemberDao;
 import com.bitcamp.board.dao.MemberDao;
 import com.bitcamp.board.service.BoardService;
+import com.bitcamp.board.service.MemberService;
 
 // 웹 어플리케이션이 시작되었을 때 공유할 자원을 준비시키거나 해제하는 일을 한다.
 // 
@@ -32,8 +33,7 @@ public class ContextLoaderListener implements ServletContextListener{
             MemberDao memberDao = new MariaDBMemberDao(con);
 
             ctx.setAttribute("boardService", new BoardService(boardDao));
-            ctx.setAttribute("memberDao", memberDao);
-            //            ctx.setAttribute("memberService", new MemberService(memberDao));
+            ctx.setAttribute("memberService", new MemberService(memberDao));
         } catch(Exception e ) {
             e.printStackTrace();
         }

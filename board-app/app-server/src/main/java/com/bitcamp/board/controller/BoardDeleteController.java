@@ -12,8 +12,7 @@ import com.bitcamp.board.domain.Member;
 import com.bitcamp.board.service.BoardService;
 
 @WebServlet("/board/delete")
-public class BoardDeleteController extends HttpServlet{
-
+public class BoardDeleteController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     BoardService boardService;
@@ -34,15 +33,21 @@ public class BoardDeleteController extends HttpServlet{
                 throw new Exception("게시글 작성자가 아닙니다.");
             }
 
-            if(!boardService.delete(no)) {
+            if (!boardService.delete(no)) {
                 throw new Exception("게시글을 삭제할 수 없습니다.");
             }
 
             response.sendRedirect("list");
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             request.setAttribute("exception", e);
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
 }
+
+
+
+
+
+
