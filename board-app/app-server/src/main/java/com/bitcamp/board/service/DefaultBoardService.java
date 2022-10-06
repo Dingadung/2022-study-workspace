@@ -1,5 +1,6 @@
 package com.bitcamp.board.service;
 
+import java.sql.Connection;
 import java.util.List;
 
 import com.bitcamp.board.dao.BoardDao;
@@ -10,21 +11,30 @@ import com.bitcamp.board.domain.Board;
 // - 메서드 이름은 업무와 관련된 이름을 사용한다.
 //
 public class DefaultBoardService implements BoardService{
+    Connection con; // 트랜잭션을 다룰 때 사용할 객체
     BoardDao boardDao;
 
-    public DefaultBoardService(BoardDao boardDao) {
+    public DefaultBoardService(BoardDao boardDao, Connection con) {
         this.boardDao = boardDao;
+        this.con = con;
     }
 
     @Override
     public void add(Board board) throws Exception {
-        // 1) 게시글 등록
-        if (boardDao.insert(board) == 0) {
-            throw new Exception("게시글 등록 실패!");
-        }
+        con.setAutoCommit(false);
+        try {
+            // 1) 게시글 등록
+            if (boardDao.insert(board) == 0) {
+                throw new Exception("게시글 등록 실패!");
+            }
 
-        // 2) 첨부파일 등록
-        boardDao.insertFiles(board);
+            // 2) 첨부파일 등록
+            boardDao.insertFiles(board);
+            con.commit();
+        } catch (Exception e) {
+            con.rollback();
+            throw e;
+        }
     }
 
     @Override
