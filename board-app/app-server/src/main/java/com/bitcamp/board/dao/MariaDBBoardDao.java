@@ -16,8 +16,7 @@ public class MariaDBBoardDao implements BoardDao {
 
     DataSource ds;
 
-    //DAO가 사용할 의존 객체 Connection을 생성자의 파라미터로 받는다.
-    public MariaDBBoardDao( DataSource ds) {
+    public MariaDBBoardDao(DataSource ds) {
         this.ds = ds;
     }
 
@@ -25,7 +24,7 @@ public class MariaDBBoardDao implements BoardDao {
     public int insert(Board board) throws Exception {
         try (
                 PreparedStatement pstmt = ds.getConnection().prepareStatement(
-                        "insert into app_board(title,ds.getConnection()tent,mno) values(?,?,?)",
+                        "insert into app_board(title,content,mno) values(?,?,?)",
                         Statement.RETURN_GENERATED_KEYS)) {
 
             // 게시글 제목과 내용을 app_board 테이블에 저장한다.
@@ -50,7 +49,7 @@ public class MariaDBBoardDao implements BoardDao {
                 "select "
                         + "   b.bno,"
                         + "   b.title,"
-                        + "   b.ds.getConnection()tent,"
+                        + "   b.content,"
                         + "   b.cdt,"
                         + "   b.vw_cnt,"
                         + "   m.mno,"
@@ -67,7 +66,7 @@ public class MariaDBBoardDao implements BoardDao {
             Board board = new Board();
             board.setNo(rs.getInt("bno"));
             board.setTitle(rs.getString("title"));
-            board.setContent(rs.getString("ds.getConnection()tent"));
+            board.setContent(rs.getString("content"));
             board.setCreatedDate(rs.getDate("cdt"));
             board.setViewCount(rs.getInt("vw_cnt"));
 
@@ -99,13 +98,13 @@ public class MariaDBBoardDao implements BoardDao {
     @Override
     public int update(Board board) throws Exception {
         try (PreparedStatement pstmt = ds.getConnection().prepareStatement(
-                "update app_board set title=?, ds.getConnection()tent=? where bno=?")) {
+                "update app_board set title=?, content=? where bno=?")) {
 
             pstmt.setString(1, board.getTitle());
             pstmt.setString(2, board.getContent());
             pstmt.setInt(3, board.getNo());
 
-            return  pstmt.executeUpdate();
+            return pstmt.executeUpdate();
         }
     }
 
