@@ -1,27 +1,27 @@
 package com.bitcamp.board.service;
 
-import java.sql.Connection;
 import java.util.List;
 
 import com.bitcamp.board.dao.BoardDao;
 import com.bitcamp.board.domain.AttachedFile;
 import com.bitcamp.board.domain.Board;
+import com.bitcamp.sql.DataSource;
 
 // 비즈니스 로직을 수행하는 객체
 // - 메서드 이름은 업무와 관련된 이름을 사용한다.
 //
 public class DefaultBoardService implements BoardService{
-    Connection con; // 트랜잭션을 다룰 때 사용할 객체
+    DataSource ds;
     BoardDao boardDao;
 
-    public DefaultBoardService(BoardDao boardDao, Connection con) {
+    public DefaultBoardService(BoardDao boardDao, DataSource ds) {
         this.boardDao = boardDao;
-        this.con = con;
+        this.ds = ds;
     }
 
     @Override
     public void add(Board board) throws Exception {
-        con.setAutoCommit(false);
+        ds.getConnection().setAutoCommit(false);
         try {
             // 1) 게시글 등록
             if (boardDao.insert(board) == 0) {
@@ -30,19 +30,19 @@ public class DefaultBoardService implements BoardService{
 
             // 2) 첨부파일 등록
             boardDao.insertFiles(board);
-            con.commit();
+            ds.getConnection().commit();
         } catch (Exception e) {
-            con.rollback();
+            ds.getConnection().rollback();
             throw e;
 
         } finally {
-            con.setAutoCommit(true);
+            ds.getConnection().setAutoCommit(true);
         }
     }
 
     @Override
     public boolean update(Board board) throws Exception {
-        con.setAutoCommit(false);
+        ds.getConnection().setAutoCommit(false);
         try {        
             // 1) 게시글 변경
             if (boardDao.update(board) == 0) {
@@ -51,13 +51,13 @@ public class DefaultBoardService implements BoardService{
             // 2) 첨부파일 추가
             boardDao.insertFiles(board);
 
-            con.commit();
+            ds.getConnection().commit();
             return true;
         } catch (Exception e) {
-            con.rollback();
+            ds.getConnection().rollback();
             throw e;
         } finally {
-            con.setAutoCommit(true);
+            ds.getConnection().setAutoCommit(true);
         }
     }
 
@@ -68,7 +68,7 @@ public class DefaultBoardService implements BoardService{
 
     @Override
     public boolean delete(int no) throws Exception {
-        con.setAutoCommit(false);
+        ds.getConnection().setAutoCommit(false);
         try {   
             // 1) 첨부파일 삭제
             boardDao.deleteFiles(no);
@@ -76,14 +76,14 @@ public class DefaultBoardService implements BoardService{
             // 2) 게시글 삭제
             boolean result = boardDao.delete(no) > 0;
 
-            con.commit();
+            ds.getConnection().commit();
 
             return result;
         } catch (Exception e) {
-            con.rollback();
+            ds.getConnection().rollback();
             throw e;
         } finally {
-            con.setAutoCommit(true);
+            ds.getConnection().setAutoCommit(true);
         }
     }
 

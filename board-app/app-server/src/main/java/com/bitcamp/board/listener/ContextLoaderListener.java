@@ -32,7 +32,7 @@ public class ContextLoaderListener implements ServletContextListener{
             BoardDao boardDao = new MariaDBBoardDao(ds);
             MemberDao memberDao = new MariaDBMemberDao(ds);
 
-            ctx.setAttribute("boardService", new DefaultBoardService(boardDao, con));
+            ctx.setAttribute("boardService", new DefaultBoardService(boardDao, ds));
             ctx.setAttribute("memberService", new DefaultMemberService(memberDao));
         } catch(Exception e ) {
             e.printStackTrace();
