@@ -27,5 +27,14 @@ public class DispatcherServlet extends HttpServlet{
         resp.setContentType("text/html;charset=UTF-8");
         RequestDispatcher 요청배달자 = req.getRequestDispatcher(pathInfo);
         요청배달자.include(req, resp);
+
+        // 페이지 컨트롤러를 실행한 후에 페이지 컨트롤러가 지정한 View Component를 실행한다.
+        String viewName = (String)req.getAttribute("viewName");
+        if(viewName !=  null) {// 페이지 컨트롤러를 정상적으로 실행했다면
+            req.getRequestDispatcher(viewName).include(req, resp); // JSP를 실행한 후 리턴된다.
+        } else { // 페이지 컨트롤러를 실행하다가 오류가 발생했다면
+            req.getRequestDispatcher("/error.jsp").forward(req, resp);
+        }
+
     }
 }
