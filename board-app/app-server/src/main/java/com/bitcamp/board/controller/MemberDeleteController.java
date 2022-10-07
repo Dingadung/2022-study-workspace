@@ -32,11 +32,10 @@ public class MemberDeleteController extends HttpServlet{
                 throw new Exception("멤버 삭제 실패"); 
             }
 
-            response.sendRedirect("list");
+            request.setAttribute("viewName", "redirect:list");
 
         } catch(Exception e) {
             request.setAttribute("exception", e);
-            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
 }

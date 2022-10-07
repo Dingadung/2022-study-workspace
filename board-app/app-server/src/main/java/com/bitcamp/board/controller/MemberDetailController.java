@@ -33,12 +33,9 @@ public class MemberDetailController extends HttpServlet{
                 throw new Exception("해당 번호의 게시글이 없습니다!");
             }
             request.setAttribute("member", member);
-            // Refresh
-            response.setContentType("text/html;charset=UTF-8"); 
-            request.getRequestDispatcher("/member/detail.jsp").include(request, response); 
+            request.setAttribute("viewName", "/member/detail.jsp"); 
         } catch(Exception e) {
             request.setAttribute("exception", e);
-            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
 }

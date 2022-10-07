@@ -34,14 +34,12 @@ public class BoardDetailController extends HttpServlet{
             if(board == null) {
                 throw new Exception("해당 번호의 게시글이 없습니다!");
             }
-            request.setAttribute("board", board);
 
-            response.setContentType("text/html;charset=UTF-8"); // JSP가 출력할 콘텐트의 MIME 타입 설정
-            request.getRequestDispatcher("/board/detail.jsp").include(request, response); // JSP를 실행한 후 리턴된다.
+            request.setAttribute("board", board);
+            request.setAttribute("viewName", "/board/detail.jsp");
 
         } catch(Exception e) {
             request.setAttribute("exception", e);
-            request.getRequestDispatcher("/error.jsp").forward(request, response); // JSP를 실행한 후 리턴된다.
         }
     }
 }
