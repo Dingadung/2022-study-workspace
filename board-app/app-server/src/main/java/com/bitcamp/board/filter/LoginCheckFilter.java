@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.bitcamp.board.domain.Member;
 
-@WebFilter("*")
+@WebFilter("/service/*")
 public class LoginCheckFilter implements Filter {
 
     @Override
@@ -30,16 +30,20 @@ public class LoginCheckFilter implements Filter {
 
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-        String servletPath = httpRequest.getServletPath();
+        //        String servletPath = httpRequest.getServletPath();
+
+        // URL 매핑이 "/service/*"  형식으로 되어 있을 때
+        // * 경로를 알아내려면 다음의 메서드를 호출해야 한다.
+        String servletPath = httpRequest.getPathInfo();
+        System.out.println(servletPath);
 
         if(servletPath.endsWith("add") || servletPath.endsWith("update") ||  servletPath.endsWith("delete") ) {
             Member loginMember =(Member)httpRequest.getSession().getAttribute("loginMember");
             if(loginMember == null) { // 로그인 하지 않았다면
-                httpResponse.sendRedirect(httpRequest.getContextPath() + "/service/auth/form.jsp");
+                httpResponse.sendRedirect(httpRequest.getContextPath() + "/service/auth/form");
                 return;
             }
         }
-
 
         chain.doFilter(request, response);
     }
