@@ -1,9 +1,9 @@
 package com.bitcamp.board.domain;
 
-import java.io.Serializable;
 import java.sql.Date;
 
-public class Member implements Serializable{
+public class Member {
+
   private int no;
   private String name;
   private String email;
@@ -55,5 +55,6 @@ public class Member implements Serializable{
   public void setCreatedDate(Date createdDate) {
     this.createdDate = createdDate;
   }
+
 
 }

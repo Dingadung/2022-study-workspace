@@ -31,6 +31,8 @@ dependencies {
     
     // Spring JDBC 관련 라이브러리
     implementation 'org.springframework:spring-jdbc:5.3.23'
+    
+    implementation 'org.springframework:spring-webmvc:5.3.23'
 }
 
 application {
