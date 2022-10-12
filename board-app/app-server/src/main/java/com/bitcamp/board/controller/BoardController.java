@@ -1,17 +1,21 @@
 package com.bitcamp.board.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bitcamp.board.domain.AttachedFile;
 import com.bitcamp.board.domain.Board;
@@ -20,6 +24,7 @@ import com.bitcamp.board.service.BoardService;
 
 // CRUD 요청을 처리하는 페이지 컨트롤러들을 한 개의 클래스로 합친다.
 @Controller // 페이지 컨트롤러에 붙이는 애노테이션
+@RequestMapping("/board/")
 public class BoardController {
 
     BoardService boardService;
@@ -28,19 +33,24 @@ public class BoardController {
         this.boardService = boardService;
     }
 
-    @GetMapping("/board/form") // 요청이 들어 왔을 때 호출될 메서드에 붙이는 애노테이션
+    @GetMapping("form") // 요청이 들어 왔을 때 호출될 메서드에 붙이는 애노테이션
     public String form(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return "/board/form.jsp";
     } // form
 
-    @PostMapping("/board/add") // 요청이 들어 왔을 때 호출될 메서드에 붙이는 애노테이션
+    @PostMapping("add") // 요청이 들어 왔을 때 호출될 메서드에 붙이는 애노테이션
     public String add(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        request.setCharacterEncoding("UTF-8");
-
         Board board = new Board();
         board.setTitle(request.getParameter("title"));
         board.setContent(request.getParameter("content"));
+        board.setAttachedFiles(saveAttachedFiles(request));
+        board.setWriter((Member) request.getSession().getAttribute("loginMember"));
 
+        boardService.add(board);
+        return "redirect:list";
+    } // add()
+
+    private List<AttachedFile> saveAttachedFiles(HttpServletRequest request) throws IOException, ServletException {
         List<AttachedFile> attachedFiles = new ArrayList<>();
         String dirPath = request.getServletContext().getRealPath("/board/files");
         Collection<Part> parts = request.getParts();
@@ -54,22 +64,16 @@ public class BoardController {
             part.write(dirPath + "/" + filename);
             attachedFiles.add(new AttachedFile(filename));
         }
-        board.setAttachedFiles(attachedFiles);
+        return attachedFiles;
+    }
 
-        Member loginMember = (Member) request.getSession().getAttribute("loginMember");
-        board.setWriter(loginMember);
-
-        boardService.add(board);
-        return "redirect:list";
-    } // add()
-
-    @GetMapping("/board/list") // 요청이 들어 왔을 때 호출될 메서드에 붙이는 애노테이션
+    @GetMapping("list") // 요청이 들어 왔을 때 호출될 메서드에 붙이는 애노테이션
     public String list(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         req.setAttribute("boards", boardService.list());
         return "/board/list.jsp";
     } //list()
 
-    @GetMapping("/board/detail") // 요청이 들어 왔을 때 호출될 메서드에 붙이는 애노테이션
+    @GetMapping("detail") // 요청이 들어 왔을 때 호출될 메서드에 붙이는 애노테이션
     public String detail(HttpServletRequest request, HttpServletResponse response) throws Exception {
         int boardNo = Integer.parseInt(request.getParameter("no"));
 
@@ -83,31 +87,15 @@ public class BoardController {
         return "/board/detail.jsp";
     } // detail()
 
-    @PostMapping("/board/update") // 요청이 들어 왔을 때 호출될 메서드에 붙이는 애노테이션
+    @PostMapping("update") // 요청이 들어 왔을 때 호출될 메서드에 붙이는 애노테이션
     public String update(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        request.setCharacterEncoding("UTF-8");
-
         Board board = new Board();
         board.setNo(Integer.parseInt(request.getParameter("no")));
         board.setTitle(request.getParameter("title"));
         board.setContent(request.getParameter("content"));
+        board.setAttachedFiles(saveAttachedFiles(request));
 
-        List<AttachedFile> attachedFiles = new ArrayList<>();
-        String dirPath = request.getServletContext().getRealPath("/board/files");
-        Collection<Part> parts = request.getParts();
-        for (Part part : parts) {
-            if (!part.getName().equals("files") || part.getSize() == 0) continue;
-            String filename = UUID.randomUUID().toString();
-            part.write(dirPath + "/" + filename);
-            attachedFiles.add(new AttachedFile(filename));
-        }
-        board.setAttachedFiles(attachedFiles);
-
-        // 게시글 작성자인지 검사한다.
-        Member loginMember = (Member) request.getSession().getAttribute("loginMember");
-        if (boardService.get(board.getNo()).getWriter().getNo() != loginMember.getNo()) {
-            throw new Exception("게시글 작성자가 아닙니다.");
-        }
+        checkOwner(board.getNo(), request.getSession());
 
         if (!boardService.update(board)) {
             throw new Exception("게시글을 변경할 수 없습니다!");
@@ -116,15 +104,19 @@ public class BoardController {
         return "redirect:list";
     }
 
-    @GetMapping("/board/delete") // 요청이 들어 왔을 때 호출될 메서드에 붙이는 애노테이션
+    private void checkOwner(int boardNo, HttpSession session) throws Exception {
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        if (boardService.get(boardNo).getWriter().getNo() != loginMember.getNo()) {
+            throw new Exception("게시글 작성자가 아닙니다.");
+        }
+    }
+
+    @GetMapping("delete") // 요청이 들어 왔을 때 호출될 메서드에 붙이는 애노테이션
     public String delete(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request.setCharacterEncoding("UTF-8");
         int no = Integer.parseInt(request.getParameter("no"));
 
-        Member loginMember = (Member) request.getSession().getAttribute("loginMember");
-        if (boardService.get(no).getWriter().getNo() != loginMember.getNo()) {
-            throw new Exception("게시글 작성자가 아닙니다.");
-        }
+        checkOwner(no, request.getSession());
 
         if (!boardService.delete(no)) {
             throw new Exception("게시글을 삭제할 수 없습니다.");
@@ -133,7 +125,7 @@ public class BoardController {
         return "redirect:list";
     } // delete()
 
-    @GetMapping("/board/fileDelete") // 요청이 들어 왔을 때 호출될 메서드에 붙이는 애노테이션
+    @GetMapping("fileDelete") // 요청이 들어 왔을 때 호출될 메서드에 붙이는 애노테이션
     public String fileDelete(HttpServletRequest request, HttpServletResponse response) throws Exception {
         int no = Integer.parseInt(request.getParameter("no"));
         AttachedFile attachedFile = boardService.getAttachedFile(no); 

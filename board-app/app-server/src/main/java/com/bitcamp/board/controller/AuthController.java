@@ -8,23 +8,26 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bitcamp.board.domain.Member;
 import com.bitcamp.board.service.MemberService;
 
 @Controller // 페이지 컨트롤러에 붙이는 애노테이션
+@RequestMapping("/auth/")
 public class AuthController {
 
     MemberService memberService;
     public AuthController(MemberService memberService) {
         this.memberService = memberService;
     }
-    @GetMapping("/auth/form") 
+
+    @GetMapping( "form") 
     public String form(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return "/auth/form.jsp";
     }
 
-    @PostMapping("/auth/login") // 요청이 들어 왔을 때 호출될 메서드에 붙이는 애노테이션
+    @PostMapping("login") 
     public String login(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -48,7 +51,7 @@ public class AuthController {
         return "/auth/loginResult.jsp";
     }
 
-    @GetMapping("/auth/logout") // 요청이 들어 왔을 때 호출될 메서드에 붙이는 애노테이션
+    @GetMapping("logout") 
     public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession();
         session.invalidate(); // 현재 세션을 무효화시킨다.

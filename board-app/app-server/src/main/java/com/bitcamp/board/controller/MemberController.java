@@ -6,11 +6,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bitcamp.board.domain.Member;
 import com.bitcamp.board.service.MemberService;
 
-@Controller // 페이지 컨트롤러에 붙이는 애노테이션
+@Controller
+@RequestMapping("/member/")
 public class MemberController {
 
     MemberService memberService;
@@ -18,15 +20,13 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-    @GetMapping("/member/form") // 요청이 들어 왔을 때 호출될 메서드에 붙이는 애노테이션
+    @GetMapping("form")
     public String form(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return "/member/form.jsp";
     }
 
-    @PostMapping("/member/add") // 요청이 들어 왔을 때 호출될 메서드에 붙이는 애노테이션
+    @PostMapping("add")
     public String add(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        request.setCharacterEncoding("UTF-8");
-
         Member member = new Member();
         member.setName(request.getParameter("name"));
         member.setEmail(request.getParameter("email"));
@@ -37,16 +37,27 @@ public class MemberController {
         return "redirect:list";
     }
 
-    @GetMapping("/member/list") // 요청이 들어 왔을 때 호출될 메서드에 붙이는 애노테이션
+    @GetMapping("list")
     public String list(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request.setAttribute("members", memberService.list());
         return "/member/list.jsp";
     }
 
-    @PostMapping("/member/update") // 요청이 들어 왔을 때 호출될 메서드에 붙이는 애노테이션
-    public String update(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        request.setCharacterEncoding("UTF-8");
+    @GetMapping("detail")
+    public String detail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        int no = Integer.parseInt(request.getParameter("no"));
+        Member member = memberService.get(no);
 
+        if (member == null) {
+            throw new Exception("해당 번호의 회원이 없습니다.");
+        }
+
+        request.setAttribute("member", member);
+        return "/member/detail.jsp";
+    }
+
+    @PostMapping("update")
+    public String update(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Member member = new Member();
         member.setNo(Integer.parseInt(request.getParameter("no")));
         member.setName(request.getParameter("name"));
@@ -60,7 +71,7 @@ public class MemberController {
         return "redirect:list";
     }
 
-    @GetMapping("/member/delete") // 요청이 들어 왔을 때 호출될 메서드에 붙이는 애노테이션
+    @GetMapping("delete")
     public String delete(HttpServletRequest request, HttpServletResponse response) throws Exception {
         int no = Integer.parseInt(request.getParameter("no"));
 
