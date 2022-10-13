@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 import com.bitcamp.board.domain.Member;
 import com.bitcamp.board.service.MemberService;
 
@@ -20,16 +21,21 @@ public class AuthController {
     this.memberService = memberService;
   }
 
+  // InternalResourceViewResolver 설정전
+  //  @GetMapping( "form") 
+  //  public View form() throws Exception {
+  //    return new JstlView("/auth/form.jsp");
+  //  }
+  //InternalResourceViewResolver 설정후
   @GetMapping( "form") 
   public String form() throws Exception {
-    return "/auth/form.jsp";
+    return  "auth/form";
   }
 
   @PostMapping("login") 
-  public String login(String email,
+  public ModelAndView login(String email,
       String password,
       String saveEmail,
-      HttpServletRequest request,
       HttpServletResponse response,
       HttpSession session) throws Exception {
     Member member = memberService.get(email, password);
@@ -46,8 +52,9 @@ public class AuthController {
     }
     response.addCookie(cookie); 
 
-    request.setAttribute("member", member);
-    return "/auth/loginResult.jsp";
+    ModelAndView mv = new ModelAndView( "auth/loginResult");
+    mv.addObject("member", member);
+    return mv;
   }
 
   @GetMapping("logout") 
