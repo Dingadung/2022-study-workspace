@@ -6,13 +6,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>JWS</title>
+<title>bitcamp</title>
 <meta http-equiv='Refresh' content='1; url=${empty member ? "form" : "../../"}'>
 </head>
 <body>
 <h1>로그인</h1>
 <c:choose>
-  <c:when test="${not empty member}" >
+  <c:when test="${not empty member}">
     <p>로그인 성공입니다!</p>
   </c:when>
   <c:otherwise>

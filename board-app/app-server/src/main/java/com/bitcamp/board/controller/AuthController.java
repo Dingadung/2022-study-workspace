@@ -1,7 +1,6 @@
 package com.bitcamp.board.controller;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -12,32 +11,30 @@ import org.springframework.web.servlet.ModelAndView;
 import com.bitcamp.board.domain.Member;
 import com.bitcamp.board.service.MemberService;
 
-@Controller // 페이지 컨트롤러에 붙이는 애노테이션
+@Controller 
 @RequestMapping("/auth/")
 public class AuthController {
 
   MemberService memberService;
+
   public AuthController(MemberService memberService) {
+    System.out.println("AuthController() 호출됨!");
     this.memberService = memberService;
   }
 
-  // InternalResourceViewResolver 설정전
-  //  @GetMapping( "form") 
-  //  public View form() throws Exception {
-  //    return new JstlView("/auth/form.jsp");
-  //  }
-  //InternalResourceViewResolver 설정후
-  @GetMapping( "form") 
+  @GetMapping("form") 
   public String form() throws Exception {
-    return  "auth/form";
+    return "auth/form";
   }
 
   @PostMapping("login") 
-  public ModelAndView login(String email,
-      String password,
-      String saveEmail,
+  public ModelAndView login(
+      String email, 
+      String password, 
+      String saveEmail, 
       HttpServletResponse response,
       HttpSession session) throws Exception {
+
     Member member = memberService.get(email, password);
 
     if (member != null) {
@@ -52,15 +49,14 @@ public class AuthController {
     }
     response.addCookie(cookie); 
 
-    ModelAndView mv = new ModelAndView( "auth/loginResult");
+    ModelAndView mv = new ModelAndView("auth/loginResult");
     mv.addObject("member", member);
     return mv;
   }
 
   @GetMapping("logout") 
-  public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    HttpSession session = request.getSession();
-    session.invalidate();
+  public String logout(HttpSession session) throws Exception {
+    session.invalidate(); 
     return "redirect:../../"; 
   }
 }

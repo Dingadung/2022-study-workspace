@@ -11,17 +11,17 @@
     </description>
     
     <display-name>board-app</display-name>
-
-
-<!--     <servlet>
+    
+<!--  
+    <servlet>
       <servlet-name>DispatcherServlet</servlet-name>
       <servlet-class>com.bitcamp.servlet.DispatcherServlet</servlet-class>
     </servlet>
-  <servlet-mapping>
+    <servlet-mapping>
       <servlet-name>DispatcherServlet</servlet-name>
       <url-pattern>/service/*</url-pattern>
-    </servlet-mapping> -->
-    
+    </servlet-mapping>
+-->
     <welcome-file-list>
       <welcome-file>index.html</welcome-file>
       <welcome-file>index.jsp</welcome-file>
@@ -29,3 +29,9 @@
     </welcome-file-list>
     
 </web-app>
+
+
+
+
+
+

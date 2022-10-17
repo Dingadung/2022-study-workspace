@@ -41,6 +41,10 @@ dependencies {
     implementation 'org.apache.logging.log4j:log4j-core:2.18.0'
     
     //implementation project(':app-common')
+    
+    implementation 'org.mybatis:mybatis:3.5.11'
+    
+    implementation 'org.mybatis:mybatis-spring:2.0.7'
 }
 
 application {
