@@ -1,7 +1,5 @@
 package com.bitcamp.board.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -14,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.bitcamp.board.domain.AttachedFile;
 import com.bitcamp.board.domain.Board;
 
-@Repository // DAO 역할을 수행하는 객체에 붙이는 애노테이션
+@Repository 
 public class MybatisBoardDao implements BoardDao {
 
     @Autowired
@@ -34,10 +32,12 @@ public class MybatisBoardDao implements BoardDao {
     public Board findByNo1(int no) throws Exception {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
 
+            // 게시글 가져오기
             Board board = sqlSession.selectOne("BoardDao.findByNo", no);
 
-            // 게시글 첨부파일 가져오기
-            List<AttachedFile> attachedFiles =  sqlSession.selectList("BoardDao.findFilesByBoard", no);
+            // 게시글의 첨부파일 가져오기
+            List<AttachedFile> attachedFiles = 
+                    sqlSession.selectList("BoardDao.findFilesByBoard", no);
 
             board.setAttachedFiles(attachedFiles);
 
@@ -61,22 +61,15 @@ public class MybatisBoardDao implements BoardDao {
 
     @Override
     public int update(Board board) throws Exception {
-        try (PreparedStatement pstmt = ds.getConnection().prepareStatement(
-                "update app_board set title=?, content=? where bno=?")) {
-
-            pstmt.setString(1, board.getTitle());
-            pstmt.setString(2, board.getContent());
-            pstmt.setInt(3, board.getNo());
-
-            return pstmt.executeUpdate();
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            return sqlSession.update("BoardDao.update", board);
         }
     }
 
     @Override
     public int delete(int no) throws Exception {
-        try (PreparedStatement pstmt = ds.getConnection().prepareStatement("delete from app_board where bno=?")) {
-            pstmt.setInt(1, no);
-            return pstmt.executeUpdate();
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            return sqlSession.delete("BoardDao.delete", no);
         }
     }
 
@@ -97,20 +90,8 @@ public class MybatisBoardDao implements BoardDao {
 
     @Override
     public AttachedFile findFileByNo(int fileNo) throws Exception {
-        try (PreparedStatement pstmt = ds.getConnection().prepareStatement(
-                "select bfno, filepath, bno from app_board_file where bfno = " + fileNo);
-                ResultSet rs = pstmt.executeQuery()) {
-
-            if (!rs.next()) {
-                return null;
-            }
-
-            AttachedFile file = new AttachedFile();
-            file.setNo(rs.getInt("bfno"));
-            file.setFilepath(rs.getString("filepath"));
-            file.setBoardNo(rs.getInt("bno"));
-
-            return file;
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            return sqlSession.selectOne("BoardDao.findFileByNo", fileNo);
         }
     }
 
@@ -123,36 +104,15 @@ public class MybatisBoardDao implements BoardDao {
 
     @Override
     public int deleteFile(int fileNo) throws Exception {
-        try (PreparedStatement pstmt = ds.getConnection().prepareStatement(
-                "delete from app_board_file where bfno=?")) {
-
-            pstmt.setInt(1, fileNo);
-            return pstmt.executeUpdate();
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            return sqlSession.delete("BoardDao.deleteFile", fileNo);
         }
     }
 
     @Override
     public int deleteFiles(int boardNo) throws Exception {
-        try (PreparedStatement pstmt = ds.getConnection().prepareStatement(
-                "delete from app_board_file where bno=?")) {
-
-            pstmt.setInt(1, boardNo);
-            return pstmt.executeUpdate();
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            return sqlSession.delete("BoardDao.deleteFiles", boardNo);
         }
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
