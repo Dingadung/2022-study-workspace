@@ -8,7 +8,7 @@ import com.bitcamp.board.dao.BoardDao;
 import com.bitcamp.board.dao.MemberDao;
 import com.bitcamp.board.domain.Member;
 
-@Service // 서비스 역할을 수행하는 객체에 붙이는 애노테이션
+@Service 
 public class DefaultMemberService implements MemberService {
 
   @Autowired

@@ -8,9 +8,8 @@ import com.bitcamp.board.dao.BoardDao;
 import com.bitcamp.board.domain.AttachedFile;
 import com.bitcamp.board.domain.Board;
 
-@Service // 서비스 역할을 수행하는 객체에 붙이는 애노테이션
+@Service
 public class DefaultBoardService implements BoardService {
-
 
   @Autowired 
   BoardDao boardDao;
