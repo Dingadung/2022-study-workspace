@@ -21,6 +21,7 @@ public interface BoardService {
   AttachedFile getAttachedFile(int fileNo) throws Exception;
 
   boolean deleteAttachedFile(int fileNo) throws Exception;
+
 }
 
 

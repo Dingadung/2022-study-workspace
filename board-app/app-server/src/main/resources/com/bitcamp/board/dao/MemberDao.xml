@@ -12,22 +12,33 @@
     <result column="cdt" property="createdDate"/>
   </resultMap>
 
-<insert id="insert" parameterType="member">
-  insert into app_member(name,email,pwd) 
-  values(#{name},#{email},sha2(#{password},256))
-</insert>
+  <insert id="insert" parameterType="member">
+    insert into app_member(name,email,pwd) 
+    values(#{name},#{email},sha2(#{password},256))
+  </insert>
 
-<select id="findByNo" resultMap="memberMap">
-  select 
-    mno,
-    name,
-    email,
-    cdt
-  from 
-    app_member 
-  where
-     mno=#{value}
-</select>
+  <select id="findByNo" resultMap="memberMap">
+    select 
+      mno,
+      name,
+      email,
+      cdt
+    from 
+      app_member 
+    where 
+      mno=#{value}
+  </select>
+  
+  <select id="findAll" resultMap="memberMap">
+    select 
+      mno,
+      name,
+      email 
+    from 
+      app_member 
+    order by 
+      name
+  </select>
 
   <select id="findByEmailPassword" resultMap="memberMap">
     select 
@@ -41,18 +52,7 @@
       email=#{email} and pwd=sha2(#{password},256)
   </select>
   
-  <select id="findAll" resultMap="memberMap">
-    select 
-      mno,
-      name,
-      email 
-    from 
-      app_member 
-    order by 
-      name
-  </select>
-  
-  <update id="update" parameterType="member">
+  <update id="update" parameterType="Member">
     update app_member set 
       name=#{name}, 
       email=#{email}, 
